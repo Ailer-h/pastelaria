@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+*{
+
+    padding: 0;
+    margin: 0;
+    font-family: "Kanit", Arial, Helvetica, sans-serif;
+
+}
+
+.center{
+
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    background-image: url("../images/pastel.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+.form-login{
+
+    width: 30em;
+    height: 30em;
+    background-color: #FAEEE4;
+
+    border-radius: 2em;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.form-login h1{
+
+    font-size: 4.2em;
+    margin-top: .2em;
+
+}
+
+.form-login label{
+
+    font-size: 2em;
+    margin-top: 1em;
+    margin-bottom: .5em;
+
+}
+
+.form-login input[type="text"], input[type="password"]{
+
+    width: 20em;
+
+}
+
+.form-login input[type="submit"]{
+
+    margin-top: 1em;
+    font-size: 2em;
+
+    border-radius: 1.5em;
+    border: none;
+    
+    background-color: #FFD369;
+
+    width: 4em;
+
+    transition: 200ms;
+
+}
+
+.form-login input[type="submit"]:hover{
+
+    background-color: #be9d4f;
+
+    transform: scale(1.15);
+    transition: 200ms;
+
+}
