@@ -64,7 +64,7 @@
     border-radius: 1.5em;
     border: none;
     
-    background-color: #FFD369;
+    background: linear-gradient(90deg, rgba(255,177,0,1) 0%, rgba(255,218,89,1) 50%, rgba(255,177,0,1) 100%);
 
     width: 4em;
 
