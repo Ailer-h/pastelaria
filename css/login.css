@@ -8,51 +8,69 @@
 
 }
 
-.center{
+body{
 
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
     background-image: url("../images/pastel.jpg");
     background-size: cover;
     background-repeat: no-repeat;
 
 }
 
+.login{
+
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    
+}
+
 .form-login{
 
     width: 30em;
-    height: 30em;
-    background-color: #FAEEE4;
-
-    border-radius: 2em;
+    height: 100vh;
+    background-color: #f1f1f1;
 
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
+
+}
+
+.form-login .icon-holder{
+
+    padding: .7em;
+    border-radius: 10em;
+
+}
+
+.form-login .icon-holder img{
+
+    width: 5em;
+    height: 5em;
 
 }
 
 .form-login h1{
 
-    font-size: 4.2em;
-    margin-top: .2em;
+    font-size: 3em;
+    margin-top: .1em;
 
 }
 
 .form-login label{
 
-    font-size: 2em;
-    margin-top: 1em;
-    margin-bottom: .5em;
+    font-size: 1.3em;
+    margin-top: .5em;
+    margin-bottom: .1em;
 
 }
 
 .form-login input[type="text"], input[type="password"]{
 
     width: 20em;
+
 
 }
 
@@ -61,10 +79,10 @@
     margin-top: 1em;
     font-size: 2em;
 
-    border-radius: 1.5em;
+    border-radius: .4em;
     border: none;
     
-    background: linear-gradient(90deg, rgba(255,177,0,1) 0%, rgba(255,218,89,1) 50%, rgba(255,177,0,1) 100%);
+    background: linear-gradient(90deg, rgb(252, 196, 67) 0%, rgb(248, 227, 150) 50%, rgb(252, 196, 67) 100%);
 
     width: 4em;
 
@@ -74,9 +92,84 @@
 
 .form-login input[type="submit"]:hover{
 
-    background-color: #be9d4f;
+    background: linear-gradient(90deg, rgb(252, 196, 67) 0%, rgb(248, 227, 150) 40%, rgb(248, 227, 150) 60%, rgb(252, 196, 67) 100%);
 
     transform: scale(1.15);
     transition: 200ms;
+
+}
+
+.grid{
+
+    display: grid;
+    gap: 0;
+    grid-template-columns: 25% 75%;
+    background-color: transparent;
+
+}
+
+.center{
+
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.center .frame{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(0, 0, 0, 0.192);
+    width: 50em;
+    height: 20em;
+
+}
+
+.center .frame h1{
+
+    font-size: 4em;
+
+}
+
+.aviso{
+
+    display: grid;
+    grid-template-columns: 20% 80%;
+    width: 13em;
+
+    padding: .3em;
+
+    background-color: #e2564c62;
+    border: .2em solid #e2574c;
+
+    display: none;
+
+}
+
+.aviso .img-holder{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.aviso .txt-holder{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.aviso img{
+
+    width: 2em;
+    height: 2em;
 
 }

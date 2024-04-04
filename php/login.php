@@ -10,20 +10,70 @@
 </head>
 
 <body>
-    <div class="center">
-        <form action="checkUser.php" method="post">
-            <div class="form-login">
-                <h1>Login</h1>
-                <label for="user">Código de Login:</label>
-                <input type="text" id="user" name="user" required>
+    <div class="grid">
+        <div class="login">
+            <form action="checkUser.php" method="post">
+                <div class="form-login">
+                    
+                    <div class="icon-holder">
+                        <img src="../images/icons/envelope.png">
+                    </div>
+                    
+                    <div class="aviso" id="aviso-block">
+                        <div class="img-holder"><img src="../images/icons/cancel.png"></div>
+                        <div class="txt-holder">
+                            <p id="aviso-txt">Senha Inválida</p>
+                            <p>Tente Novamente</p>
+                        </div>
+                    </div>
 
-                <label for="senha">Senha:</label>
-                <input type="password" id="senha" name="senha" required>
+                    <h1>Login</h1>
+                    <label for="user">Código de Login:</label>
+                    <input type="text" id="user" name="user" oninput="noSlashes_js(this.value, this)" required>
+                    
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" name="senha" required>
+                    
+                    <input type="submit" value="Entrar">
+                </div>
+            </form>
+        </div>
 
-                <input type="submit" value="Entrar">
+        <div class="center">
+            <div class="frame">
+                <h1>PASTELARIA NOME</h1>
             </div>
-        </form>
+        </div>
+
     </div>
 </body>
-
+<script src="../js/masks.js"></script>
 </html>
+
+<?php
+
+    if($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['n'])){
+
+        $error = $_GET['n'];
+
+        echo"<script>
+            console.log('Erro de Email | Código =".$_GET['n']."')
+        </script>";
+
+        if($error == 100){
+
+            echo"<script>
+                document.getElementById('aviso-block').style.display = 'block';
+                document.getElementById('aviso-txt').textContent = 'Email Inválido';
+            </script>";
+
+        }else if($error == 200){
+            echo"<script>
+                document.getElementById('aviso-block').style.display = 'block';
+                document.getElementById('aviso-txt').textContent = 'Senha Inválida';
+            </script>";
+        }
+
+    }
+
+?>
