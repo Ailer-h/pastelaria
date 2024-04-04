@@ -16,7 +16,7 @@
                 <div class="form-login">
                     
                     <div class="icon-holder">
-                        <img src="../images/icons/envelope.png">
+                        <img src="../images/icons/user.png">
                     </div>
                     
                     <div class="aviso" id="aviso-block">
@@ -28,11 +28,11 @@
                     </div>
 
                     <h1>Login</h1>
-                    <label for="user">Código de Login:</label>
+                    <label for="user">Email:</label>
                     <input type="text" id="user" name="user" oninput="noSlashes_js(this.value, this)" required>
                     
                     <label for="senha">Senha:</label>
-                    <input type="password" id="senha" name="senha" required>
+                    <input type="password" id="senha" name="senha" oninput="noSlashes_js(this.value, this)" required>
                     
                     <input type="submit" value="Entrar">
                 </div>
@@ -52,12 +52,11 @@
 
 <?php
 
-    if($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['n'])){
-
-        $error = $_GET['n'];
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['n'])){
+        $error = $_POST['n'];
 
         echo"<script>
-            console.log('Erro de Email | Código =".$_GET['n']."')
+            console.log('Erro de Email | Código = $error');
         </script>";
 
         if($error == 100){
@@ -68,12 +67,12 @@
             </script>";
 
         }else if($error == 200){
+
             echo"<script>
                 document.getElementById('aviso-block').style.display = 'block';
                 document.getElementById('aviso-txt').textContent = 'Senha Inválida';
             </script>";
+        
         }
-
     }
-
 ?>

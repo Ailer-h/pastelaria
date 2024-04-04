@@ -1,6 +1,3 @@
-<!-- <script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.2.js"></script> -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
 <?php
 
     include "mysql_connect.php";
@@ -16,22 +13,39 @@
 
         echo"Empty";
 
-        header("Location: login.php?n=100");
+        echo"<form action='login.php' method='post' id='erro'><input type='hidden' id='n' name='n' value='100'></form>";
+
+        echo"<script>document.getElementById('erro').submit();</script>";
 
     }else if($values[1] != $password){
 
         echo"Wrong password";
 
-        header("Location: login.php?n=200");
+        echo"<form action='login.php' method='post' id='erro'><input type='hidden' id='n' name='n' value='200'></form>";
+
+        echo"<script>document.getElementById('erro').submit();</script>";
 
     }else{
 
         echo "Logged <br>";
         echo "Flag = ".$values[2];
 
+        if($values[2] == "a"){
+            header("Location: adm_dashboard.php");
+        
+        }else if($values[2] == "f"){
+            header("Location: user_dashboard.php");
+            
+        }else{
+            echo"<br> ERRO! FLAG INVALIDA";
+
+        }
+
     }
 
     // echo $user;
     // echo $password;
+
+    mysqli_close($connection);
 
 ?>
