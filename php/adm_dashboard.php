@@ -21,5 +21,40 @@
             </div>
         </div>
     </div>
+
+    <div class="center">
+        <div class="grid">
+            <div class="item">
+                <h1>Produtos</h1>
+                    <a><button>Ver produtos</button></a>
+            </div>
+
+            <div class="item">
+                <h1>Estoque</h1>
+                    <a><button>Ver estoque</button></a>
+            </div>
+
+            <div class="item">
+                <h1>Pedidos</h1>
+                    <a><button>Ver pedidos</button></a>
+            </div>
+
+            <div class="item">
+                <h1>Clientes</h1>
+                    <a><button>Ver clientes</button></a>
+            </div>
+
+            <div class="item">
+                <h1>Fornecedores</h1>
+                    <a><button>Ver fornecedores</button></a>
+            </div>
+
+            <div class="item">
+                <h1>Funcionários</h1>
+                    <a><button>Ver funcionarios</button></a>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

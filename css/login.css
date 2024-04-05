@@ -19,14 +19,6 @@ body{
 /* Fim das tags comuns */
 
 /* Formulario de Login */
-.login{
-
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    
-}
 
 .form-login{
 
@@ -110,8 +102,7 @@ body{
 
     display: grid;
     gap: 0;
-    grid-template-columns: 25% 75%;
-    background-color: transparent;
+    grid-template-columns: 35% 65%;
 
 }
 
@@ -132,8 +123,8 @@ body{
     align-items: center;
 
     background-color: rgba(0, 0, 0, 0.192);
-    width: 50em;
-    height: 20em;
+
+    padding: 3em;
 
 }
 
