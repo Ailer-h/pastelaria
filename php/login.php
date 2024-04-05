@@ -12,7 +12,8 @@
 <body>
     <div class="grid">
 
-        <form action="checkUser.php" method="post">
+        <!-- Form de login -->
+        <form action="utilities/checkUser.php" method="post">
             <div class="form-login">
                 
                 <div class="icon-holder">
@@ -38,6 +39,7 @@
             </div>
         </form>
 
+        <!-- Banner da direita -->
         <div class="center">
             <div class="frame">
                 <h1>PASTELARIA NOME</h1>
@@ -49,6 +51,7 @@
 <script src="../js/masks.js"></script>
 </html>
 
+<!-- Recebe e trata os códigos de erro para o aviso de informação errada -->
 <?php
 
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['n'])){
@@ -58,14 +61,14 @@
             console.log('Erro de Email | Código = $error');
         </script>";
 
-        if($error == 100){
+        if($error == 100){ //Erro de Email Inválido
 
             echo"<script>
                 document.getElementById('aviso-block').style.display = 'block';
                 document.getElementById('aviso-txt').textContent = 'Email Inválido';
             </script>";
 
-        }else if($error == 200){
+        }else if($error == 200){ //Erro de Senha Inválida
 
             echo"<script>
                 document.getElementById('aviso-block').style.display = 'block';

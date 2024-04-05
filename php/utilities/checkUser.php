@@ -1,3 +1,4 @@
+<!-- Faz a verificação do login do usuario -->
 <?php
 
     include "mysql_connect.php";
@@ -8,42 +9,40 @@
     $query = mysqli_query($connection, "select email_user, senha_user, tipo_user, nome_user from usuarios where email_user like'".$user."';");
     $values = mysqli_fetch_array($query);
     
-
-    if(empty($values)){
+    //Detecta informações de login errada e envia o erro adequado
+    if(empty($values)){ //Se o email não existir no banco
 
         echo"Empty";
 
-        echo"<form action='login.php' method='post' id='erro'><input type='hidden' id='n' name='n' value='100'></form>";
+        echo"<form action='../login.php' method='post' id='erro'><input type='hidden' id='n' name='n' value='100'></form>";
 
         echo"<script>document.getElementById('erro').submit();</script>";
 
-    }else if($values[1] != $password){
+    }else if($values[1] != $password){ //Se a senha estiver errada
 
         echo"Wrong password";
 
-        echo"<form action='login.php' method='post' id='erro'><input type='hidden' id='n' name='n' value='200'></form>";
+        echo"<form action='../login.php' method='post' id='erro'><input type='hidden' id='n' name='n' value='200'></form>";
 
         echo"<script>document.getElementById('erro').submit();</script>";
 
     }else{
 
+        //Salva a sessão do usuário
         session_start();
 
         $_SESSION['username'] = $values[3];
         $_SESSION['user_flag'] = $values[2];
         $_SESSION['user_email'] = $values[0];
 
-        
-        echo "Logged <br>";
-        echo "Flag = ".$values[2];
-
+        //Envia o usuario para a pagina correta com base na sua função
         if($values[2] == "a"){
-            header("Location: adm_dashboard.php");
+            header("Location: ../adm_dashboard.php");
         
         }else if($values[2] == "f"){
-            header("Location: user_dashboard.php");
+            header("Location: ../user_dashboard.php");
             
-        }else{
+        }else{ //Precaução de erro na flag
             echo"<br> ERRO! FLAG INVALIDA";
 
         }

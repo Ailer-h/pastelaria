@@ -1,3 +1,4 @@
+<!-- Conecta ao database -->
 <?php
 
     $server = "127.0.0.1";

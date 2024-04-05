@@ -1,13 +1,5 @@
 <?php
-
-    session_start();
-
-    if(!isset($_SESSION['username'])){
-
-        header("Location: sessionEnded.php");
-
-    }
-
+    include "utilities/checkSession.php";
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +11,7 @@
     <title>ADM DASHBOARD</title>
 </head>
 <body>
+    <!-- Barra de navegção -->
     <div class="navbar">
         <div class="logo"></div>
         <div class="menu">
@@ -40,6 +33,7 @@
         </div>
     </div>
 
+    <!-- Dashboard de páginas -->
     <div class="center">
         <div class="grid">
             <div class="item">
@@ -49,7 +43,7 @@
 
             <div class="item">
                 <h1>Estoque</h1>
-                    <a><button>Ver estoque</button></a>
+                    <a href="tabelaEstoque.php"><button>Ver estoque</button></a>
             </div>
 
             <div class="item">
