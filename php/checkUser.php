@@ -5,7 +5,7 @@
     $user = $_POST['user'];
     $password = $_POST['senha'];
 
-    $query = mysqli_query($connection, "select email_user, senha_user, tipo_user from usuarios where email_user like'".$user."';");
+    $query = mysqli_query($connection, "select email_user, senha_user, tipo_user, nome_user from usuarios where email_user like'".$user."';");
     $values = mysqli_fetch_array($query);
     
 
@@ -27,6 +27,13 @@
 
     }else{
 
+        session_start();
+
+        $_SESSION['username'] = $values[3];
+        $_SESSION['user_flag'] = $values[2];
+        $_SESSION['user_email'] = $values[0];
+
+        
         echo "Logged <br>";
         echo "Flag = ".$values[2];
 

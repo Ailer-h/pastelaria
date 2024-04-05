@@ -1,3 +1,15 @@
+<?php
+
+    session_start();
+
+    if(!isset($_SESSION['username'])){
+
+        header("Location: sessionEnded.php");
+
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,8 +28,14 @@
             <button>Test</button>
             
             <div class="user-area">
-                <p>Olá User!</p>
-                <a href="login.php"><div class="logout"><img src="../images/icons/logout.png"> <p>Logout</p></div></a>
+                
+                <?php
+
+                    $username = $_SESSION['username'];
+                    echo"<p>Olá $username!</p>";
+                
+                ?>
+                <a href="sessionEnded.php"><div class="logout"><img src="../images/icons/logout.png"> <p>Logout</p></div></a>
             </div>
         </div>
     </div>
