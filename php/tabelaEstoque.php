@@ -1,5 +1,25 @@
 <?php
-    include "utilities/checkSession.php"
+    //Checa se a sessão do usuário é valida
+    include "utilities/checkSession.php";
+
+    //Recebe a solicitação de cadastro
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form'])){
+
+        include "utilities/mysql_connect.php";
+
+        $nome = $_POST['nome'];
+        $data_vencimento = $_POST['data-vencimento'];
+        $valor_custo = $_POST['valor-custo'];
+        $unidade_medida = $_POST['unidade-medida'];
+        $qtd = $_POST['qtd'];
+        $qtd_padrao = $_POST['qtd'];
+        
+        $query = mysqli_query($connection, "insert into estoque(nome_item,data_vencimento,valor_custo,unidade_medida,qtd,qtd_padrao) values ('$nome','$data_vencimento','$valor_custo','$unidade_medida','$qtd','$qtd_padrao');");
+
+        mysqli_close($connection);
+        
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -99,7 +119,7 @@
                         </div>
                     </div>
 
-                    <input type="submit" value="Cadastrar">
+                    <input type="submit" name="form" value="Cadastrar">
 
                 </div>
             </form>
