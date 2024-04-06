@@ -41,30 +41,68 @@
                 <input type="submit" value="🔎︎">
             </form>
 
-            <form action="tabelaEstoque.php" method="post" id="filter">
-                <input type="date" name="start-date" id="start-date">
-                <input type="date" name="end-date" id="end-date">
-                <input type="submit" value="Filtrar">
-                <button><img src="../images/icons/plus.png"></button>
-            </form>
+            <div id="filter">
+                <form action="tabelaEstoque.php" method="post">
+                    <input type="date" name="start-date" id="start-date">
+                    <input type="date" name="end-date" id="end-date">
+                    <input type="submit" value="Filtrar">
+                </form>
+                <button onclick="document.getElementById('add-item').style.display = 'block';"><img src="../images/icons/plus.png"></button>
+            </div>
 
         </div>
        
         <div class="table-holder">
             <table>
-                <tr style="position: sticky; top: 0; background-color: #dcdcdc;">
-                    <th>Nome</th>
-                    <th>D. Vencimento</th>
-                    <th>Custo (R$)</th>
-                    <th>Uni. Medida</th>
-                    <th>Qtd</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-
-
-
+                <tr style="position: sticky; top: 0; background-color: #dcdcdc;"><th>Nome</th><th>D. Vencimento</th><th>Custo (R$)</th><th>Uni. Medida</th><th>Qtd</th><th></th><th></th></tr>
             </table>
+        </div>
+    </div>
+
+    <div id="add-item">
+        <div class="center-absolute">
+            <div class="header">
+                <h1>Nova Matéria Prima</h1>
+                <img src="../images/icons/close.png" onclick="document.getElementById('add-item').style.display = 'none';">
+            </div>
+            <form action="tabelaEstoque.php" method="post">
+            <div class="form-holder">
+                    <div class="r-one">
+                        <div>
+                            <label for="nome">Nome:</label>
+                            <input type="text" name="nome" id="nome" requied>
+                        </div>
+                        <div>
+                            <label for="data-vencimento">Data de Vencimento:</label>
+                            <input type="date" name="data-vencimento" id="data-vencimento" required>
+                        </div>
+                    </div>
+                    
+                    <div class="r-two">
+                        <div>
+                            <label for="valor-custo">Valor de Custo:</label>
+                            <input type="number" name="valor-custo" id="valor-custo" min="0.0001" step="any" required>
+                        </div>
+
+                        <div>
+                            <label for="unidade-medida">Unidade de Medida:</label>
+                            <select name="unidade-medida" id="unidade-medida" required>
+                                <option value="" selected hidden></option>
+                                <option value="g">G</option>
+                                <option value="ml">Ml</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="qtd">Quantidade:</label>
+                            <input type="number" name="qtd" id="qtd" min="1" step="1" required>
+                        </div>
+                    </div>
+
+                    <input type="submit" value="Cadastrar">
+
+                </div>
+            </form>
         </div>
     </div>
     
