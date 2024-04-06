@@ -15,10 +15,6 @@
     <div class="navbar">
         <div class="logo"></div>
         <div class="menu">
-            <button>Test</button>
-            <button>Test</button>
-            <button>Test</button>
-            <button>Test</button>
             
             <div class="user-area">
                 

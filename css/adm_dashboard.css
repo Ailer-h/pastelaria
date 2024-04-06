@@ -41,28 +41,6 @@
 
 }
 
-.navbar .menu button{
-
-    width: 9em;
-    height: 3.5em;
-    background-color: #FFD369;
-
-    border: none;
-    border-radius: 2em;
-
-    transition: 200ms;
-
-}
-
-.navbar .menu button:hover{
-
-    transform: scale(1.1);
-    background-color: #d6b056;
-
-    transition: 200ms;
-
-}
-
 .navbar .menu .user-area{
 
     display: flex;
@@ -71,6 +49,10 @@
 
     color: white;
 
+}
+
+.navbar .menu .user-area p{
+    margin-bottom: .1em;
 }
 
 .navbar .menu .user-area .logout{
@@ -85,6 +67,10 @@
     text-decoration: none;
     color: white;
 
+}
+
+.navbar .menu .user-area p{
+    margin-left: .3em;
 }
 
 .navbar .menu .user-area .logout img{
@@ -106,7 +92,7 @@
 
     margin-top: 1em;
 
-    height: 82vh;
+    height: calc(100vh - 6em);
 
 }
 

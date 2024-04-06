@@ -12,15 +12,11 @@
     //Detecta informações de login errada e envia o erro adequado
     if(empty($values)){ //Se o email não existir no banco
 
-        echo"Empty";
-
         echo"<form action='../login.php' method='post' id='erro'><input type='hidden' id='n' name='n' value='100'></form>";
 
         echo"<script>document.getElementById('erro').submit();</script>";
 
     }else if($values[1] != $password){ //Se a senha estiver errada
-
-        echo"Wrong password";
 
         echo"<form action='../login.php' method='post' id='erro'><input type='hidden' id='n' name='n' value='200'></form>";
 
@@ -48,9 +44,6 @@
         }
 
     }
-
-    // echo $user;
-    // echo $password;
 
     mysqli_close($connection);
 
