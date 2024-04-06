@@ -355,7 +355,7 @@ body{
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    gap: 5em;
+    gap: 3em;
 
 }
 
@@ -407,6 +407,12 @@ body{
 
 .center-absolute .form-holder input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus{
     outline: none;
+}
+
+.center-absolute .form-holder .qtd{
+
+    width: 7em;
+
 }
 
 

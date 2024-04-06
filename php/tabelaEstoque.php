@@ -54,7 +54,7 @@
        
         <div class="table-holder">
             <table>
-                <tr style="position: sticky; top: 0; background-color: #dcdcdc;"><th>Nome</th><th>D. Vencimento</th><th>Custo (R$)</th><th>Uni. Medida</th><th>Qtd</th><th></th><th></th></tr>
+                <tr style="position: sticky; top: 0; background-color: #dcdcdc;"><th>Nome</th><th>D. Vencimento</th><th>Custo (R$)</th><th>Uni. Medida</th><th>Qtd</th><th>Status</th><th>Ações</th></tr>
             </table>
         </div>
     </div>
@@ -95,7 +95,7 @@
 
                         <div>
                             <label for="qtd">Quantidade:</label>
-                            <input type="number" name="qtd" id="qtd" min="1" step="1" required>
+                            <input type="number" name="qtd" id="qtd" min="1" step="1" class="qtd" required>
                         </div>
                     </div>
 
