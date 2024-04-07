@@ -280,7 +280,44 @@ body{
 .table-holder table{
 
     width: 60em;
+    border-spacing: 0;
+    text-align: center;
 
+}
+
+.table-holder table th{
+
+    border: .1em solid grey;
+
+}
+
+.table-holder table button{
+    
+    width: 2em;
+    height: 2em;
+    margin-top: .5em;
+
+    border: none;
+    border-radius: .5em;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #FFD369;
+
+}
+
+.table-holder table button img{
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.table-holder .status{
+    width: 1em;
+    height: 1em;
+    border-radius: 1em;
+    background-color: #606060;
 }
 /* Fim das classes de corpo */
 

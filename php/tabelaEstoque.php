@@ -3,7 +3,7 @@
     include "utilities/checkSession.php";
 
     //Recebe a solicitação de cadastro
-    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form'])){
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar'])){
 
         include "utilities/mysql_connect.php";
 
@@ -18,6 +18,110 @@
 
         mysqli_close($connection);
         
+    }
+
+    //Funções utilizadas na tabela
+    function tratarData($data){
+        $date_array = explode("-",$data);
+        return $date_array[2]."/".$date_array[1]."/".$date_array[0];
+    }
+
+    function table($search){
+
+        include "utilities/mysql_connect.php";
+
+        $query = mysqli_query($connection, "select nome_item, data_vencimento, valor_custo, unidade_medida, qtd, qtd_padrao, id_item from estoque where nome_item like \"%$search%\" group by 1;");
+
+        while($output = mysqli_fetch_array($query)){
+
+            if($output[4] == 0){
+                //Paint row red
+            
+            }else{
+                
+                $data = tratarData($output[1]);
+
+                echo"<tr>";
+
+                echo"<td>$output[0]</td>";
+                echo"<td>$data</td>";
+                echo"<td>$output[2]/$output[3]</td>";
+                echo"<td>$output[4] $output[3]</td>";
+                
+                if($output[4] <= $output[5]*0.1){
+                    echo"<td><div style='display: flex; justify-content: center; gap: .3em;'>";
+                    echo"<div class='status' style='background-color:#E72929;'></div>";
+                    echo"<div class='status'></div>";
+                    echo"<div class='status'></div>";
+                    echo"</div></td>";
+                
+                }else if($output[4] <= $output[5]*0.5){
+                    echo"<td><div style='display: flex; justify-content: center; gap: .3em;'>";
+                    echo"<div class='status'></div>";
+                    echo"<div class='status' style='background-color:#FFC94A;'></div>";
+                    echo"<div class='status'></div>";
+                    echo"</div></td>";
+                
+                }else{
+                    echo"<td><div style='display: flex; justify-content: center; gap: .3em;'>";
+                    echo"<div class='status'></div>";
+                    echo"<div class='status'></div>";
+                    echo"<div class='status' style='background-color:#008000;'></div>";
+                    echo"</div></td>";
+                }
+                        
+                echo"<td><div style='display: flex; justify-content: center; gap: 1em;'>";
+                echo"<form action='tabelaEstoque.php' method='post'><input type='hidden' name='id_delete' value='$output[6]'><button type='submit' name='delete'><img src='../images/icons/delete.png'></button></form>";
+                echo"<form action='tabelaEstoque.php' method='post'><input type='hidden' name='id_edit' value='$output[6]'><button type='submit' name='edit'><img src='../images/icons/edit.png'></button></form>";
+                echo"</div></td></tr>";
+            }
+
+        }
+
+        mysqli_close($connection);
+        
+    }
+
+    //Funções das ações
+    function delete($id){
+        include "utilities/mysql_connect.php";
+        $query = mysqli_query($connection, "delete from estoque where id_item = $id;");
+        mysqli_close($connection);
+
+        header("Location: tabelaEstoque.php");
+    }
+
+    function edit($id)
+
+    function callEditForm($id){
+
+        include "utilities/mysql_connect.php";
+        $query = mysqli_query($connection, "select nome_item, data_vencimento, valor_custo, unidade_medida, qtd, qtd_padrao, id_item from estoque where id_item = $id group by 1;");
+        $output = mysqli_fetch_array($query);
+
+        //id="cadastrar"
+        //id="atualizar"
+
+        echo"<script>
+            document.getElementById('add-item').style.display = 'block';
+            document.getElementById('atualizar').style.display = 'block';
+            document.getElementById('cadastrar').style.display = 'none';
+            
+            document.getElementById('titulo-form').textContent = 'Editar Matéria Prima';
+
+            document.getElementById('nome').value = '$output[0]';
+            document.getElementById('data-vencimento').value = '$output[1]';
+            document.getElementById('valor-custo').value = '$output[2]';
+            document.querySelector('#unidade-medida').value = '$output[3]';
+            document.getElementById('qtd').value = '$output[4]';
+        </script>";
+
+    }
+
+    //Recebe a solicitação de deleção
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_delete'])){
+        delete($_POST['id_delete']);
+    
     }
 
 ?>
@@ -74,7 +178,10 @@
        
         <div class="table-holder">
             <table>
-                <tr style="position: sticky; top: 0; background-color: #dcdcdc;"><th>Nome</th><th>D. Vencimento</th><th>Custo (R$)</th><th>Uni. Medida</th><th>Qtd</th><th>Status</th><th>Ações</th></tr>
+                <tr style="position: sticky; top: 0; background-color: #dcdcdc;"><th style="border-left: none;">Nome</th><th>D. Vencimento</th><th>Custo (R$)</th><th>Qtd</th><th>Status</th><th style="border-right: none;">Ações</th></tr>
+                <?php
+                    table("");
+                ?>
             </table>
         </div>
     </div>
@@ -82,7 +189,7 @@
     <div id="add-item">
         <div class="center-absolute">
             <div class="header">
-                <h1>Nova Matéria Prima</h1>
+                <h1 id="titulo-form">Nova Matéria Prima</h1>
                 <img src="../images/icons/close.png" onclick="document.getElementById('add-item').style.display = 'none';">
             </div>
             <form action="tabelaEstoque.php" method="post">
@@ -108,8 +215,8 @@
                             <label for="unidade-medida">Unidade de Medida:</label>
                             <select name="unidade-medida" id="unidade-medida" required>
                                 <option value="" selected hidden></option>
-                                <option value="g">G</option>
-                                <option value="ml">Ml</option>
+                                <option value="g">g</option>
+                                <option value="ml">ml</option>
                             </select>
                         </div>
 
@@ -119,12 +226,23 @@
                         </div>
                     </div>
 
-                    <input type="submit" name="form" value="Cadastrar">
-
+                    <input type="submit" name="cadastrar" id="cadastrar" value="Cadastrar">
+                    <input type="submit" name="atualizar" id="atualizar" style="display: none;" value="Atualizar">
+                    
                 </div>
             </form>
         </div>
     </div>
     
+    <?php
+    
+        //Recebe a solicitação de edição
+        if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_edit'])){
+            callEditForm($_POST['id_edit']);
+
+        }
+    
+    ?>
+
 </body>
 </html>
