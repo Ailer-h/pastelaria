@@ -1,3 +1,22 @@
+<?php
+
+    //Detecta se o usuário está logado e passa direto pro sistema
+    session_start();
+
+    if(isset($_SESSION['user_flag'])){
+        
+        if($_SESSION['user_flag'] == "a"){
+            header("Location: adm_dashboard.php");
+
+        }else if($_SESSION['user_flag'] == "f"){
+            header("Location: user_dashboard.php");
+
+        }
+
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
