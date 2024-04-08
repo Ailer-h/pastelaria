@@ -6,4 +6,3 @@ function noSlashes_js(value, input){
     document.getElementById(input.id).value = mask;
 
 }
-

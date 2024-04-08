@@ -120,7 +120,6 @@ body{
 /* Fim da navbar */
 
 /* Classes de corpo */
-
 .center{
 
     height: calc(100vh - 6em);
@@ -291,11 +290,23 @@ body{
 
 }
 
+.table-holder table .normal-row:hover{
+    background-color: #9a9a9a;
+}
+.table-holder table .red-row{
+    background-color: #e2564c62;
+}
+
+.table-holder table .red-row:hover{
+    background-color: #6f2a2591;
+}
+
 .table-holder table button{
     
     width: 2em;
     height: 2em;
     margin-top: .5em;
+    margin-bottom: .5em;
 
     border: none;
     border-radius: .5em;
@@ -318,6 +329,21 @@ body{
     height: 1em;
     border-radius: 1em;
     background-color: #606060;
+}
+
+.table-holder .bar-holder{
+
+    height: .8em;
+    width: 7em;
+    border-radius: 1em;
+    background-color: #606060;
+    margin-left: 2em;
+
+}
+
+.table-holder .bar-holder .bar{
+    height: .8em;
+    border-radius: 1em;
 }
 /* Fim das classes de corpo */
 
