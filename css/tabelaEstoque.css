@@ -152,7 +152,21 @@ body{
 .table-header #searchbox{
 
     display: flex;
-    gap: 0;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+
+}
+
+.table-header #searchbox img{
+
+    width: .7em;
+    height: .7em;
+    margin-left: 1em;
+
+    filter: invert(100%);
+
+    display: none;
 
 }
 
@@ -189,6 +203,8 @@ body{
 
     margin-right: 2em;
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 1em;
 
 }
@@ -196,6 +212,11 @@ body{
 .table-header #filter form{
     display: flex;
     gap: 1em;
+}
+
+.table-header #filter form label{
+    color: white;
+    font-size: 1.2em;
 }
 
 .table-header #filter input[type="date"]{
@@ -285,8 +306,15 @@ body{
 }
 
 .table-holder table th{
-
+    
     border: .1em solid grey;
+    
+}
+
+.table-holder table td{
+    border-bottom: .1em solid grey;
+
+    /* color: #00ae00; */
 
 }
 
@@ -294,11 +322,22 @@ body{
     background-color: #9a9a9a;
 }
 .table-holder table .red-row{
-    background-color: #e2564c62;
+    background-color: #e2564c;
 }
 
 .table-holder table .red-row:hover{
-    background-color: #6f2a2591;
+    background-color: #bb453c;
+}
+
+.table-holder table .dead-row{
+    background-color: #000000c4;
+    color: white;
+    font-style: italic;
+}
+
+.table-holder table .dead-row:hover{
+    background-color: #000000fc;
+    color: white;
 }
 
 .table-holder table button{

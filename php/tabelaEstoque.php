@@ -26,7 +26,18 @@
         return $date_array[2]."/".$date_array[1]."/".$date_array[0];
     }
 
-    function getPercentage($n, $total){
+    function getPercentageShow($n, $total){
+        $percent = (100*$n)/$total;
+
+        if($percent > 100){
+            return 100;
+        
+        }
+        
+        return $percent;
+    }
+
+    function getPercentageReal($n, $total){
         return (100*$n)/$total;
     }
 
@@ -39,16 +50,20 @@
         while($output = mysqli_fetch_array($query)){
 
             if($output[4] == 0){
+                echo"<tr class='dead-row'>";
+                
+            }else if($output[4] <= $output[5]*0.1){
                 echo"<tr class='red-row'>";
-            
+                
+                
             }else{
-                
                 echo"<tr class='normal-row'>";
-                
+
             }
 
             $data = tratarData($output[1]);
-            $percentage = getPercentage($output[4], $output[5]);
+            $percentageShow = getPercentageShow($output[4], $output[5]);
+            $percentageReal = getPercentageReal($output[4], $output[5]);
 
             echo"<td>$output[0]</td>";
             echo"<td>$data</td>";
@@ -57,20 +72,20 @@
                 
             if($output[4] <= $output[5]*0.1){
                 echo"<td><div style='display: flex; justify-content: start; align-items: center; gap: .3em;'>";
-                echo"<div class='bar-holder'><div class='bar' style='width: $percentage%; background-color: #E72929;'></div></div>";
-                echo"<p>$percentage%</p>";
+                echo"<div class='bar-holder'><div class='bar' style='width: $percentageShow%; background-color: #E72929;'></div></div>";
+                echo"<p>$percentageReal%</p>";
                 echo"</div></td>";
                 
             }else if($output[4] <= $output[5]*0.5){
                 echo"<td style='width: 12em;'><div style='display: flex; justify-content: start; align-items: center; gap: .3em;'>";
-                echo"<div class='bar-holder'><div class='bar' style='width: $percentage%; background-color: #FFC94A;'></div></div>";
-                echo"<p>$percentage%</p>";
+                echo"<div class='bar-holder'><div class='bar' style='width: $percentageShow%; background-color: #FFC94A;'></div></div>";
+                echo"<p>$percentageReal%</p>";
                 echo"</div></td>";
                 
             }else{
                 echo"<td><div style='display: flex; justify-content: start; align-items: center; gap: .3em;'>";
-                echo"<div class='bar-holder'><div class='bar' style='width: $percentage%; background-color: #008000;'></div></div>";
-                echo"<p>$percentage%</p>";
+                echo"<div class='bar-holder'><div class='bar' style='width: $percentageShow%; background-color: #00ae00;'></div></div>";
+                echo"<p>$percentageReal%</p>";
                 echo"</div></td>";
             }
                         
@@ -163,12 +178,13 @@
             <form action="tabelaEstoque.php" method="post" id="searchbox">
                 <input type="text" placeholder="Pesquisar..." name="search" id="searchbar">
                 <input type="submit" value="🔎︎">
+                <a href="tabelaEstoque.php"><img src="../images/icons/close.png" id="close-search"></a>
             </form>
 
             <div id="filter">
                 <form action="tabelaEstoque.php" method="post">
-                    <input type="date" name="start-date" id="start-date">
-                    <input type="date" name="end-date" id="end-date">
+                    <label for="vencimento">Data de Vencimento: </label>
+                    <input type="date" name="vencimento" id="vencimento">
                     <input type="submit" value="Filtrar">
                 </form>
                 <button onclick="setForm(0)"><img src="../images/icons/plus.png"></button>
@@ -180,7 +196,21 @@
             <table>
                 <tr style="position: sticky; top: 0; background-color: #dcdcdc;"><th style="border-left: none;">Nome</th><th>D. Vencimento</th><th>Custo (R$)</th><th>Qtd</th><th>Status</th><th style="border-right: none;">Ações</th></tr>
                 <?php
-                    table("");
+
+                    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])){
+                        $search = $_POST['search'];
+                        table($search);
+
+                        echo "<script>
+                                document.getElementById('searchbar').value='$search'
+                                document.getElementById('close-search').style.display = 'block'
+                            </script>";
+                    
+                    }else{
+                        table("");
+
+                    }
+
                 ?>
             </table>
         </div>
