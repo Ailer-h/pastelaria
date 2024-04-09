@@ -1,5 +1,7 @@
 <?php
     include "utilities/checkSession.php";
+    include "utilities/checkPermissions.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -8,6 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/adm_dashboard.css">
+    <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
     <title>Dashboard</title>
 </head>
 <body>
@@ -59,7 +62,7 @@
 
             <div class="item">
                 <h1>Funcionários</h1>
-                    <a><button>Ver funcionarios</button></a>
+                    <a href="tabelaFuncionarios.php"><button>Ver funcionarios</button></a>
             </div>
         </div>
     </div>

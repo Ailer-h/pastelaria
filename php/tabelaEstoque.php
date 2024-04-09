@@ -1,6 +1,7 @@
 <?php
     //Checa se a sessão do usuário é valida
     include "utilities/checkSession.php";
+    include "utilities/checkPermissions.php";
 
     //Recebe a solicitação de cadastro
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar'])){
@@ -147,6 +148,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/tabelaEstoque.css">
+    <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
     <title>Estoque</title>
 </head>
 <body>

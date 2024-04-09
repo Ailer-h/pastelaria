@@ -1,0 +1,504 @@
+/* Tags Comuns */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+*{
+
+    padding: 0;
+    margin: 0;
+    font-family: "Kanit", Arial, Helvetica, sans-serif;
+
+}
+
+body{
+
+    overflow: hidden;
+
+}
+
+/* Fim das tags comuns */
+
+/* Navbar */
+.navbar{
+
+    height: 6em;
+    background-color: #313131;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-left: 3em;
+    padding-right: 3em;
+
+}
+
+.navbar h1{
+
+    color: white;
+    font-size: 3em;
+
+}
+
+.navbar .logo{
+
+    height: 4.5em;
+    width: 4.5em;
+    border-radius: 3em;
+    background-color: #FFD369;
+
+    background-image: url('../images/logo.png');
+
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    background-position: center center;
+
+}
+
+.navbar .menu{
+
+    display: flex;
+    gap: 1.5em;
+
+}
+
+.navbar .menu button{
+
+    width: 9em;
+    height: 3.5em;
+    background-color: #FFD369;
+
+    border: none;
+    border-radius: 2em;
+
+    transition: 200ms;
+
+}
+
+.navbar .menu button:hover{
+
+    transform: scale(1.1);
+    background-color: #d6b056;
+
+    transition: 200ms;
+
+}
+
+.navbar .menu .user-area{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    color: white;
+
+}
+
+.navbar .menu .user-area p{
+    margin-bottom: .1em;
+}
+
+.navbar .menu .user-area .logout{
+
+    display: flex;
+    align-items: center;
+
+}
+
+.navbar .menu .user-area a{
+
+    text-decoration: none;
+    color: white;
+
+}
+
+.navbar .menu .user-area p{
+    margin-left: .3em;
+}
+
+.navbar .menu .user-area .logout img{
+
+    width: 1em;
+    height: 1em;
+    filter: invert(100%);
+    margin-right: .2em;
+
+}
+/* Fim da navbar */
+
+/* Classes de corpo */
+.center{
+
+    height: calc(100vh - 6em);
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    flex-direction: column;
+
+}
+
+.table-header{
+
+    margin-top: 3em;
+
+    width: 60em;
+    height: 4em;
+    background-color: #313131;
+
+    border-radius: 1em 1em 0 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+/* Barra de pesquisa */
+.table-header #searchbox{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+
+}
+
+.table-header #searchbox img{
+
+    width: .7em;
+    height: .7em;
+    margin-left: 1em;
+
+    filter: invert(100%);
+
+    display: none;
+
+}
+
+.table-header #searchbox input[type="text"]{
+
+    margin-left: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
+
+    border: none;
+
+    border-radius: 1em 0 0 1em;
+
+}
+
+.table-header #searchbox input[type="text"]:focus, input[type="submit"]:focus{
+    outline: none;
+}
+
+.table-header #searchbox input[type="submit"]{
+
+    border: none;
+
+    background-color: #FFD369;
+
+    width: 2em;
+    border-radius: 0 1em 1em 0;
+
+}
+/* Fim da barra de pesquisa */
+
+/* Filtro */
+.table-header #menu{
+
+    margin-right: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+
+}
+
+.table-header #menu button{
+    
+    width: 2.3em;
+    height: 2.3em;
+    
+    border: none;
+    border-radius: .2em;
+    
+    background-color: #DE5D35;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 200ms;
+    
+}
+
+.table-header #menu button img{
+
+    width: 1.5em;
+    height: 1.5em;
+
+}
+
+.table-header #menu button:hover{
+
+    background-color: #a74628;
+
+    transition: 200ms;
+
+}
+
+.table-holder{
+
+    width: 60em;
+    height: 25em;
+
+    background-color: #dcdcdc;
+
+    border-radius: 0 0 1em 1em;
+    overflow-y: scroll;
+
+}
+
+.table-holder::-webkit-scrollbar{
+    display: none;
+}
+
+.table-holder table{
+
+    width: 60em;
+    border-spacing: 0;
+    text-align: center;
+
+}
+
+.table-holder table th{
+    
+    border: .1em solid grey;
+    
+}
+
+.table-holder table td{
+    border-bottom: .1em solid grey;
+
+    /* color: #00ae00; */
+
+}
+
+.table-holder table .normal-row:hover{
+    background-color: #9a9a9a;
+}
+.table-holder table .red-row{
+    background-color: #e2564c;
+}
+
+.table-holder table .red-row:hover{
+    background-color: #bb453c;
+}
+
+.table-holder table .dead-row{
+    background-color: #000000c4;
+    color: white;
+    font-style: italic;
+}
+
+.table-holder table .dead-row:hover{
+    background-color: #000000fc;
+    color: white;
+}
+
+.table-holder table button{
+    
+    width: 2em;
+    height: 2em;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    
+    border: none;
+    border-radius: .5em;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: #FFD369;
+    
+    transition: 200ms;
+
+}
+
+.table-holder table button:hover{
+
+    background-color: #d6b056;
+
+    transition: 200ms;
+
+}
+
+.table-holder table button img{
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.table-holder .status{
+    width: 1em;
+    height: 1em;
+    border-radius: 1em;
+    background-color: #606060;
+}
+
+.table-holder .bar-holder{
+
+    height: .8em;
+    width: 7em;
+    border-radius: 1em;
+    background-color: #606060;
+    margin-left: 2em;
+
+}
+
+.table-holder .bar-holder .bar{
+    height: .8em;
+    border-radius: 1em;
+}
+/* Fim das classes de corpo */
+
+/* Cadastrar Materia Prima */
+.center-absolute{
+
+    position: absolute;
+    z-index: 2;
+    top: 6em;
+    
+    height: calc(100vh - 6em);
+    width: 100vw;
+    padding-bottom: 2em;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    backdrop-filter: brightness(50%) blur(.3em);
+
+}
+
+.center-absolute .header{
+
+    height: 3em;
+    width: 55em;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: #313131;
+    border-radius: 1em 1em 0 0;
+
+}
+
+.center-absolute .header img{
+
+    margin-right: 1em;
+
+    height: 1em;
+    width: 1em;
+
+    filter: invert(100%);
+
+    cursor: pointer;
+
+}
+
+.center-absolute .header h1{
+
+    margin-left: 1em;
+    color: white;
+
+}
+
+.center-absolute .form-holder{
+
+    width: 55em;
+    height: 20em;
+
+    border-radius: 0 0 1em 1em;
+    
+    background-color: #dcdcdc;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 3em;
+
+}
+
+.center-absolute .form-holder .r-one{
+
+    width: calc(100% - 2em);
+
+    display: flex;
+    justify-content: start;
+    gap: 5em;
+
+    padding-left: 2em;
+
+
+}
+
+.center-absolute .form-holder .r-two{
+
+    width: calc(100% - 2em);
+
+    display: flex;
+    justify-content: start;
+    gap: 2em;
+
+    padding-left: 2em;
+
+
+}
+
+.center-absolute .form-holder input[type="submit"]{
+
+    width: 7em;
+    height: 3em;
+
+    border: none;
+    border-radius: 1em;
+    background-color: #FFD369;
+
+}
+
+.center-absolute .form-holder input[type="text"], input[type="number"], input[type="date"], select{
+
+    border-radius: .3em;
+    margin-left: .1em;
+    padding-left: .3em;
+
+    border: .001em solid black;
+
+}
+
+.center-absolute .form-holder input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus{
+    outline: none;
+}
+
+.center-absolute .form-holder .qtd{
+
+    width: 7em;
+
+}
+
+
+.center-absolute .form-holder input[type="submit"]:hover{
+
+    transform: scale(1.1);
+    background-color: #d6b056;
+
+    transition: 200ms;
+
+}
+/* Fim do cadastro de matéria prima */

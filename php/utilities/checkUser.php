@@ -32,7 +32,7 @@
         $_SESSION['user_email'] = $values[0];
 
         //Envia o usuario para a pagina correta com base na sua função
-        if($values[2] == "a"){
+        if($values[2] == "a" || $values[2] == "d"){
             header("Location: ../adm_dashboard.php");
         
         }else if($values[2] == "f"){

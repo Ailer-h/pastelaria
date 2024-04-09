@@ -5,7 +5,7 @@
 
     if(isset($_SESSION['user_flag'])){
         
-        if($_SESSION['user_flag'] == "a"){
+        if($_SESSION['user_flag'] == "a" || $_SESSION['user_flag'] == "d"){
             header("Location: adm_dashboard.php");
 
         }else if($_SESSION['user_flag'] == "f"){
@@ -25,6 +25,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/login.css">
+    <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
     <title>Login</title>
 </head>
 
