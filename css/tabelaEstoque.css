@@ -294,7 +294,12 @@ body{
     background-color: #dcdcdc;
 
     border-radius: 0 0 1em 1em;
+    overflow-y: scroll;
 
+}
+
+.table-holder::-webkit-scrollbar{
+    display: none;
 }
 
 .table-holder table{
