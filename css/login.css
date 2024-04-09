@@ -135,6 +135,15 @@ body{
     text-align: center;
 
 }
+
+.center .frame img{
+    width: 15em;
+    height: 15em;
+
+    background-position: center center;
+    margin-right: 1em;
+
+}
 /* Fim do banner da empresa */
 
 /* Aviso de erro de submissão */

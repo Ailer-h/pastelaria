@@ -61,6 +61,7 @@
         <!-- Banner da direita -->
         <div class="center">
             <div class="frame">
+                <img src="../images/logo.png">
                 <h1>PASTELARIA <br> DIVINA MASSA</h1>
             </div>
         </div>

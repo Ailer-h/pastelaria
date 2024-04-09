@@ -32,16 +32,12 @@
     border-radius: 3em;
     background-color: #FFD369;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-image: url('../images/logo.png');
 
-}
+    background-size: contain;
+    background-repeat: no-repeat;
 
-.navbar .logo img{
-
-    width: 4em;
-    height: 4em;
+    background-position: center center;
 
 }
 

@@ -152,10 +152,12 @@
 <body>
     
     <div class="navbar">
+        <a href="adm_dashboard.php">
         <div class="logo"></div>
+        </a>
+
         <h1>Estoque</h1>
         <div class="menu">
-            <a href="adm_dashboard.php"><button>Pagina Inicial</button></a>
             <button>Produtos</button>
             <button>Pedidos</button>
             

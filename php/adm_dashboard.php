@@ -3,7 +3,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,9 +13,7 @@
 <body>
     <!-- Barra de navegção -->
     <div class="navbar">
-        <div class="logo">
-            <img src="../images/logo.png">
-        </div>
+        <div class="logo"></div>
         <div class="menu">
             
             <div class="user-area">
