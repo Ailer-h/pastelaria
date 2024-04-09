@@ -4,7 +4,7 @@ let forms = [
     `<div class="center-absolute">
     <div class="header">
         <h1 id="titulo-form">Nova Matéria Prima</h1>
-        <img src="../images/icons/close.png" id="close-register" onclick="location.href = location.href">
+        <img src="../images/icons/close.png" id="close-register" onclick="setForm(-1);">
     </div>
     <form action="tabelaEstoque.php" method="post">
     <div class="form-holder">
@@ -52,8 +52,8 @@ let forms = [
 </div>`,
 `<div class="center-absolute">
 <div class="header">
-    <h1 id="titulo-form">Editar Prima</h1>
-    <img src="../images/icons/close.png" id="close-register" onclick="setForm(-1);">
+    <h1 id="titulo-form">Editar Matéria Prima</h1>
+    <img src="../images/icons/close.png" id="close-register" onclick="location.href = location.href">
 </div>
 <form action="tabelaEstoque.php" method="post">
 <input type="hidden" name="id" id="id">

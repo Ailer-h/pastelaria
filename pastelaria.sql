@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 04, 2024 at 08:00 PM
+-- Generation Time: Apr 09, 2024 at 11:49 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -20,6 +20,36 @@ SET time_zone = "+00:00";
 --
 -- Database: `pastelaria`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `estoque`
+--
+
+DROP TABLE IF EXISTS `estoque`;
+CREATE TABLE IF NOT EXISTS `estoque` (
+  `id_item` int NOT NULL AUTO_INCREMENT,
+  `nome_item` varchar(50) NOT NULL,
+  `data_vencimento` date NOT NULL,
+  `valor_custo` decimal(10,2) NOT NULL,
+  `unidade_medida` varchar(2) NOT NULL,
+  `qtd` int NOT NULL,
+  `qtd_padrao` int NOT NULL,
+  PRIMARY KEY (`id_item`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `estoque`
+--
+
+INSERT INTO `estoque` (`id_item`, `nome_item`, `data_vencimento`, `valor_custo`, `unidade_medida`, `qtd`, `qtd_padrao`) VALUES
+(2, 'PROD1', '1111-11-11', '25.00', 'g', 100, 100),
+(3, 'PROD2', '1111-11-11', '35.00', 'g', 78, 100),
+(4, 'PROD3', '1111-11-11', '245.00', 'g', 45, 100),
+(5, 'PROD4', '1111-11-11', '12.00', 'g', 0, 100),
+(6, 'PROD5', '1111-11-11', '12.00', 'g', 88, 99),
+(7, 'PROD6', '1111-11-11', '15.00', 'g', 10, 100);
 
 -- --------------------------------------------------------
 

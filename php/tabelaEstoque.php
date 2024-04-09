@@ -38,14 +38,14 @@
     }
 
     function getPercentageReal($n, $total){
-        return (100*$n)/$total;
+        return round((100*$n)/$total, 2);
     }
 
     function table($search){
 
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "select nome_item, data_vencimento, valor_custo, unidade_medida, qtd, qtd_padrao, id_item from estoque where nome_item like \"%$search%\" group by 1;");
+        $query = mysqli_query($connection, "select nome_item, data_vencimento, valor_custo, unidade_medida, qtd, qtd_padrao, id_item from estoque where nome_item like \"%$search%\";");
 
         while($output = mysqli_fetch_array($query)){
 
@@ -71,7 +71,7 @@
             echo"<td>$output[4] $output[3]</td>";
                 
             if($output[4] <= $output[5]*0.1){
-                echo"<td><div style='display: flex; justify-content: start; align-items: center; gap: .3em;'>";
+                echo"<td style='width: 12em;'><div style='display: flex; justify-content: start; align-items: center; gap: .3em;'>";
                 echo"<div class='bar-holder'><div class='bar' style='width: $percentageShow%; background-color: #E72929;'></div></div>";
                 echo"<p>$percentageReal%</p>";
                 echo"</div></td>";
@@ -83,7 +83,7 @@
                 echo"</div></td>";
                 
             }else{
-                echo"<td><div style='display: flex; justify-content: start; align-items: center; gap: .3em;'>";
+                echo"<td style='width: 12em;'><div style='display: flex; justify-content: start; align-items: center; gap: .3em;'>";
                 echo"<div class='bar-holder'><div class='bar' style='width: $percentageShow%; background-color: #00ae00;'></div></div>";
                 echo"<p>$percentageReal%</p>";
                 echo"</div></td>";
