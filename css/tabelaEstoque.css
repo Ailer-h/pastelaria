@@ -199,7 +199,7 @@ body{
 /* Fim da barra de pesquisa */
 
 /* Filtro */
-.table-header #filter{
+.table-header #menu{
 
     margin-right: 2em;
     display: flex;
@@ -209,51 +209,7 @@ body{
 
 }
 
-.table-header #filter form{
-    display: flex;
-    gap: 1em;
-}
-
-.table-header #filter form label{
-    color: white;
-    font-size: 1.2em;
-}
-
-.table-header #filter input[type="date"]{
-
-    border-radius: 1em;
-    border: none;
-
-    padding-left: 1em;
-    padding-right: 1em;
-
-}
-
-.table-header #filter input[type="date"]:focus, input[type="submit"]:focus{
-    outline: none;
-}
-
-.table-header #filter input[type="submit"]{
-
-    width: 5em;
-    border-radius: 1em;
-    border: none;
-    background-color: #FFD369;
-
-    transition: 200ms;
-
-}
-
-.table-header #filter input[type="submit"]:hover{
-
-    background-color: #d6b056;
-
-    transition: 200ms;
-
-}
-/* Fim do filtro */
-
-.table-header #filter button{
+.table-header #menu button{
     
     width: 2.3em;
     height: 2.3em;
@@ -271,14 +227,14 @@ body{
     
 }
 
-.table-header #filter button img{
+.table-header #menu button img{
 
     width: 1.5em;
     height: 1.5em;
 
 }
 
-.table-header #filter button:hover{
+.table-header #menu button:hover{
 
     background-color: #a74628;
 
@@ -402,10 +358,6 @@ body{
 /* Fim das classes de corpo */
 
 /* Cadastrar Materia Prima */
-#add-item{
-    display: none;
-}
-
 .center-absolute{
 
     position: absolute;
@@ -517,6 +469,7 @@ body{
 
     border-radius: .3em;
     margin-left: .1em;
+    padding-left: .3em;
 
     border: .001em solid black;
 

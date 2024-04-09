@@ -21,7 +21,7 @@ let forms = [
             
             <div class="r-two">
                 <div>
-                    <label for="valor-custo">Valor de Custo:</label>
+                    <label for="valor-custo">Valor da unidade:</label>
                     <input type="number" name="valor-custo" id="valor-custo" min="0.0001" step="any" required>
                 </div>
 
@@ -71,7 +71,7 @@ let forms = [
         
         <div class="r-two">
             <div>
-                <label for="valor-custo">Valor de Custo:</label>
+                <label for="valor-custo">Valor da unidade:</label>
                 <input type="number" name="valor-custo" id="valor-custo" min="0.0001" step="any" required>
             </div>
 

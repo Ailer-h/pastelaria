@@ -8,12 +8,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/adm_dashboard.css">
-    <title>ADM DASHBOARD</title>
+    <title>Dashboard</title>
 </head>
 <body>
     <!-- Barra de navegção -->
     <div class="navbar">
-        <div class="logo"></div>
+        <div class="logo">
+            <img src="../images/logo.png">
+        </div>
         <div class="menu">
             
             <div class="user-area">

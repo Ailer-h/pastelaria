@@ -61,7 +61,7 @@
         <!-- Banner da direita -->
         <div class="center">
             <div class="frame">
-                <h1>PASTELARIA NOME</h1>
+                <h1>PASTELARIA <br> DIVINA MASSA</h1>
             </div>
         </div>
 

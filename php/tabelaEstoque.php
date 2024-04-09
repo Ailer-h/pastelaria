@@ -181,12 +181,8 @@
                 <a href="tabelaEstoque.php"><img src="../images/icons/close.png" id="close-search"></a>
             </form>
 
-            <div id="filter">
-                <form action="tabelaEstoque.php" method="post">
-                    <label for="vencimento">Data de Vencimento: </label>
-                    <input type="date" name="vencimento" id="vencimento">
-                    <input type="submit" value="Filtrar">
-                </form>
+            <div id="menu">
+                <button onclick=""><img src="../images/icons/report.png"></button>
                 <button onclick="setForm(0)"><img src="../images/icons/plus.png"></button>
             </div>
 
@@ -220,7 +216,7 @@
     </div>
 
 </body>
-<script src="../js/handleForms.js"></script>
+<script src="../js/handleForms_estoque.js"></script>
 </html>
 
 <?php
