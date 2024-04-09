@@ -346,15 +346,25 @@ body{
     height: 2em;
     margin-top: .5em;
     margin-bottom: .5em;
-
+    
     border: none;
     border-radius: .5em;
-
+    
     display: flex;
     align-items: center;
     justify-content: center;
-
+    
     background-color: #FFD369;
+    
+    transition: 200ms;
+
+}
+
+.table-holder table button:hover{
+
+    background-color: #d6b056;
+
+    transition: 200ms;
 
 }
 
