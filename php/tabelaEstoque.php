@@ -1,6 +1,8 @@
 <?php
     //Checa se a sessão do usuário é valida
     include "utilities/checkSession.php";
+
+    //Checa se o usuário tem permissões para entrar na pagina
     include "utilities/checkPermissions.php";
 
     //Recebe a solicitação de cadastro

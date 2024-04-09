@@ -205,7 +205,7 @@ body{
 }
 /* Fim da barra de pesquisa */
 
-/* Filtro */
+/* Menu */
 .table-header #menu{
 
     margin-right: 2em;
@@ -248,6 +248,7 @@ body{
     transition: 200ms;
 
 }
+/* Fim do menu */
 
 .table-holder{
 
@@ -281,34 +282,33 @@ body{
 
 .table-holder table td{
     border-bottom: .1em solid grey;
-
-    /* color: #00ae00; */
-
 }
 
 .table-holder table .normal-row:hover{
     background-color: #9a9a9a;
 }
-.table-holder table .red-row{
-    background-color: #e2564c;
+
+.table-holder table .disabled-button{
+    
+    width: 2em;
+    height: 2em;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    
+    border: none;
+    border-radius: .5em;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: #797979;
+    
+    transition: 200ms;
+
 }
 
-.table-holder table .red-row:hover{
-    background-color: #bb453c;
-}
-
-.table-holder table .dead-row{
-    background-color: #000000c4;
-    color: white;
-    font-style: italic;
-}
-
-.table-holder table .dead-row:hover{
-    background-color: #000000fc;
-    color: white;
-}
-
-.table-holder table button{
+.table-holder table .button{
     
     width: 2em;
     height: 2em;
@@ -328,7 +328,7 @@ body{
 
 }
 
-.table-holder table button:hover{
+.table-holder table .button:hover{
 
     background-color: #d6b056;
 
@@ -341,12 +341,7 @@ body{
     height: 1.5em;
 }
 
-.table-holder .status{
-    width: 1em;
-    height: 1em;
-    border-radius: 1em;
-    background-color: #606060;
-}
+
 
 .table-holder .bar-holder{
 
@@ -364,7 +359,7 @@ body{
 }
 /* Fim das classes de corpo */
 
-/* Cadastrar Materia Prima */
+/* Cadastrar Funcionario */
 .center-absolute{
 
     position: absolute;
@@ -472,7 +467,7 @@ body{
 
 }
 
-.center-absolute .form-holder input[type="text"], input[type="number"], input[type="date"], select{
+.center-absolute .form-holder input[type="text"], select{
 
     border-radius: .3em;
     margin-left: .1em;
@@ -482,16 +477,9 @@ body{
 
 }
 
-.center-absolute .form-holder input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus{
+.center-absolute .form-holder input[type="text"]:focus, select:focus{
     outline: none;
 }
-
-.center-absolute .form-holder .qtd{
-
-    width: 7em;
-
-}
-
 
 .center-absolute .form-holder input[type="submit"]:hover{
 

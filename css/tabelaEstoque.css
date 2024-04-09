@@ -205,7 +205,7 @@ body{
 }
 /* Fim da barra de pesquisa */
 
-/* Filtro */
+/* Menu */
 .table-header #menu{
 
     margin-right: 2em;
@@ -260,6 +260,7 @@ body{
     overflow-y: scroll;
 
 }
+/* Fim do menu */
 
 .table-holder::-webkit-scrollbar{
     display: none;
@@ -281,9 +282,6 @@ body{
 
 .table-holder table td{
     border-bottom: .1em solid grey;
-
-    /* color: #00ae00; */
-
 }
 
 .table-holder table .normal-row:hover{
@@ -339,13 +337,6 @@ body{
 .table-holder table button img{
     width: 1.5em;
     height: 1.5em;
-}
-
-.table-holder .status{
-    width: 1em;
-    height: 1em;
-    border-radius: 1em;
-    background-color: #606060;
 }
 
 .table-holder .bar-holder{
@@ -491,7 +482,6 @@ body{
     width: 7em;
 
 }
-
 
 .center-absolute .form-holder input[type="submit"]:hover{
 
