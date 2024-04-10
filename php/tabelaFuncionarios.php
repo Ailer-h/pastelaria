@@ -143,7 +143,7 @@
     </div>
 
 </body>
-<script src="../js/handleForms_funcionarios.js"></script>
+<script src="../js/formHandlers/handleForms_funcionarios.js"></script>
 <script src="../js/masks.js"></script>
 
 </html>

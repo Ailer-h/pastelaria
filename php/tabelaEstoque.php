@@ -222,7 +222,7 @@
     </div>
 
 </body>
-<script src="../js/handleForms_estoque.js"></script>
+<script src="../js/formHandlers/handleForms_estoque.js"></script>
 </html>
 
 <?php
@@ -235,7 +235,6 @@
         $values = mysqli_fetch_array(mysqli_query($connection, "select nome_item, data_vencimento, valor_custo, unidade_medida, qtd, qtd_padrao, id_item from estoque where id_item=$id group by 1;"));
         
         echo"<script>
-            console.log('wow')
             setForm(1);
 
             document.getElementById('nome').value = '$values[0]';
