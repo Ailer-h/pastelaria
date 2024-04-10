@@ -14,20 +14,21 @@ let forms = [
                     <input type="text" name="nome" id="nome" oninput="letters_js(this.value, this)" requied>
                 </div>
                 <div>
-                    <label for="email">Email:</label>
-                    <input type="email" name="email" id="email" oninput="noSlashes_js(this.value, this)" required>
+                    <label for="cpf">CPF:</label>
+                    <input type="text" name="cpf" id="cpf" maxlength="14" onkeyup="mask_js(this.value, this, '###.###.###-##')" required>
                 </div>
             </div>
 
             <div class="r-two">
                 <div>
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="email" oninput="noSlashes_js(this.value, this)" required>
+
+                </div>
+            
+                <div>
                     <label for="senha">Senha:</label>
                     <input type="text" name="senha" id="senha" oninput="noSlashes_js(this.value, this)" required>
-                </div>
-
-                <div>
-                    <label for="cpf">CPF:</label>
-                    <input type="text" name="cpf" id="cpf" maxlength="14" onkeyup="mask_js(this.value, this, '###.###.###-##')" required>
                 </div>
 
                 <div>
@@ -63,20 +64,21 @@ let forms = [
             <input type="text" name="nome" id="nome" oninput="letters_js(this.value, this)" requied>
         </div>
         <div>
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" oninput="noSlashes_js(this.value, this)" required>
+            <label for="cpf">CPF:</label>
+            <input type="text" name="cpf" id="cpf" maxlength="14" onkeyup="mask_js(this.value, this, '###.###.###-##')" required>
         </div>
     </div>
-
+    
     <div class="r-two">
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" oninput="noSlashes_js(this.value, this)" required>
+    
+        </div>
+    
         <div>
             <label for="senha">Senha:</label>
             <input type="text" name="senha" id="senha" oninput="noSlashes_js(this.value, this)" required>
-        </div>
-
-        <div>
-            <label for="cpf">CPF:</label>
-            <input type="text" name="cpf" id="cpf" maxlength="14" onkeyup="mask_js(this.value, this, '###.###.###-##')" required>
         </div>
 
         <div>

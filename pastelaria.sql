@@ -75,11 +75,11 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_user`, `nome_user`, `email_user`, `senha_user`, `cpf_user`, `cargo_user`, `tipo_user`) VALUES
-(1, 'Henrique Ailer', 'ailer@email.com', 'senha-padrao', '', '', 'a'),
-(2, 'Caio Paulena', 'caio@email.com', 'senha-padrao', '', '', 'a'),
-(3, 'João Silva', 'joao@email.com', 'senha-padrao', '', '', 'f'),
-(4, 'Arthur Souza', 'arthur@email.com', 'senha-padrao', '', '', 'f'),
-(5, 'Admnistrador', 'adm', 'adm', '', '', 'd');
+(1, 'Henrique Ailer', 'ailer@email.com', 'senha-padrao', '123.123.123-12', 'Admnistrador', 'a'),
+(2, 'Caio Paulena', 'caio@email.com', 'senha-padrao', '123.123.123-12', 'Admnistrador', 'a'),
+(3, 'João Silva', 'joao@email.com', 'senha-padrao', '123.123.123-12', 'Atendente', 'f'),
+(4, 'Arthur Souza', 'arthur@email.com', 'senha-padrao', '123.123.123-12', 'Atendente', 'f'),
+(5, 'Admnistrador', 'adm', 'adm', '456.456.456.78', 'Diretor', 'd');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

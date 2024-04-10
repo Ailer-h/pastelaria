@@ -26,30 +26,21 @@
             echo"<td>$output[2]</td>";
             echo"<td>$output[3]</td>";
             
-            if($_SESSION['user_flag'] == "d"){
+            if($_SESSION['user_flag'] == "d" || $output[4] == "f"){
 
                 echo"<td><div style='display: flex; justify-content: center; gap: 1em;'>";
-                echo"<form action='tabelaEstoque.php' method='post'><input type='hidden' name='id_delete' value='$output[5]'><button class='button' name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";
-                echo"<form action='tabelaEstoque.php' method='post'><input type='hidden' name='id_edit' value='$output[5]'><button class='button' name='edit' type='submit'><img src='../images/icons/edit.png'></button></form>";
+                echo"<form action='tabelaFuncionarios.php' method='post'><input type='hidden' name='id_delete' value='$output[5]'><button class='button' name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";
+                echo"<form action='tabelaFuncionarios.php' method='post'><input type='hidden' name='id_edit' value='$output[5]'><button class='button' name='edit' type='submit'><img src='../images/icons/edit.png'></button></form>";
                 echo"</div></td></tr>";
             
             }else{
 
-                if($output[4] == "f"){
+                echo"<td><div style='display: flex; justify-content: center; gap: 1em;'>";
+                echo"<button class='disabled-button' name='delete' type='submit'><img src='../images/icons/delete.png'></button>";
+                echo"<button class='disabled-button' name='edit' type='submit'><img src='../images/icons/edit.png'></button>";
+                echo"</div></td></tr>";
 
-                    echo"<td><div style='display: flex; justify-content: center; gap: 1em;'>";
-                    echo"<form action='tabelaEstoque.php' method='post'><input type='hidden' name='id_delete' value='$output[5]'><button class='button' name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";
-                    echo"<form action='tabelaEstoque.php' method='post'><input type='hidden' name='id_edit' value='$output[5]'><button class='button' name='edit' type='submit'><img src='../images/icons/edit.png'></button></form>";
-                    echo"</div></td></tr>";
-
-                }else{
-
-                    echo"<td><div style='display: flex; justify-content: center; gap: 1em;'>";
-                    echo"<button class='disabled-button' name='delete' type='submit'><img src='../images/icons/delete.png'></button>";
-                    echo"<button class='disabled-button' name='edit' type='submit'><img src='../images/icons/edit.png'></button>";
-                    echo"</div></td></tr>";
-
-                }
+                
 
             }
 
