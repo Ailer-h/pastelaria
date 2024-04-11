@@ -96,6 +96,25 @@ body{
     transition: 200ms;
 
 }
+
+.form-login .passwordControl{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-login .passwordControl img{
+
+    width: 1.5em;
+    height: 1.5em;
+
+    margin-top: .5em;
+    margin-right: .5em;
+}
+
+.form-login .passwordControl p{
+    margin-top: .3em;
+}
 /* Fim do formulario de login */
 
 .grid{

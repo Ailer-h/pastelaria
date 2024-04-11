@@ -55,6 +55,11 @@
                 <label for="senha">Senha:</label>
                 <input type="password" id="senha" name="senha" oninput="noSlashes_js(this.value, this)" required>
                 
+                <div class="passwordControl">
+                    <img src="../images/icons/hide.png" id="passwordIcon" onclick="showPassword('senha', 'passwordIcon')">
+                    <p>Mostrar Senha</p>
+                </div>
+                
                 <input type="submit" value="Entrar">
             </div>
         </form>
@@ -70,6 +75,7 @@
     </div>
 </body>
 <script src="../js/masks.js"></script>
+<script src="../js/showPassword.js"></script>
 </html>
 
 <!-- Recebe e trata os códigos de erro para o aviso de informação errada -->
@@ -79,7 +85,7 @@
         $error = $_POST['n'];
 
         echo"<script>
-            console.log('Erro de Email | Código = $error');
+            console.log('Erro de Credenciais | Código = $error');
         </script>";
 
         if($error == 100){ //Erro de Email Inválido
