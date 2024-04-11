@@ -93,7 +93,7 @@
             }
                         
             echo"<td><div style='display: flex; justify-content: center; gap: 1em;'>";
-            echo"<form action='tabelaEstoque.php' method='post'><input type='hidden' name='id_delete' value='$output[6]'><button name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";
+            echo"<form action='tabelaEstoque.php' method='post'><input type='hidden' name='id_delete-confirmar' value='$output[6]'><button name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";
             echo"<form action='tabelaEstoque.php' method='post'><input type='hidden' name='id_edit' value='$output[6]'><button name='edit' type='submit'><img src='../images/icons/edit.png'></button></form>";
             echo"</div></td></tr>";
 
@@ -248,6 +248,24 @@
         </script>";
 
         mysqli_close($connection);
+
+    }
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_delete-confirmar'])){
+
+        $id = $_POST['id_delete-confirmar'];
+        
+        include "utilities/mysql_connect.php";
+        
+        $nome = mysqli_fetch_array(mysqli_query($connection, "select nome_item from estoque where id_item=$id group by 1;"))[0];
+
+        echo"<script>
+            setForm(2);
+
+            document.getElementById('info').textContent = 'Você deseja deletar as informações de $nome?';
+            document.getElementById('id').value = $id;
+        
+        </script>";
 
     }
 

@@ -110,6 +110,9 @@ body{
 
     margin-top: .5em;
     margin-right: .5em;
+
+    cursor: pointer;
+
 }
 
 .form-login .passwordControl p{

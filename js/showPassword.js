@@ -1,5 +1,4 @@
 function showPassword(passwordId, iconid){
-    console.log('Runned')
     let icon = document.getElementById(iconid);
     let input = document.getElementById(passwordId);
 

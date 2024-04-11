@@ -492,3 +492,109 @@ body{
 
 }
 /* Fim do cadastro de matéria prima */
+
+/* Confirmação de deleção */
+.center-absolute .delete-header{
+    
+    height: 3em;
+    width: 25em;
+    
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    
+    background-color: #313131;
+    border-radius: 1em 1em 0 0;
+    
+}
+
+.center-absolute .delete-header img{
+
+    margin-right: 1em;
+
+    height: 1em;
+    width: 1em;
+
+    filter: invert(100%);
+
+    cursor: pointer;
+
+}
+
+.center-absolute .delete-form{
+
+    width: 25em;
+    height: 10em;
+
+    border-radius: 0 0 1em 1em;
+    
+    background-color: #dcdcdc;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 3em;
+
+}
+
+.center-absolute .delete-form h1{
+
+    font-size: 1em;
+
+}
+
+.center-absolute .delete-form .btns{
+    display: flex;
+    gap: 2em;
+}
+
+.center-absolute .delete-form .btns .del{
+    
+    background-color: transparent;
+    color: #ce4f4e;
+    border: .2em solid #d03c3c;
+    border-radius: .5em;
+    
+    height: 1.9em;
+    width: 7.2em;
+
+    transition: 200ms;
+    
+}
+
+.center-absolute .delete-form .btns .del:hover{
+    
+    transform: scale(1.1);
+    transition: 200ms;
+
+    background-color: #ce4f4e;
+    color: black;
+    border: none;
+
+}
+
+.center-absolute .delete-form .btns .cancel{
+    
+    background-color: transparent;
+    color: #375daa;
+    border: .15em solid #375daa;
+    border-radius: .5em;
+    
+    height: 1.9em;
+    width: 7.2em;
+
+    transition: 200ms;
+    
+}
+
+.center-absolute .delete-form .btns .cancel:hover{
+
+    transform: scale(1.1);
+    transition: 200ms;
+
+    background-color: #375daa;
+    color: black;
+    border: none;
+
+}

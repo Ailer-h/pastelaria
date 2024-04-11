@@ -99,6 +99,19 @@ let forms = [
         
     </div>
 </form>
+</div>`,
+`<div class="center-absolute">
+<div class="delete-header">
+    <img src="../images/icons/close.png" onclick="location.href = location.href">
+</div>
+<div class="delete-form">
+    <h1 id="info">Você deseja deletar as informações de [PROD1]?</h1>
+
+    <div class="btns">
+        <form action="tabelaEstoque.php" method="post"><input type="hidden" name="id_delete" id="id" value="0"><button class="del">Deletar</button></form>
+        <a href="tabelaEstoque.php"><button class="cancel">Cancelar</button></a>
+    </div>
+</div>
 </div>`
 ];
 
@@ -106,7 +119,7 @@ function setForm(formIx){
 
     let form = document.getElementById('form-box');
 
-    if(formIx != 0 && formIx != 1){
+    if(formIx < 0 || formIx > forms.length){
         form.innerHTML = "";
         return
     }

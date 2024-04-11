@@ -74,8 +74,8 @@
 
     </div>
 </body>
-<script src="../js/masks.js"></script>
-<script src="../js/showPassword.js"></script>
+<script src="../js/masks.js"></script> <!-- Pacote de máscaras -->
+<script src="../js/showPassword.js"></script> <!-- Função para visualizar/esconder senha -->
 </html>
 
 <!-- Recebe e trata os códigos de erro para o aviso de informação errada -->

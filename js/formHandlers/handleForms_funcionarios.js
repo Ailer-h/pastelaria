@@ -100,14 +100,15 @@ let forms = [
 
 </div>
 </form>
-</div>`
+</div>`,
+
 ];
 
 function setForm(formIx){
 
     let form = document.getElementById('form-box');
 
-    if(formIx != 0 && formIx != 1){
+    if(formIx < 0 || formIx > forms.length){
         form.innerHTML = "";
         return
     }
