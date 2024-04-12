@@ -105,7 +105,10 @@ let forms = [
     <img src="../images/icons/close.png" onclick="location.href = location.href">
 </div>
 <div class="delete-form">
-    <h1 id="info">Você deseja deletar as informações de [PROD1]?</h1>
+    <div style="display: flex; align-items: center; flex-direction: column;">
+        <h1>Você deseja deletar as informações de</h1>
+        <h1 id="info">[nome]</h1>
+    </div>
 
     <div class="btns">
         <form action="tabelaEstoque.php" method="post"><input type="hidden" name="id_delete" id="id" value="0"><button class="del">Deletar</button></form>

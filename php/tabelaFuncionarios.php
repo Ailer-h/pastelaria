@@ -8,6 +8,20 @@
     //Recebe a solicitação de cadastro
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar'])){
 
+        include "utilities/mysql_connect.php";
+
+        $nome = $_POST['nome'];
+        $cpf = $_POST['cpf'];
+        $email = $_POST['email'];
+        $senha = $_POST['senha'];
+        $cargo = $_POST['cargo'];
+        $tipo = $_POST['permissoes'];
+
+        $query = mysqli_query($connection, "insert into usuarios(nome_user, email_user, senha_user, cpf_user, cargo_user, tipo_user) values ('$nome','$email','$senha','$cpf','$cargo','$tipo');");
+
+        mysqli_close($connection);
+        header("Location: tabelaFuncionarios.php");
+
     }
 
     //Funções utilizadas na tabela
@@ -29,7 +43,7 @@
             if($_SESSION['user_flag'] == "d" || $output[4] == "f"){
 
                 echo"<td><div style='display: flex; justify-content: center; gap: 1em;'>";
-                echo"<form action='tabelaFuncionarios.php' method='post'><input type='hidden' name='id_delete' value='$output[5]'><button class='button' name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";
+                echo"<form action='tabelaFuncionarios.php' method='post'><input type='hidden' name='id_delete-confirmar' value='$output[5]'><button class='button' name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";
                 echo"<form action='tabelaFuncionarios.php' method='post'><input type='hidden' name='id_edit' value='$output[5]'><button class='button' name='edit' type='submit'><img src='../images/icons/edit.png'></button></form>";
                 echo"</div></td></tr>";
             
@@ -48,6 +62,45 @@
 
         mysqli_close($connection);
         
+    }
+
+    //Funções das açãoes
+    function edit($id){
+
+        $info = [];
+
+        $info[0] = $_POST['nome'];
+        $info[1] = $_POST['email'];
+        $info[2] = $_POST['senha'];
+        $info[3] = $_POST['cpf'];
+        $info[4] = $_POST['cargo'];
+        $info[5] = $_POST['permissoes'];
+
+        include "utilities/mysql_connect.php";
+
+        $query = mysqli_query($connection, "update usuarios set nome_user='$info[0]', email_user='$info[1]', senha_user='$info[2]', cpf_user='$info[3]', cargo_user='$info[4]', tipo_user='$info[5]' where id_user=$id;");
+        mysqli_close($connection);
+
+        header("Location: tabelaFuncionarios.php");
+
+    }
+
+    function delete_item($id){
+        include "utilities/mysql_connect.php";
+        $query = mysqli_query($connection, "delete from usuarios where id_user = $id;");
+        mysqli_close($connection);
+
+        header("Location: tabelaFuncionarios.php");
+    }
+
+    //Recebe a solicitação de deleção
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_delete'])){
+        delete_item($_POST['id_delete']);
+    
+    }
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['atualizar'])){
+        edit($_POST['id']);
     }
 
 ?>
@@ -143,7 +196,54 @@
     </div>
 
 </body>
-<script src="../js/formHandlers/handleForms_funcionarios.js"></script>
-<script src="../js/masks.js"></script>
-
+<script src="../js/formHandlers/handleForms_funcionarios.js"></script> <!-- Gerenciador de formulários -->
+<script src="../js/masks.js"></script> <!-- Pacote de máscaras -->
 </html>
+
+<?php
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_edit'])){
+        
+        $id = $_POST['id_edit'];
+        
+        include "utilities/mysql_connect.php";
+
+        $values = mysqli_fetch_array(mysqli_query($connection, "select nome_user, cpf_user, email_user, senha_user, cargo_user, tipo_user, id_user from usuarios where id_user=$id group by 1;"));
+        
+        echo"<script>
+            setForm(1);
+
+            document.getElementById('nome').value = '$values[0]';
+            document.getElementById('cpf').value = '$values[1]';
+            document.getElementById('email').value = '$values[2]';
+            document.getElementById('senha').value = '$values[3]';
+            document.getElementById('cargo').value = '$values[4]';
+            document.querySelector('#permissoes').value = '$values[5]';
+            document.getElementById('id').value = '$values[6]';
+
+        </script>";
+
+        mysqli_close($connection);
+
+    }
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_delete-confirmar'])){
+
+        $id = $_POST['id_delete-confirmar'];
+        
+        echo"<script>console.log('$id')</script>";
+        
+        include "utilities/mysql_connect.php";
+        
+        $nome = mysqli_fetch_array(mysqli_query($connection, "select nome_user from usuarios where id_user=$id group by 1;"))[0];
+
+        echo"<script>
+            setForm(2);
+
+            document.getElementById('info').textContent = '$nome?';
+            document.getElementById('id').value = $id;
+        
+        </script>";
+
+    }
+
+?>

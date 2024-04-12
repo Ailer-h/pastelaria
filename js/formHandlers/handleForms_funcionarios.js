@@ -57,6 +57,7 @@ let forms = [
 <img src="../images/icons/close.png" id="close-register" onclick="location.href = location.href;">
 </div>
 <form action="tabelaFuncionarios.php" method="post">
+<input type="hidden" name="id" id="id">
 <div class="form-holder">
     <div class="r-one">
         <div>
@@ -101,7 +102,22 @@ let forms = [
 </div>
 </form>
 </div>`,
+`<div class="center-absolute">
+<div class="delete-header">
+    <img src="../images/icons/close.png" onclick="location.href = location.href">
+</div>
+<div class="delete-form">
+    <div style="display: flex; align-items: center; flex-direction: column;">
+        <h1>Você deseja deletar as informações de</h1>
+        <h1 id="info">[nome]</h1>
+    </div>
 
+    <div class="btns">
+        <form action="tabelaFuncionarios.php" method="post"><input type="hidden" name="id_delete" id="id" value="0"><button class="del">Deletar</button></form>
+        <a href="tabelaFuncionarios.php"><button class="cancel">Cancelar</button></a>
+    </div>
+</div>
+</div>`
 ];
 
 function setForm(formIx){

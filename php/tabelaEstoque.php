@@ -20,6 +20,7 @@
         $query = mysqli_query($connection, "insert into estoque(nome_item,data_vencimento,valor_custo,unidade_medida,qtd,qtd_padrao) values ('$nome','$data_vencimento','$valor_custo','$unidade_medida','$qtd','$qtd_padrao');");
 
         mysqli_close($connection);
+        header("Location: tabelaEstoque.php");
         
     }
 
@@ -262,7 +263,7 @@
         echo"<script>
             setForm(2);
 
-            document.getElementById('info').textContent = 'Você deseja deletar as informações de $nome?';
+            document.getElementById('info').textContent = '$nome?';
             document.getElementById('id').value = $id;
         
         </script>";
