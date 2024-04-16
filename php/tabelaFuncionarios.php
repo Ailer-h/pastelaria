@@ -40,7 +40,7 @@
             echo"<td>$output[2]</td>";
             echo"<td>$output[3]</td>";
             
-            if($_SESSION['user_flag'] == "d" || $output[4] == "f"){
+            if(($_SESSION['user_flag'] == "d" || $output[4] == "f") && $output[4] != "d"){
 
                 echo"<td><div style='display: flex; justify-content: center; gap: 1em;'>";
                 echo"<form action='tabelaFuncionarios.php' method='post'><input type='hidden' name='id_delete-confirmar' value='$output[5]'><button class='button' name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";

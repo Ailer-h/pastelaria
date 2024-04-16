@@ -57,7 +57,7 @@
                 echo"<tr class='dead-row'>";
                 
             }else if($output[4] <= $output[5]*0.1){
-                echo"<tr class='red-row'>";
+                echo"<tr class='alert'>";
                 
                 
             }else{

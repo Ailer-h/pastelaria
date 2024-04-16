@@ -57,7 +57,7 @@
 
             <div class="item">
                 <h1>Fornecedores</h1>
-                    <a><button>Ver fornecedores</button></a>
+                    <a href="tabelaFornecedores.php"><button>Ver fornecedores</button></a>
             </div>
 
             <div class="item">

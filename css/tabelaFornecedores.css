@@ -143,7 +143,7 @@ body{
 
     margin-top: 3em;
 
-    width: 60em;
+    width: 70em;
     height: 4em;
     background-color: #313131;
 
@@ -248,10 +248,11 @@ body{
     transition: 200ms;
 
 }
+/* Fim do menu */
 
 .table-holder{
 
-    width: 60em;
+    width: 70em;
     height: 25em;
 
     background-color: #dcdcdc;
@@ -260,7 +261,6 @@ body{
     overflow-y: scroll;
 
 }
-/* Fim do menu */
 
 .table-holder::-webkit-scrollbar{
     display: none;
@@ -268,7 +268,7 @@ body{
 
 .table-holder table{
 
-    width: 60em;
+    width: 70em;
     border-spacing: 0;
     text-align: center;
 
@@ -287,26 +287,28 @@ body{
 .table-holder table .normal-row:hover{
     background-color: #9a9a9a;
 }
-.table-holder table .alert{
-    background-color: #e3b447;
+
+.table-holder table .disabled-button{
+    
+    width: 2em;
+    height: 2em;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    
+    border: none;
+    border-radius: .5em;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: #797979;
+    
+    transition: 200ms;
+
 }
 
-.table-holder table .alert:hover{
-    background-color: #bb963f;
-}
-
-.table-holder table .dead-row{
-    background-color: #e2564c;
-    color: white;
-    font-style: italic;
-}
-
-.table-holder table .dead-row:hover{
-    background-color: #bb453c;
-    color: white;
-}
-
-.table-holder table button{
+.table-holder table .button{
     
     width: 2em;
     height: 2em;
@@ -326,7 +328,7 @@ body{
 
 }
 
-.table-holder table button:hover{
+.table-holder table .button:hover{
 
     background-color: #d6b056;
 
@@ -338,6 +340,8 @@ body{
     width: 1.5em;
     height: 1.5em;
 }
+
+
 
 .table-holder .bar-holder{
 
@@ -355,7 +359,7 @@ body{
 }
 /* Fim das classes de corpo */
 
-/* Cadastrar Materia Prima */
+/* Cadastrar Funcionario */
 .center-absolute{
 
     position: absolute;
@@ -463,7 +467,7 @@ body{
 
 }
 
-.center-absolute .form-holder input[type="text"], input[type="number"], input[type="date"], select{
+.center-absolute .form-holder input[type="text"], select{
 
     border-radius: .3em;
     margin-left: .1em;
@@ -473,14 +477,8 @@ body{
 
 }
 
-.center-absolute .form-holder input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus{
+.center-absolute .form-holder input[type="text"]:focus, select:focus{
     outline: none;
-}
-
-.center-absolute .form-holder .qtd{
-
-    width: 7em;
-
 }
 
 .center-absolute .form-holder input[type="submit"]:hover{
@@ -541,6 +539,7 @@ body{
 .center-absolute .delete-form h1{
 
     font-size: 1em;
+    width: fit-content;
 
 }
 
