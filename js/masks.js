@@ -1,7 +1,18 @@
+console.log("Masks are working")
+
 function noSlashes_js(value, input){
 
     value = value.toString();
     var mask = value.replace(/[\/\\ \t\r\n]/g, '');
+    
+    document.getElementById(input.id).value = mask;
+
+}
+
+function noBackslashes(value, input){
+
+    value = value.toString();
+    var mask = value.replace(/\\/g, '');
     
     document.getElementById(input.id).value = mask;
 

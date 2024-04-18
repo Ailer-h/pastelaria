@@ -11,7 +11,7 @@ let forms = [
             <div class="r-one">
                 <div>
                     <label for="nome">Nome:</label>
-                    <input type="text" name="nome" id="nome" requied>
+                    <input type="text" name="nome" id="nome" oninput="noBackslashes(this.value, this) letters_js(this.value, this)" requied>
                 </div>
                 <div>
                     <label for="data-vencimento">Data de Vencimento:</label>
@@ -61,7 +61,7 @@ let forms = [
         <div class="r-one">
             <div>
                 <label for="nome">Nome:</label>
-                <input type="text" name="nome" id="nome" requied>
+                <input type="text" name="nome" id="nome" oninput="noBackslashes(this.value, this) letters_js(this.value, this)" requied>
             </div>
             <div>
                 <label for="data-vencimento">Data de Vencimento:</label>

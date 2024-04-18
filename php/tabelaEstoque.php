@@ -224,6 +224,7 @@
 
 </body>
 <script src="../js/formHandlers/handleForms_estoque.js"></script>
+<script src="../js/masks.js"></script>
 </html>
 
 <?php

@@ -11,7 +11,7 @@ let forms = [
             <div class="r-one">
                 <div>
                     <label for="nome">Nome:</label>
-                    <input type="text" name="nome" id="nome" oninput="letters_js(this.value, this)" requied>
+                    <input type="text" name="nome" id="nome" oninput="noBackslashes(this.value, this) letters_js(this.value, this)" requied>
                 </div>
                 <div>
                     <label for="cpf">CPF:</label>
@@ -33,7 +33,7 @@ let forms = [
 
                 <div>
                     <label for="cargo">Cargo:</label>
-                    <input type="text" name="cargo" id="cargo" oninput="letters_js(this.value, this); noSlashes_js(this.value, this)" required>
+                    <input type="text" name="cargo" id="cargo" oninput="noBackslashes(this.value, this) letters_js(this.value, this)" required>
                 </div>
 
                 <div>
@@ -62,7 +62,7 @@ let forms = [
     <div class="r-one">
         <div>
             <label for="nome">Nome:</label>
-            <input type="text" name="nome" id="nome" oninput="letters_js(this.value, this)" requied>
+            <input type="text" name="nome" id="nome" oninput="noBackslashes(this.value, this) letters_js(this.value, this)" requied>
         </div>
         <div>
             <label for="cpf">CPF:</label>
@@ -84,7 +84,7 @@ let forms = [
 
         <div>
             <label for="cargo">Cargo:</label>
-            <input type="text" name="cargo" id="cargo" oninput="letters_js(this.value, this); noSlashes_js(this.value, this)" required>
+            <input type="text" name="cargo" id="cargo" oninput="noBackslashes(this.value, this) letters_js(this.value, this)" required>
         </div>
 
         <div>
