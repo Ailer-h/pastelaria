@@ -45,9 +45,9 @@
             echo"<td>$output[4]</td>";
             
             echo"<td><div style='display: flex; justify-content: center; gap: 1em;'>";
-            echo"<form action='tabelaFuncionarios.php' method='post'><input type='hidden' name='id_info' value='$output[5]'><button name='get_info' type='submit'><img src='../images/icons/info.png'></button></form>";
-            echo"<form action='tabelaEstoque.php' method='post'><input type='hidden' name='id_delete-confirmar' value='$output[5]'><button name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";
-            echo"<form action='tabelaEstoque.php' method='post'><input type='hidden' name='id_edit' value='$output[5]'><button name='edit' type='submit'><img src='../images/icons/edit.png'></button></form>";
+            echo"<form action='tabelaFornecedores.php' method='post'><input type='hidden' name='id_info' value='$output[5]'><button name='get_info' type='submit'><img src='../images/icons/info.png'></button></form>";
+            echo"<form action='tabelaFornecedores.php' method='post'><input type='hidden' name='id_delete-confirmar' value='$output[5]'><button name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";
+            echo"<form action='tabelaFornecedores.php' method='post'><input type='hidden' name='id_edit' value='$output[5]'><button name='edit' type='submit'><img src='../images/icons/edit.png'></button></form>";
             echo"</div></td></tr>";
 
             echo"</tr>";
@@ -70,6 +70,73 @@
 
         mysqli_close($connection);
         
+    }
+
+    function setForm(){
+        echo"<div class='center-absolute'>
+                <div class='header'>
+                <h1 id='titulo-form'>Novo Fornecedor</h1>
+                <img src='../images/icons/close.png' id='close-register' onclick='location.href = location.href'>
+            </div>
+            <form action='tabelaFornecedores.php' method='post'>
+                <div class='form-holder'>
+                    <div class='half-1'>
+                    <div class='r-one'>
+                        <div>
+                            <label for='nome'>Nome:</label>
+                            <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this); letters_js(this.value, this);' requied>
+                        </div>
+                        <div>
+                            <label for='cnpj'>CNPJ:</label>
+                            <input type='text' name='cnpj' id='cnpj' maxlength='20' oninput='noBackslashes(this.value, this); nums_js(this.value, this)' onkeyup='mask_js(this.value, this, \"##.###.###/####-##\")' required>
+                        </div>
+
+                        <div>
+                            <label for='produto'>Produto:</label>
+                            <select name='produto' id='produto' required>
+                                <option value='' selected hidden></option>";
+                                get_products();
+                        echo"</select>
+                        </div>
+
+                    </div>
+        
+                    <div class='r-two'>
+                        <div>
+                            <label for='email'>Email:</label>
+                            <input type='email' name='email' id='email' oninput='noBackslashes(this.value, this)' required>
+        
+                        </div>
+                    
+                        <div>
+                            <label for='ramo'>Ramo de Atividade:</label>
+                            <input type='text' name='ramo' id='ramo' oninput='noBackslashes(this.value, this); letters_js(this.value, this)' required>
+                        </div>
+
+                        <div>
+                            <label for='tel1'>Telefones:</label>
+                            <input type='text' name='tel1' id='tel1' placeholder='Telefone...' oninput='noBackslashes(this.value, this); nums_js(this.value, this)' onkeyup='mask_js(this.value, this, \"(##)#####-####\")' required>
+                            <input type='text' name='tel2' id='tel2' placeholder='Telefone (Opcional)...' oninput='noBackslashes(this.value, this); nums_js(this.value, this)' onkeyup='mask_js(this.value, this, \"(##)#####-####\")'>
+                        </div>
+
+                    </div>
+
+                    <div class='r-three'>
+                        <label for='endereco'>Endereço:</label>
+                        <input type='text' name='endereco' id='endereco' oninput='noBackslashes(this.value, this)' required>
+                    </div>
+        
+                    <input type='submit' name='cadastrar' id='cadastrar' value='Cadastrar'>
+                    </div>
+                    <div class='half-2'>
+                        <div style='display: flex; flex-direction: column;'>
+                            <label for='descricao'>Descrição:</label>
+                            <textarea name='descricao' id='descricao' cols='30' rows='20' spellcheck='true' oninput='noBackslashes(this.value, this)' requied></textarea>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            </div>";
     }
 
 ?>
@@ -159,133 +226,15 @@
     </div>
 
     <div id="form-box">
-    <div class='center-absolute'>
-                <div class='header'>
-                    <h1 id='titulo-form'>Novo Fornecedor</h1>
-                    <img src='../images/icons/close.png' id='close-register' onclick='location.href = location.href'>
-                </div>
-                <form action='tabelaFornecedores.php' method='post'>
-                    <div class='form-holder'>
-                        <div class='half-1'>
-                        <div class='r-one'>
-                            <div>
-                                <label for='nome'>Nome:</label>
-                                <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this) letters_js(this.value, this)' requied>
-                            </div>
-                            <div>
-                                <label for='cnpj'>CNPJ:</label>
-                                <input type='text' name='cnpj' id='cnpj' maxlength='20' oninput='noBackslashes(this.value, this) letters_js(this.value, this)' onkeyup='mask_js(this.value, this, '##.###.###/####-##')' required>
-                            </div>
-
-                            <div>
-                                <label for='produto'>Produto:</label>
-                                <select name='produto' id='produto' required>
-                                    <option value='' selected hidden></option>
-                                </select>
-                            </div>
-
-                        </div>
-            
-                        <div class='r-two'>
-                            <div>
-                                <label for='email'>Email:</label>
-                                <input type='email' name='email' id='email' oninput='noBackslashes(this.value, this)' required>
-            
-                            </div>
-                        
-                            <div>
-                                <label for='ramo'>Ramo de Atividade:</label>
-                                <input type='text' name='ramo' id='ramo' oninput='noBackslashes(this.value, this) letters_js(this.value, this)' required>
-                            </div>
-
-                            <div>
-                                <label for='tel1'>Telefones:</label>
-                                <input type='text' name='tel1' id='tel1' placeholder='Telefone...' oninput='noBackslashes(this.value, this) letters_js(this.value, this)' onkeyup='mask_js(this.value, this, '(##)#####-####')' required>
-                                <input type='text' name='tel2' id='tel2' placeholder='Telefone (Opcional)...' oninput='noBackslashes(this.value, this) letters_js(this.value, this)' onkeyup='mask_js(this.value, this, '(##)#####-####')'>
-                            </div>
-
-                        </div>
-            
-                        <input type='submit' name='cadastrar' id='cadastrar' value='Cadastrar'>
-                        </div>
-                        <div class='half-2'>
-                            <div style='display: flex; flex-direction: column;'>
-                                <label for='descricao'>Descrição:</label>
-                                <textarea name='descricao' id='descricao' cols='30' rows='20' spellcheck='true'  requied></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                </div>
-
-
-        <?php
-
-            if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['new-item'])){
-                echo"
-                <div class='center-absolute'>
-                <div class='header'>
-                    <h1 id='titulo-form'>Novo Fornecedor</h1>
-                    <img src='../images/icons/close.png' id='close-register' onclick='location.href = location.href'>
-                </div>
-                <form action='tabelaFornecedores.php' method='post'>
-                    <div class='form-holder'>
-                        <div class='half-1'>
-                        <div class='r-one'>
-                            <div>
-                                <label for='nome'>Nome:</label>
-                                <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this) letters_js(this.value, this)' requied>
-                            </div>
-                            <div>
-                                <label for='cnpj'>CNPJ:</label>
-                                <input type='text' name='cnpj' id='cnpj' maxlength='20' oninput='noBackslashes(this.value, this) letters_js(this.value, this)' onkeyup='mask_js(this.value, this, '##.###.###/####-##')' required>
-                            </div>
-
-                            <div>
-                                <label for='produto'>Produto:</label>
-                                <select name='produto' id='produto' required>
-                                    <option value='' selected hidden></option>";
-                                    get_products();
-                                echo"</select>
-                            </div>
-
-                        </div>
-            
-                        <div class='r-two'>
-                            <div>
-                                <label for='email'>Email:</label>
-                                <input type='email' name='email' id='email' oninput='noBackslashes(this.value, this)' required>
-            
-                            </div>
-                        
-                            <div>
-                                <label for='ramo'>Ramo de Atividade:</label>
-                                <input type='text' name='ramo' id='ramo' oninput='noBackslashes(this.value, this) letters_js(this.value, this)' required>
-                            </div>
-
-                            <div>
-                                <label for='tel1'>Telefones:</label>
-                                <input type='text' name='tel1' id='tel1' placeholder='Telefone...' oninput='noBackslashes(this.value, this) letters_js(this.value, this)' onkeyup='mask_js(this.value, this, '(##)#####-####')' required>
-                                <input type='text' name='tel2' id='tel2' placeholder='Telefone (Opcional)...' oninput='noBackslashes(this.value, this) letters_js(this.value, this)' onkeyup='mask_js(this.value, this, '(##)#####-####')'>
-                            </div>
-
-                        </div>
-            
-                        <input type='submit' name='cadastrar' id='cadastrar' value='Cadastrar'>
-                        </div>
-                        <div class='half-2'>
-                            <div style='display: flex; flex-direction: column;'>
-                                <label for='descricao'>Descrição:</label>
-                                <textarea name='descricao' id='descricao' cols='30' rows='20' spellcheck='true'  requied></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                </div>
-                ";
-            }
         
+        <?php
+    
+            if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new-item'])){
+                setForm();
+            }
+    
         ?>
+
     </div>
 
 </body>

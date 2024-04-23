@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `fornecedores` (
   `descricao` text,
   `ramo_atividade` varchar(100) NOT NULL,
   `produto_oferecido` varchar(100) NOT NULL,
-  PRIMARY KEY (`id_funcionario`)
+  PRIMARY KEY (`id_fornecedor`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
