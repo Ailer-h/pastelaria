@@ -37,7 +37,7 @@
 
             <div id="menu">
                 <button onclick=""><img src="../images/icons/report.png"></button>
-                <button onclick="setForm(0)"><img src="../images/icons/plus.png"></button>
+                <button><img src="../images/icons/plus.png"></button>
             </div>
 
         </div>
@@ -80,6 +80,5 @@
     </div>
 
 </body>
-<script src="../js/formHandlers/handleForms_clientes.js"></script>
 <script src="../js/masks.js"></script>
 </html>

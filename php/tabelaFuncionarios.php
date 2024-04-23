@@ -24,6 +24,135 @@
 
     }
 
+    function show_delbox(){
+        echo"<div class='center-absolute'>
+        <div class='delete-header'>
+            <img src='../images/icons/close.png' onclick='location.href = location.href'>
+        </div>
+        <div class='delete-form'>
+            <div style='display: flex; align-items: center; flex-direction: column;'>
+                <h1>Você deseja deletar as informações de</h1>
+                <h1 id='info'>[nome]</h1>
+            </div>
+        
+            <div class='btns'>
+                <form action='tabelaFuncionarios.php' method='post'><input type='hidden' name='id_delete' id='id' value='0'><button class='del'>Deletar</button></form>
+                <a href='tabelaFuncionarios.php'><button class='cancel'>Cancelar</button></a>
+            </div>
+        </div>
+        </div>";
+    }
+
+    function setForm($form_id){
+
+        if($form_id == 0){
+                echo"<div class='center-absolute'>
+                <div class='header'>
+                    <h1 id='titulo-form'>Novo Funcionário</h1>
+                    <img src='../images/icons/close.png' id='close-register' onclick='location.href = location.href'>
+                </div>
+                <form action='tabelaFuncionarios.php' method='post'>
+                    <div class='form-holder'>
+                        <div class='r-one'>
+                            <div>
+                                <label for='nome'>Nome:</label>
+                                <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this); letters_js(this.value, this)' requied>
+                            </div>
+                            <div>
+                                <label for='cpf'>CPF:</label>
+                                <input type='text' name='cpf' id='cpf' maxlength='14' onkeyup='mask_js(this.value, this, \"###.###.###-##\")' required>
+                            </div>
+                        </div>
+            
+                        <div class='r-two'>
+                            <div>
+                                <label for='email'>Email:</label>
+                                <input type='email' name='email' id='email' oninput='noSlashes_js(this.value, this)' required>
+            
+                            </div>
+
+                            <div>
+                                <label for='senha'>Senha:</label>
+                                <input type='text' name='senha' id='senha' oninput='noSlashes_js(this.value, this)' required>
+                            </div>
+            
+                            <div>
+                                <label for='cargo'>Cargo:</label>
+                                <input type='text' name='cargo' id='cargo' oninput='noBackslashes(this.value, this); letters_js(this.value, this)' required>
+                            </div>
+            
+                            <div>
+                                <label for='permissoes'>Permissões:</label>
+                                <select name='permissoes' id='permissoes' required>
+                                    <option value='' selected hidden></option>
+                                    <option value='a'>Admnistrador</option>
+                                    <option value='f'>Funcionário</option>
+                                </select>
+                            </div>
+                        </div>
+            
+                        <input type='submit' name='cadastrar' id='cadastrar' value='Cadastrar'>
+            
+                    </div>
+                </form>
+            </div>";
+        
+        }else if($form_id == 1){
+            echo"<div class='center-absolute'>
+            <div class='header'>
+            <h1 id='titulo-form'>Editar Funcionário</h1>
+            <img src='../images/icons/close.png' id='close-register' onclick='location.href = location.href;'>
+            </div>
+            <form action='tabelaFuncionarios.php' method='post'>
+            <input type='hidden' name='id' id='id'>
+            <div class='form-holder'>
+                <div class='r-one'>
+                    <div>
+                        <label for='nome'>Nome:</label>
+                        <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this); letters_js(this.value, this)' requied>
+                    </div>
+                    <div>
+                        <label for='cpf'>CPF:</label>
+                        <input type='text' name='cpf' id='cpf' maxlength='14' onkeyup='mask_js(this.value, this, '###.###.###-##')' required>
+                    </div>
+                </div>
+                
+                <div class='r-two'>
+                    <div>
+                        <label for='email'>Email:</label>
+                        <input type='email' name='email' id='email' oninput='noSlashes_js(this.value, this)' required>
+                
+                    </div>
+                
+                    <div>
+                        <label for='senha'>Senha:</label>
+                        <input type='text' name='senha' id='senha' oninput='noSlashes_js(this.value, this)' required>
+                    </div>
+            
+                    <div>
+                        <label for='cargo'>Cargo:</label>
+                        <input type='text' name='cargo' id='cargo' oninput='noBackslashes(this.value, this); letters_js(this.value, this)' required>
+                    </div>
+            
+                    <div>
+                        <label for='permissoes'>Permissões:</label>
+                        <select name='permissoes' id='permissoes' required>
+                            <option value='' selected hidden></option>
+                            <option value='a'>Admnistrador</option>
+                            <option value='f'>Funcionário</option>
+                        </select>
+                    </div>
+                </div>
+            
+                <input type='submit' name='atualizar' id='atualizar' value='Atualizar'>
+            
+            </div>
+            </form>
+            </div>";
+        }
+
+    }
+
     //Funções utilizadas na tabela
     function table($search){
 
@@ -53,8 +182,6 @@
                 echo"<button class='disabled-button' name='delete' type='submit'><img src='../images/icons/delete.png'></button>";
                 echo"<button class='disabled-button' name='edit' type='submit'><img src='../images/icons/edit.png'></button>";
                 echo"</div></td></tr>";
-
-                
 
             }
 
@@ -156,7 +283,10 @@
 
             <div id="menu">
                 <button onclick=""><img src="../images/icons/report.png"></button>
-                <button onclick="setForm(0)"><img src="../images/icons/plus.png"></button>
+                <form action="tabelaFuncionarios.php" method="post">
+                    <input type="hidden" name="new-item" value="0">
+                    <button><img src="../images/icons/plus.png"></button>
+                </form>
             </div>
 
         </div>
@@ -192,58 +322,56 @@
         </div>
     </div>
 
-    <div id="form-box">        
+    <div id="form-box">
+
+        <?php
+            if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new-item'])){
+                setForm(0);
+                echo'<script>console.log("WOW")</script>';
+            
+            }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_edit'])){
+                setForm(1);
+            
+                $id = $_POST['id_edit'];
+        
+                include "utilities/mysql_connect.php";
+
+                $values = mysqli_fetch_array(mysqli_query($connection, "select nome_user, cpf_user, email_user, senha_user, cargo_user, tipo_user, id_user from usuarios where id_user=$id group by 1;"));
+        
+                echo"<script>
+
+                    document.getElementById('nome').value = '$values[0]';
+                    document.getElementById('cpf').value = '$values[1]';
+                    document.getElementById('email').value = '$values[2]';
+                    document.getElementById('senha').value = '$values[3]';
+                    document.getElementById('cargo').value = '$values[4]';
+                    document.querySelector('#permissoes').value = '$values[5]';
+                    document.getElementById('id').value = '$values[6]';
+
+                </script>";
+
+                mysqli_close($connection);
+            
+            }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_delete-confirmar'])){
+                show_delbox();
+
+                $id = $_POST['id_delete-confirmar'];
+        
+                include "utilities/mysql_connect.php";
+        
+                $nome = mysqli_fetch_array(mysqli_query($connection, "select nome_user from usuarios where id_user=$id group by 1;"))[0];
+
+                echo"<script>
+
+                    document.getElementById('info').textContent = '$nome?';
+                    document.getElementById('id').value = $id;
+        
+                </script>";
+            }
+        ?>
+
     </div>
 
 </body>
-<script src="../js/formHandlers/handleForms_funcionarios.js"></script> <!-- Gerenciador de formulários -->
 <script src="../js/masks.js"></script> <!-- Pacote de máscaras -->
 </html>
-
-<?php
-    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_edit'])){
-        
-        $id = $_POST['id_edit'];
-        
-        include "utilities/mysql_connect.php";
-
-        $values = mysqli_fetch_array(mysqli_query($connection, "select nome_user, cpf_user, email_user, senha_user, cargo_user, tipo_user, id_user from usuarios where id_user=$id group by 1;"));
-        
-        echo"<script>
-            setForm(1);
-
-            document.getElementById('nome').value = '$values[0]';
-            document.getElementById('cpf').value = '$values[1]';
-            document.getElementById('email').value = '$values[2]';
-            document.getElementById('senha').value = '$values[3]';
-            document.getElementById('cargo').value = '$values[4]';
-            document.querySelector('#permissoes').value = '$values[5]';
-            document.getElementById('id').value = '$values[6]';
-
-        </script>";
-
-        mysqli_close($connection);
-
-    }
-
-    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_delete-confirmar'])){
-
-        $id = $_POST['id_delete-confirmar'];
-        
-        echo"<script>console.log('$id')</script>";
-        
-        include "utilities/mysql_connect.php";
-        
-        $nome = mysqli_fetch_array(mysqli_query($connection, "select nome_user from usuarios where id_user=$id group by 1;"))[0];
-
-        echo"<script>
-            setForm(2);
-
-            document.getElementById('info').textContent = '$nome?';
-            document.getElementById('id').value = $id;
-        
-        </script>";
-
-    }
-
-?>

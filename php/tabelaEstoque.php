@@ -104,6 +104,135 @@
         
     }
 
+    function show_delbox(){
+        echo"<div class='center-absolute'>
+        <div class='delete-header'>
+            <img src='../images/icons/close.png' onclick='location.href = location.href'>
+        </div>
+        <div class='delete-form'>
+            <div style='display: flex; align-items: center; flex-direction: column;'>
+                <h1>Você deseja deletar as informações de</h1>
+                <h1 id='info'>[nome]</h1>
+            </div>
+        
+            <div class='btns'>
+                <form action='tabelaEstoque.php' method='post'><input type='hidden' name='id_delete' id='id' value='0'><button class='del'>Deletar</button></form>
+                <a href='tabelaEstoque.php'><button class='cancel'>Cancelar</button></a>
+            </div>
+        </div>
+        </div>
+        ";
+    }
+
+    function setForm($form_id){
+
+        if($form_id == 0){
+            
+            echo"<div class='center-absolute'>
+                <div class='header'>
+                    <h1 id='titulo-form'>Nova Matéria Prima</h1>
+                    <img src='../images/icons/close.png' id='close-register' onclick='location.href = location.href'>
+                </div>
+                <form action='tabelaEstoque.php' method='post'>
+                <div class='form-holder'>
+                        <div class='r-one'>
+                            <div>
+                                <label for='nome'>Nome:</label>
+                                <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this); letters_js(this.value, this)' requied>
+                            </div>
+                            <div>
+                                <label for='data-vencimento'>Data de Vencimento:</label>
+                                <input type='date' name='data-vencimento' id='data-vencimento' required>
+                            </div>
+                        </div>
+
+                        <div class='r-two'>
+                            <div>
+                                <label for='valor-custo'>Valor da unidade:</label>
+                                <input type='number' name='valor-custo' id='valor-custo' min='0.0001' step='any' required>
+                            </div>
+
+                            <div>
+                                <label for='unidade-medida'>Unidade de Medida:</label>
+                                <select name='unidade-medida' id='unidade-medida' required>
+                                    <option value='' selected hidden></option>
+                                    <option value='g'>g</option>
+                                    <option value='ml'>ml</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for='qtd'>Qtd:</label>
+                                <input type='number' name='qtd' id='qtd' min='0' step='1' class='qtd' required>
+                            </div>
+
+                            <div>
+                                <label for='qtd'>Qtd Padrão:</label>
+                                <input type='number' name='qtd-controle' id='qtd-controle' min='0' step='1' class='qtd' required>
+                            </div>
+                        </div>
+
+                        <input type='submit' name='cadastrar' id='cadastrar' value='Cadastrar'>
+
+                    </div>
+                </form>
+            </div>";
+        
+        }else if($form_id == 1){
+            echo"<div class='center-absolute'>
+            <div class='header'>
+                <h1 id='titulo-form'>Editar Matéria Prima</h1>
+                <img src='../images/icons/close.png' id='close-register' onclick='location.href = location.href'>
+            </div>
+            <form action='tabelaEstoque.php' method='post'>
+            <input type='hidden' name='id' id='id'>
+            <div class='form-holder'>
+                    <div class='r-one'>
+                        <div>
+                            <label for='nome'>Nome:</label>
+                            <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this) letters_js(this.value, this)' requied>
+                        </div>
+                        <div>
+                            <label for='data-vencimento'>Data de Vencimento:</label>
+                            <input type='date' name='data-vencimento' id='data-vencimento' required>
+                        </div>
+                    </div>
+                    
+                    <div class='r-two'>
+                        <div>
+                            <label for='valor-custo'>Valor da unidade:</label>
+                            <input type='number' name='valor-custo' id='valor-custo' min='0.0001' step='any' required>
+                        </div>
+            
+                        <div>
+                            <label for='unidade-medida'>Unidade de Medida:</label>
+                            <select name='unidade-medida' id='unidade-medida' required>
+                                <option value='' selected hidden></option>
+                                <option value='g'>g</option>
+                                <option value='ml'>ml</option>
+                            </select>
+                        </div>
+            
+                        <div>
+                            <label for='qtd'>Qtd:</label>
+                            <input type='number' name='qtd' id='qtd' min='0' step='1' class='qtd' required>
+                        </div>
+            
+                        <div>
+                            <label for='qtd'>Qtd Padrão:</label>
+                            <input type='number' name='qtd-controle' id='qtd-controle' min='0' step='1' class='qtd' required>
+                        </div>
+                    </div>
+            
+                    <input type='submit' name='atualizar' id='atualizar' value='Atualizar'>
+                    
+                </div>
+            </form>
+            </div>";
+        }
+        
+    }
+
     //Funções das ações
     function delete_item($id){
         include "utilities/mysql_connect.php";
@@ -190,7 +319,10 @@
 
             <div id="menu">
                 <button onclick=""><img src="../images/icons/report.png"></button>
-                <button onclick="setForm(0)"><img src="../images/icons/plus.png"></button>
+                <form action="tabelaEstoque.php" method="post">
+                    <input type="hidden" name="new-item" value="0">
+                    <button><img src="../images/icons/plus.png"></button>
+                </form>
             </div>
 
         </div>
@@ -220,55 +352,54 @@
     </div>
 
     <div id="form-box">
+        <?php
+            if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new-item'])){
+                setForm(0);
+                echo"<script>console.log('here')</script>";
+            
+            }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_edit'])){
+                setForm(1);
+
+                $id = $_POST['id_edit'];
+        
+                include "utilities/mysql_connect.php";
+
+                $values = mysqli_fetch_array(mysqli_query($connection, "select nome_item, data_vencimento, valor_custo, unidade_medida, qtd, qtd_padrao, id_item from estoque where id_item=$id group by 1;"));
+        
+                echo"<script>
+
+                    document.getElementById('nome').value = '$values[0]';
+                    document.getElementById('data-vencimento').value = '$values[1]';
+                    document.getElementById('valor-custo').value = '$values[2]';
+                    document.getElementById('unidade-medida').value = '$values[3]';
+                    document.getElementById('qtd').value = '$values[4]';
+                    document.getElementById('qtd-controle').value = '$values[5]';
+                    document.getElementById('id').value = '$values[6]';
+
+                </script>";
+
+                mysqli_close($connection);
+
+            }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_delete-confirmar'])){
+                show_delbox();
+
+                $id = $_POST['id_delete-confirmar'];
+        
+                include "utilities/mysql_connect.php";
+
+                $nome = mysqli_fetch_array(mysqli_query($connection, "select nome_item from estoque where id_item=$id group by 1;"))[0];
+
+                echo"<script>
+
+                    document.getElementById('info').textContent = '$nome?';
+                    document.getElementById('id').value = $id;
+
+                </script>";
+            }
+        
+        ?>
     </div>
 
 </body>
-<script src="../js/formHandlers/handleForms_estoque.js"></script>
 <script src="../js/masks.js"></script>
 </html>
-
-<?php
-    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_edit'])){
-        
-        $id = $_POST['id_edit'];
-        
-        include "utilities/mysql_connect.php";
-
-        $values = mysqli_fetch_array(mysqli_query($connection, "select nome_item, data_vencimento, valor_custo, unidade_medida, qtd, qtd_padrao, id_item from estoque where id_item=$id group by 1;"));
-        
-        echo"<script>
-            setForm(1);
-
-            document.getElementById('nome').value = '$values[0]';
-            document.getElementById('data-vencimento').value = '$values[1]';
-            document.getElementById('valor-custo').value = '$values[2]';
-            document.getElementById('unidade-medida').value = '$values[3]';
-            document.getElementById('qtd').value = '$values[4]';
-            document.getElementById('qtd-controle').value = '$values[5]';
-            document.getElementById('id').value = '$values[6]';
-
-        </script>";
-
-        mysqli_close($connection);
-
-    }
-
-    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_delete-confirmar'])){
-
-        $id = $_POST['id_delete-confirmar'];
-        
-        include "utilities/mysql_connect.php";
-        
-        $nome = mysqli_fetch_array(mysqli_query($connection, "select nome_item from estoque where id_item=$id group by 1;"))[0];
-
-        echo"<script>
-            setForm(2);
-
-            document.getElementById('info').textContent = '$nome?';
-            document.getElementById('id').value = $id;
-        
-        </script>";
-
-    }
-
-?>

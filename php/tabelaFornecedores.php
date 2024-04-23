@@ -20,7 +20,7 @@
 
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "insert into fornecedores(nome,celular1,celular2,email,cnpj,descricao,ramo_atividade,produto_oferecido) values ('$nome','$tel1','$tel2','$email','$cnpj','$descricao','$ramo','$produto');");
+        $query = mysqli_query($connection, "insert into fornecedores(nome,celular1,celular2,email,endereco,cnpj,descricao,ramo_atividade,produto_oferecido) values ('$nome','$tel1','$tel2','$email','$endereco','$cnpj','$descricao','$ramo','$produto');");
 
         mysqli_close($connection);
 
@@ -34,7 +34,9 @@
 
         while($output = mysqli_fetch_array($query)){
 
-            echo"<tr>";
+            $produto = mysqli_fetch_array(mysqli_query($connection, "select nome_item from estoque where id_item=$output[4]"))[0];
+
+            echo"<tr class='normal-row'>";
 
             echo"<td>$output[0]</td>";
             echo"<td>
@@ -42,7 +44,7 @@
                 <div>$output[2]</div>
             </td>";
             echo"<td>$output[3]</td>";
-            echo"<td>$output[4]</td>";
+            echo"<td>$produto</td>";
             
             echo"<td><div style='display: flex; justify-content: center; gap: 1em;'>";
             echo"<form action='tabelaFornecedores.php' method='post'><input type='hidden' name='id_info' value='$output[5]'><button name='get_info' type='submit'><img src='../images/icons/info.png'></button></form>";
@@ -72,71 +74,202 @@
         
     }
 
-    function setForm(){
+    function show_delbox(){
         echo"<div class='center-absolute'>
-                <div class='header'>
-                <h1 id='titulo-form'>Novo Fornecedor</h1>
-                <img src='../images/icons/close.png' id='close-register' onclick='location.href = location.href'>
+        <div class='delete-header'>
+            <img src='../images/icons/close.png' onclick='location.href = location.href'>
+        </div>
+        <div class='delete-form'>
+            <div style='display: flex; align-items: center; flex-direction: column;'>
+                <h1>Você deseja deletar as informações de</h1>
+                <h1 id='info'>[nome]</h1>
             </div>
-            <form action='tabelaFornecedores.php' method='post'>
-                <div class='form-holder'>
-                    <div class='half-1'>
-                    <div class='r-one'>
-                        <div>
-                            <label for='nome'>Nome:</label>
-                            <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this); letters_js(this.value, this);' requied>
-                        </div>
-                        <div>
-                            <label for='cnpj'>CNPJ:</label>
-                            <input type='text' name='cnpj' id='cnpj' maxlength='20' oninput='noBackslashes(this.value, this); nums_js(this.value, this)' onkeyup='mask_js(this.value, this, \"##.###.###/####-##\")' required>
-                        </div>
-
-                        <div>
-                            <label for='produto'>Produto:</label>
-                            <select name='produto' id='produto' required>
-                                <option value='' selected hidden></option>";
-                                get_products();
-                        echo"</select>
-                        </div>
-
-                    </div>
         
-                    <div class='r-two'>
-                        <div>
-                            <label for='email'>Email:</label>
-                            <input type='email' name='email' id='email' oninput='noBackslashes(this.value, this)' required>
+            <div class='btns'>
+                <form action='tabelaFornecedores.php' method='post'><input type='hidden' name='id_delete' id='id' value='0'><button class='del'>Deletar</button></form>
+                <a href='tabelaFornecedores.php'><button class='cancel'>Cancelar</button></a>
+            </div>
+        </div>
+        </div>
+        ";
+    }
+
+    function setForm($form_id){
+
+        if($form_id == 0){
+            echo"<div class='center-absolute'>
+                    <div class='header'>
+                    <h1 id='titulo-form'>Novo Fornecedor</h1>
+                    <img src='../images/icons/close.png' id='close-register' onclick='location.href = location.href'>
+                </div>
+                <form action='tabelaFornecedores.php' method='post'>
+                    <div class='form-holder'>
+                        <div class='half-1'>
+                        <div class='r-one'>
+                            <div>
+                                <label for='nome'>Nome:</label>
+                                <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this); letters_js(this.value, this);' requied>
+                            </div>
+                            <div>
+                                <label for='cnpj'>CNPJ:</label>
+                                <input type='text' name='cnpj' id='cnpj' maxlength='20' oninput='noBackslashes(this.value, this); nums_js(this.value, this)' onkeyup='mask_js(this.value, this, \"##.###.###/####-##\")' required>
+                            </div>
+
+                            <div>
+                                <label for='produto'>Produto:</label>
+                                <select name='produto' id='produto' required>
+                                    <option value='' selected hidden></option>";
+                                    get_products();
+                            echo"</select>
+                            </div>
+
+                        </div>
+
+                        <div class='r-two'>
+                            <div>
+                                <label for='email'>Email:</label>
+                                <input type='email' name='email' id='email' oninput='noBackslashes(this.value, this)' required>
+
+                            </div>
+
+                            <div>
+                                <label for='ramo'>Ramo de Atividade:</label>
+                                <input type='text' name='ramo' id='ramo' oninput='noBackslashes(this.value, this); letters_js(this.value, this)' required>
+                            </div>
+
+                            <div>
+                                <label for='tel1'>Telefones:</label>
+                                <input type='text' name='tel1' id='tel1' placeholder='Telefone...' oninput='noBackslashes(this.value, this); nums_js(this.value, this)' onkeyup='mask_js(this.value, this, \"(##)#####-####\")' required>
+                                <input type='text' name='tel2' id='tel2' placeholder='Telefone (Opcional)...' oninput='noBackslashes(this.value, this); nums_js(this.value, this)' onkeyup='mask_js(this.value, this, \"(##)#####-####\")'>
+                            </div>
+
+                        </div>
+
+                        <div class='r-three'>
+                            <label for='endereco'>Endereço:</label>
+                            <input type='text' name='endereco' id='endereco' oninput='noBackslashes(this.value, this)' required>
+                        </div>
+
+                        <input type='submit' name='cadastrar' id='cadastrar' value='Cadastrar'>
+                        </div>
+                        <div class='half-2'>
+                            <div style='display: flex; flex-direction: column;'>
+                                <label for='descricao'>Descrição:</label>
+                                <textarea name='descricao' id='descricao' cols='30' rows='20' spellcheck='true' oninput='noBackslashes(this.value, this)' requied></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </div>";
         
-                        </div>
-                    
-                        <div>
-                            <label for='ramo'>Ramo de Atividade:</label>
-                            <input type='text' name='ramo' id='ramo' oninput='noBackslashes(this.value, this); letters_js(this.value, this)' required>
-                        </div>
+        }else if($form_id == 1){
+            echo"<div class='center-absolute'>
+            <div class='header'>
+            <h1 id='titulo-form'>Editar Fornecedor</h1>
+            <img src='../images/icons/close.png' id='close-register' onclick='location.href = location.href'>
+        </div>
+        <form action='tabelaFornecedores.php' method='post'>
+            <input type='hidden' name='id' id='id'>
+            <div class='form-holder'>
+                <div class='half-1'>
+                <div class='r-one'>
+                    <div>
+                        <label for='nome'>Nome:</label>
+                        <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this); letters_js(this.value, this);' requied>
+                    </div>
+                    <div>
+                        <label for='cnpj'>CNPJ:</label>
+                        <input type='text' name='cnpj' id='cnpj' maxlength='20' oninput='noBackslashes(this.value, this); nums_js(this.value, this)' onkeyup='mask_js(this.value, this, \"##.###.###/####-##\")' required>
+                    </div>
 
-                        <div>
-                            <label for='tel1'>Telefones:</label>
-                            <input type='text' name='tel1' id='tel1' placeholder='Telefone...' oninput='noBackslashes(this.value, this); nums_js(this.value, this)' onkeyup='mask_js(this.value, this, \"(##)#####-####\")' required>
-                            <input type='text' name='tel2' id='tel2' placeholder='Telefone (Opcional)...' oninput='noBackslashes(this.value, this); nums_js(this.value, this)' onkeyup='mask_js(this.value, this, \"(##)#####-####\")'>
-                        </div>
+                    <div>
+                        <label for='produto'>Produto:</label>
+                        <select name='produto' id='produto' required>
+                            <option value='' selected hidden></option>";
+                            get_products();
+                    echo"</select>
+                    </div>
+
+                </div>
+
+                <div class='r-two'>
+                    <div>
+                        <label for='email'>Email:</label>
+                        <input type='email' name='email' id='email' oninput='noBackslashes(this.value, this)' required>
 
                     </div>
 
-                    <div class='r-three'>
-                        <label for='endereco'>Endereço:</label>
-                        <input type='text' name='endereco' id='endereco' oninput='noBackslashes(this.value, this)' required>
+                    <div>
+                        <label for='ramo'>Ramo de Atividade:</label>
+                        <input type='text' name='ramo' id='ramo' oninput='noBackslashes(this.value, this); letters_js(this.value, this)' required>
                     </div>
-        
-                    <input type='submit' name='cadastrar' id='cadastrar' value='Cadastrar'>
+
+                    <div>
+                        <label for='tel1'>Telefones:</label>
+                        <input type='text' name='tel1' id='tel1' placeholder='Telefone...' oninput='noBackslashes(this.value, this); nums_js(this.value, this)' onkeyup='mask_js(this.value, this, \"(##)#####-####\")' required>
+                        <input type='text' name='tel2' id='tel2' placeholder='Telefone (Opcional)...' oninput='noBackslashes(this.value, this); nums_js(this.value, this)' onkeyup='mask_js(this.value, this, \"(##)#####-####\")'>
                     </div>
-                    <div class='half-2'>
-                        <div style='display: flex; flex-direction: column;'>
-                            <label for='descricao'>Descrição:</label>
-                            <textarea name='descricao' id='descricao' cols='30' rows='20' spellcheck='true' oninput='noBackslashes(this.value, this)' requied></textarea>
-                        </div>
+
+                </div>
+
+                <div class='r-three'>
+                    <label for='endereco'>Endereço:</label>
+                    <input type='text' name='endereco' id='endereco' oninput='noBackslashes(this.value, this)' required>
+                </div>
+
+                <input type='submit' name='atualizar' id='atualizar' value='Atualizar'>
+                </div>
+                <div class='half-2'>
+                    <div style='display: flex; flex-direction: column;'>
+                        <label for='descricao'>Descrição:</label>
+                        <textarea name='descricao' id='descricao' cols='30' rows='20' spellcheck='true' oninput='noBackslashes(this.value, this)' requied></textarea>
                     </div>
                 </div>
-            </form>
-            </div>";
+            </div>
+        </form>
+        </div>";
+        }
+
+    }
+
+    //Funções das ações
+    function delete_item($id){
+        include "utilities/mysql_connect.php";
+        $query = mysqli_query($connection, "delete from fornecedores where id_fornecedor = $id;");
+        mysqli_close($connection);
+
+        header("Location: tabelaFornecedores.php");
+    }
+
+    function edit($id){
+
+        '$info = []';
+
+        $info[0] = $_POST['nome'];
+        $info[1] = $_POST['tel1'];
+        $info[2] = isset($_POST['tel2']) ? $tel2 = $_POST['tel2'] : null;
+        $info[3] = $_POST['email'];
+        $info[4] = $_POST['endereco'];
+        $info[5] = $_POST['cnpj'];
+        $info[6] = $_POST['descricao'];
+        $info[7] = $_POST['ramo'];
+        $info[8] = $_POST['produto'];
+
+        include "utilities/mysql_connect.php";
+        $query = mysqli_query($connection, "update fornecedores set nome='$info[0]', celular1='$info[1]', celular2='$info[2]', email='$info[3]', endereco='$info[4]', cnpj='$info[5]', descricao='$info[6]', ramo_atividade='$info[7]', produto_oferecido='$info[8]' where id_fornecedor=$id");
+        mysqli_close($connection);
+
+        header("Location: tabelaFornecedores.php");
+    }
+
+    //Recebe a solicitação de deleção
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_delete'])){
+        delete_item($_POST['id_delete']);
+    
+    }
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['atualizar'])){
+        edit($_POST['id']);
     }
 
 ?>
@@ -230,7 +363,93 @@
         <?php
     
             if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new-item'])){
-                setForm();
+                setForm(0);
+            
+            }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_edit'])){
+                setForm(1);
+
+                $id = $_POST['id_edit'];
+        
+                include "utilities/mysql_connect.php";
+
+                $values = mysqli_fetch_array(mysqli_query($connection, "select nome, celular1, celular2, email, endereco, cnpj, descricao, ramo_atividade, produto_oferecido, id_fornecedor from fornecedores where id_fornecedor=$id group by 1;"));
+
+                echo"<script>
+
+                    document.getElementById('nome').value = '$values[0]';
+                    document.getElementById('tel1').value = '$values[1]';
+                    document.getElementById('tel2').value = '$values[2]';
+                    document.getElementById('email').value = '$values[3]';
+                    document.getElementById('endereco').value = '$values[4]';
+                    document.getElementById('cnpj').value = '$values[5]';
+                    
+                    document.getElementById('descricao').value = '$values[6]';
+
+                    document.getElementById('ramo').value = '$values[7]';
+                    document.querySelector('#produto').value = '$values[8]';
+                    document.getElementById('id').value = '$values[9]';
+
+                </script>";
+                
+            }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_delete-confirmar'])){
+                show_delbox();
+
+                $id = $_POST['id_delete-confirmar'];
+        
+                include "utilities/mysql_connect.php";
+
+                $nome = mysqli_fetch_array(mysqli_query($connection, "select nome from fornecedores where id_fornecedor=$id group by 1;"))[0];
+
+                echo"<script>
+
+                    document.getElementById('info').textContent = '$nome?';
+                    document.getElementById('id').value = $id;
+
+                </script>";
+            
+            }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_info'])){
+
+                setForm(1);
+
+                $id = $_POST['id_info'];
+        
+                include "utilities/mysql_connect.php";
+
+                $values = mysqli_fetch_array(mysqli_query($connection, "select nome, celular1, celular2, email, endereco, cnpj, descricao, ramo_atividade, produto_oferecido, id_fornecedor from fornecedores where id_fornecedor=$id group by 1;"));
+
+                echo"<script>
+
+                    document.getElementById('nome').value = '$values[0]';
+                    document.getElementById('tel1').value = '$values[1]';
+                    document.getElementById('tel2').value = '$values[2]';
+                    document.getElementById('email').value = '$values[3]';
+                    document.getElementById('endereco').value = '$values[4]';
+                    document.getElementById('cnpj').value = '$values[5]';
+                    
+                    document.getElementById('descricao').value = '$values[6]';
+
+                    document.getElementById('ramo').value = '$values[7]';
+                    document.querySelector('#produto').value = '$values[8]';
+                    document.getElementById('id').value = '$values[9]';
+
+                    document.getElementById('nome').disabled = true;
+                    document.getElementById('tel1').disabled = true;
+                    document.getElementById('tel2').disabled = true;
+                    document.getElementById('email').disabled = true;
+                    document.getElementById('endereco').disabled = true;
+                    document.getElementById('cnpj').disabled = true;
+                    
+                    document.getElementById('descricao').disabled = true;
+
+                    document.getElementById('ramo').disabled = true;
+                    document.querySelector('#produto').disabled = true;
+                    document.getElementById('id').disabled = true;
+
+                    document.getElementById('atualizar').style.display = 'none';
+                    document.getElementById('titulo-form').textContent = 'Informações';
+
+                </script>";
+
             }
     
         ?>
@@ -238,6 +457,5 @@
     </div>
 
 </body>
-<script src="../js/formHandlers/handleForms_fornecedores.js"></script>
 <script src="../js/masks.js"></script>
 </html>

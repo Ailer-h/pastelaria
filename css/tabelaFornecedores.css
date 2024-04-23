@@ -340,23 +340,6 @@ body{
     width: 1.5em;
     height: 1.5em;
 }
-
-
-
-.table-holder .bar-holder{
-
-    height: .8em;
-    width: 7em;
-    border-radius: 1em;
-    background-color: #606060;
-    margin-left: 2em;
-
-}
-
-.table-holder .bar-holder .bar{
-    height: .8em;
-    border-radius: 1em;
-}
 /* Fim das classes de corpo */
 
 /* Cadastrar Funcionario */
