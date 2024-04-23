@@ -59,7 +59,7 @@ INSERT INTO `estoque` (`id_item`, `nome_item`, `data_vencimento`, `valor_custo`,
 
 DROP TABLE IF EXISTS `fornecedores`;
 CREATE TABLE IF NOT EXISTS `fornecedores` (
-  `id_funcionario` int NOT NULL AUTO_INCREMENT,
+  `id_fornecedor` int NOT NULL AUTO_INCREMENT,
   `nome` varchar(50) NOT NULL,
   `celular1` varchar(14) NOT NULL,
   `celular2` varchar(14) DEFAULT NULL,
