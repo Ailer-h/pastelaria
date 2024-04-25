@@ -71,6 +71,8 @@ body{
     border: none;
     border-radius: 2em;
 
+    cursor: pointer;
+
     transition: 200ms;
 
 }
@@ -202,6 +204,8 @@ body{
     width: 2em;
     border-radius: 0 1em 1em 0;
 
+    cursor: pointer;
+
 }
 /* Fim da barra de pesquisa */
 
@@ -223,6 +227,8 @@ body{
     
     border: none;
     border-radius: .2em;
+
+    cursor: pointer;
     
     background-color: #DE5D35;
 
@@ -288,26 +294,6 @@ body{
     background-color: #9a9a9a;
 }
 
-.table-holder table .disabled-button{
-    
-    width: 2em;
-    height: 2em;
-    margin-top: .5em;
-    margin-bottom: .5em;
-    
-    border: none;
-    border-radius: .5em;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    background-color: #797979;
-    
-    transition: 200ms;
-
-}
-
 .table-holder table button{
     
     width: 2em;
@@ -317,6 +303,8 @@ body{
     
     border: none;
     border-radius: .5em;
+
+    cursor: pointer;
     
     display: flex;
     align-items: center;
@@ -488,6 +476,8 @@ body{
     border-radius: 1em;
     background-color: #FFD369;
 
+    cursor: pointer;
+
 }
 
 .center-absolute .form-holder input[type="text"], input[type="email"], select, textarea{
@@ -577,6 +567,8 @@ body{
     color: #ce4f4e;
     border: .2em solid #d03c3c;
     border-radius: .5em;
+
+    cursor: pointer;
     
     height: 1.9em;
     width: 7.2em;
@@ -602,6 +594,8 @@ body{
     color: #375daa;
     border: .15em solid #375daa;
     border-radius: .5em;
+
+    cursor: pointer;
     
     height: 1.9em;
     width: 7.2em;

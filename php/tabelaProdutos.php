@@ -85,45 +85,7 @@
                 </div>
                 <form action='tabelaProdutos.php' method='post'>
                 <div class='form-holder'>
-                        <div class='r-one'>
-                            <div>
-                                <label for='nome'>Nome:</label>
-                                <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this); letters_js(this.value, this)' requied>
-                            </div>
-                            <div>
-                                <label for='data-vencimento'>Data de Vencimento:</label>
-                                <input type='date' name='data-vencimento' id='data-vencimento' required>
-                            </div>
-                        </div>
-
-                        <div class='r-two'>
-                            <div>
-                                <label for='valor-custo'>Valor da unidade:</label>
-                                <input type='number' name='valor-custo' id='valor-custo' min='0.0001' step='any' required>
-                            </div>
-
-                            <div>
-                                <label for='unidade-medida'>Unidade de Medida:</label>
-                                <select name='unidade-medida' id='unidade-medida' required>
-                                    <option value='' selected hidden></option>
-                                    <option value='g'>g</option>
-                                    <option value='ml'>ml</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label for='qtd'>Qtd:</label>
-                                <input type='number' name='qtd' id='qtd' min='0' step='1' class='qtd' required>
-                            </div>
-
-                            <div>
-                                <label for='qtd'>Qtd Padrão:</label>
-                                <input type='number' name='qtd-controle' id='qtd-controle' min='0' step='1' class='qtd' required>
-                            </div>
-                        </div>
-
-                        <input type='submit' name='cadastrar' id='cadastrar' value='Cadastrar'>
-
+                        
                     </div>
                 </form>
             </div>

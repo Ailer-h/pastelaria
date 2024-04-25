@@ -45,6 +45,8 @@
     border: none;
     border-radius: 1em;
 
+    cursor: pointer;
+
     transition: 200ms;
 
 }
