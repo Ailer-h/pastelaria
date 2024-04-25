@@ -37,7 +37,7 @@
         <div class="grid">
             <div class="item">
                 <h1>Produtos</h1>
-                    <a><button>Ver produtos</button></a>
+                    <a href="tabelaProdutos.php"><button>Ver produtos</button></a>
             </div>
 
             <div class="item">

@@ -1,5 +1,6 @@
-<!-- Conecta ao database -->
 <?php
+
+    //Conecta ao database
 
     $server = "127.0.0.1";
     $user = "root";

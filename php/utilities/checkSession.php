@@ -1,5 +1,6 @@
-<!-- Verifica se o usuário está logado para impedir a entrada sem loging -->
 <?php
+
+    //Verifica se o usuário está logado para impedir a entrada sem loging
 
     session_start();
 

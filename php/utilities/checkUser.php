@@ -1,5 +1,6 @@
-<!-- Faz a verificação do login do usuario -->
 <?php
+
+    //Faz a verificação do login do usuario
 
     include "mysql_connect.php";
 
