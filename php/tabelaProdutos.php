@@ -87,11 +87,11 @@
                 <div class='form-holder'>
                         <div class="half-1"></div>
                         <div class="half-2">
-                            <img class="img-thumbnail">
-                            <p id="img-filename"></p>
+                            <img class="img-thumbnail" id="img-thumbnail">
+                            <p id="img-filename" style="font-style: italic;"></p>
                             <div class="img-input">
                                 <label for="img" class="label">Imagem do Produto</label>
-                                <input type="file" name="img" id="img" accept="image/*" onchange="changePlaceholder('img-filename')">
+                                <input type="file" name="img" id="img" accept="image/*" onchange="changePlaceholder('img-filename', this.id, 'img-thumbnail')">
                             </div>
                         </div>
                     </div>
