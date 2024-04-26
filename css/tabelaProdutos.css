@@ -386,18 +386,42 @@ body{
 .center-absolute .form-holder{
 
     width: 55em;
-    height: 20em;
+    height: 30em;
 
     border-radius: 0 0 1em 1em;
     
     background-color: #dcdcdc;
 
+    /* display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 3em; */
+
+    display: grid;
+    grid-template-columns: 70% 30%;
+
+}
+
+.center-absolute .form-holder .half-1{
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: 3em;
+}
 
+.center-absolute .form-holder .half-2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1em;
+
+}
+
+.center-absolute .form-holder::-webkit-scrollbar{
+    display: none;
 }
 
 .center-absolute .form-holder .r-one{
@@ -409,7 +433,6 @@ body{
     gap: 5em;
 
     padding-left: 2em;
-
 
 }
 
@@ -424,6 +447,43 @@ body{
     padding-left: 2em;
 
 
+}
+.center-absolute .form-holder .img-thumbnail{
+    max-width: 12em;
+    max-height: 12em;
+}
+
+.center-absolute .form-holder .img-input{
+    width: 10em;
+    height: 2em;
+    
+    border: none;
+    border-radius: 1em;
+    background-color: #FFD369;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* overflow: hidden; */
+    
+}
+
+.center-absolute .form-holder .img-input label{
+    cursor: pointer;
+}
+
+.center-absolute .form-holder .img-input:hover{
+    transform: scale(1.1);
+    background-color: #d6b056;
+
+    transition: 200ms;
+}
+
+.center-absolute .form-holder input[type="file"]{
+    width: 0;
+    height: 0;
+    display: none;
 }
 
 .center-absolute .form-holder input[type="submit"]{

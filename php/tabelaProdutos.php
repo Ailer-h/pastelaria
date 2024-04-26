@@ -85,7 +85,15 @@
                 </div>
                 <form action='tabelaProdutos.php' method='post'>
                 <div class='form-holder'>
-                        
+                        <div class="half-1"></div>
+                        <div class="half-2">
+                            <img class="img-thumbnail">
+                            <p id="img-filename"></p>
+                            <div class="img-input">
+                                <label for="img" class="label">Imagem do Produto</label>
+                                <input type="file" name="img" id="img" accept="image/*" onchange="changePlaceholder('img-filename')">
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -93,4 +101,5 @@
 
 </body>
 <script src="../js/masks.js"></script> <!-- Pacote de máscaras -->
+<script src="../js/fileName_handler.js"></script>
 </html>
