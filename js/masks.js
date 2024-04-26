@@ -60,3 +60,12 @@ function letters_js(valor, input){
     document.getElementById(input.id).value = valor;
 
 }
+
+//Limita a somente integers
+function int_js(valor, input){
+
+    valor = valor.toString().replace(/\D/g,"");
+
+    document.getElementById(input.id).value = valor;
+
+}

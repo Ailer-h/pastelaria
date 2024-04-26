@@ -85,15 +85,48 @@
                 </div>
                 <form action='tabelaProdutos.php' method='post'>
                 <div class='form-holder'>
-                        <div class="half-1"></div>
-                        <div class="half-2">
-                            <img class="img-thumbnail" id="img-thumbnail">
-                            <p id="img-filename" style="font-style: italic;"></p>
-                            <div class="img-input">
-                                <label for="img" class="label">Imagem do Produto</label>
-                                <input type="file" name="img" id="img" accept="image/*" onchange="changePlaceholder('img-filename', this.id, 'img-thumbnail')">
+                    <div class='half-1'>
+                        <div class='r-one'>
+                            <div>
+                                <label for="nome">Nome:</label>
+                                <input type="text" name="nome" id="nome">
+                            </div>    
+
+                            <div style="display: flex; gap: .3em;">
+                                <label for="new-ingredient">Novo Ingrediente</label>
+                                <button id="new-ingredient"><img src="../images/icons/plus.png" alt="Novo ingrediente"></button>
                             </div>
                         </div>
+
+                        <div class='r-two'>
+
+                            <div style="display: flex; flex-direction: column;">
+                                <input type="checkbox" name="" id="">
+                                <input type="checkbox" name="" id="">
+                                <input type="checkbox" name="" id="">
+                                <input type="checkbox" name="" id="">
+                                <input type="checkbox" name="" id="">
+                                <input type="checkbox" name="" id="">
+                                <input type="checkbox" name="" id="">
+                                <input type="checkbox" name="" id="">
+                                <input type="checkbox" name="" id="">
+                                <input type="checkbox" name="" id="">
+                            </div>
+
+                        </div>
+
+                        <input type="submit" value="Cadastrar">
+                    </div>
+                    <div class='half-2'>
+                        <img class='img-thumbnail' id='img-thumbnail'>
+                        <p id='img-filename' style='font-style: italic;'></p>
+                        <div class='img-input'>
+                            <label for='img' class='label'>Imagem do Produto</label>
+                            <input type='file' name='img' id='img' accept='image/*' onchange='changePlaceholder("img-filename", this.id, "img-thumbnail")'>
+                        </div>
+                    </div>
+
+
                     </div>
                 </form>
             </div>
@@ -101,5 +134,5 @@
 
 </body>
 <script src="../js/masks.js"></script> <!-- Pacote de máscaras -->
-<script src="../js/fileName_handler.js"></script>
+<script src="../js/imgPlaceholder_handler.js"></script> <!-- Função para a preview da imagem selecionada -->
 </html>

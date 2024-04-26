@@ -426,29 +426,68 @@ body{
 }
 
 .center-absolute .form-holder .r-one{
-
+    
     width: calc(100% - 2em);
-
+    
     display: flex;
     justify-content: start;
-    gap: 5em;
-
+    gap: 2em;
+    
     padding-left: 2em;
+    
+}
 
+.center-absolute .form-holder .r-one button{
+    width: 2em;
+    height: 2em;
+
+    border: none;
+    border-radius: .5em;
+
+    cursor: pointer;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: #FFD369;
+    
+    transition: 200ms;
+}
+
+.center-absolute .form-holder .r-one button:hover{
+    background-color: #d6b056;
+
+    transition: 200ms;
+}
+
+.center-absolute .form-holder .r-one button img{
+    width: 1.5em;
+    height: 1.5em;
 }
 
 .center-absolute .form-holder .r-two{
 
     width: calc(100% - 2em);
+    height: 15em;
 
-    display: flex;
-    justify-content: start;
+    overflow-y: scroll;
+
+    background-color: blue;
+
+    display: grid;
+    grid-template-columns: 50% 50%;
+
     gap: 2em;
 
     padding-left: 2em;
 
-
 }
+
+.center-absolute .form-holder .r-two::-webkit-scrollbar{
+    display: none;
+}
+
 .center-absolute .form-holder .img-thumbnail{
     max-width: 12em;
     max-height: 12em;

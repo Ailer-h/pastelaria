@@ -163,12 +163,12 @@
 
                             <div>
                                 <label for='qtd'>Qtd:</label>
-                                <input type='number' name='qtd' id='qtd' min='0' step='1' class='qtd' required>
+                                <input type='number' name='qtd' id='qtd' min='0' step='1' class='qtd' oninput='int_js(this.value, this)' required>
                             </div>
 
                             <div>
                                 <label for='qtd'>Qtd Padrão:</label>
-                                <input type='number' name='qtd-controle' id='qtd-controle' min='0' step='1' class='qtd' required>
+                                <input type='number' name='qtd-controle' id='qtd-controle' min='0' step='1' class='qtd' oninput='int_js(this.value, this)' required>
                             </div>
                         </div>
 
@@ -190,7 +190,7 @@
                     <div class='r-one'>
                         <div>
                             <label for='nome'>Nome:</label>
-                            <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this) letters_js(this.value, this)' requied>
+                            <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this); letters_js(this.value, this)' requied>
                         </div>
                         <div>
                             <label for='data-vencimento'>Data de Vencimento:</label>
@@ -215,12 +215,12 @@
             
                         <div>
                             <label for='qtd'>Qtd:</label>
-                            <input type='number' name='qtd' id='qtd' min='0' step='1' class='qtd' required>
+                            <input type='number' name='qtd' id='qtd' min='0' step='1' class='qtd' oninput='int_js(this.value, this)' required>
                         </div>
             
                         <div>
                             <label for='qtd'>Qtd Padrão:</label>
-                            <input type='number' name='qtd-controle' id='qtd-controle' min='0' step='1' class='qtd' required>
+                            <input type='number' name='qtd-controle' id='qtd-controle' min='0' step='1' class='qtd' oninput='int_js(this.value, this)' required>
                         </div>
                     </div>
             
