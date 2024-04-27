@@ -352,7 +352,7 @@ body{
 .center-absolute .header{
 
     height: 3em;
-    width: 55em;
+    width: 50em;
 
     display: flex;
     align-items: center;
@@ -385,7 +385,7 @@ body{
 
 .center-absolute .form-holder{
 
-    width: 55em;
+    width: 50em;
     height: 30em;
 
     border-radius: 0 0 1em 1em;
@@ -408,7 +408,7 @@ body{
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    gap: 3em;
+    gap: 1em;
 }
 
 .center-absolute .form-holder .half-2{
@@ -418,6 +418,8 @@ body{
     flex-direction: column;
     text-align: center;
     gap: 1em;
+
+    border-left: .1em solid black;
 
 }
 
@@ -431,7 +433,7 @@ body{
     
     display: flex;
     justify-content: start;
-    gap: 2em;
+    gap: 1em;
     
     padding-left: 2em;
     
@@ -469,18 +471,19 @@ body{
 .center-absolute .form-holder .r-two{
 
     width: calc(100% - 2em);
-    height: 15em;
+    height: 17em;
 
     overflow-y: scroll;
 
-    background-color: blue;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
 
-    display: grid;
-    grid-template-columns: 50% 50%;
-
-    gap: 2em;
+    gap: .5em;
 
     padding-left: 2em;
+    padding-top: 1em;
+    padding-bottom: 1em;
 
 }
 
@@ -488,9 +491,39 @@ body{
     display: none;
 }
 
+.center-absolute .form-holder .r-two .prod-grid{
+    
+    display: grid;
+    grid-template-columns: 40% 20% 40%;
+    gap: .5em;
+    
+}
+
+.center-absolute .form-holder .r-two .prod-grid input[type="checkbox"]{
+    width: 2em;
+    height: 2em;
+    accent-color: #FFD369;
+}
+
+.center-absolute .form-holder .r-two .prod-grid input[type="number"]{
+    width: 5em;
+    height: 1.5em;
+}
+
 .center-absolute .form-holder .img-thumbnail{
     max-width: 12em;
     max-height: 12em;
+    
+}
+
+.center-absolute .form-holder .img-frame{
+    width: 12em;
+    height: 12em;
+    border: .1em solid black;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .center-absolute .form-holder .img-input{
@@ -544,6 +577,8 @@ body{
     border-radius: .3em;
     margin-left: .1em;
     padding-left: .3em;
+
+    width: 10em;
 
     border: .001em solid black;
 

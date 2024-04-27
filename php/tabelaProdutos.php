@@ -6,6 +6,26 @@
     //Checa se o usuário tem permissões para entrar na pagina
     include "utilities/checkPermissions.php";
 
+    function getProducts(){
+        
+        $qtd_inputs = 0;
+
+        include "utilities/mysql_connect.php";
+        $query = mysqli_query($connection, "select id_item, nome_item, unidade_medida, valor_custo from estoque;");
+
+        while($output = mysqli_fetch_array($query)){
+            echo"<label for='check$output[0]'>$output[1] (R$$output[3]/$$output[2])</label>";
+            echo"<input type='checkbox' name='check$output[0]' id='check$output[0]' onchange='showInput(\"qtd$output[0]\", \"p$output[0]\")'>";
+            echo"<div style='display: flex; gap: .4em;'>
+                    <input type='number' name='qtd$output[0]' id='qtd$output[0]' style='opacity: 0; width: 5em;'>
+                    <p id='p$output[0]' style='opacity: 0;'>$output[2]</p>
+                </div>";
+        }
+
+        mysqli_close($connection);
+
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -87,45 +107,40 @@
                 <div class='form-holder'>
                     <div class='half-1'>
                         <div class='r-one'>
-                            <div>
+                            <div style="display: flex; flex-direction: column;">
                                 <label for="nome">Nome:</label>
                                 <input type="text" name="nome" id="nome">
-                            </div>    
-
-                            <div style="display: flex; gap: .3em;">
-                                <label for="new-ingredient">Novo Ingrediente</label>
-                                <button id="new-ingredient"><img src="../images/icons/plus.png" alt="Novo ingrediente"></button>
                             </div>
+                            
+                            <div style="display: flex; flex-direction: column;">
+                                <label for="val_venda">Valor de Venda:</label>
+                                <input type="text">
+                            </div>
+
                         </div>
 
                         <div class='r-two'>
 
-                            <div style="display: flex; flex-direction: column;">
-                                <input type="checkbox" name="" id="">
-                                <input type="checkbox" name="" id="">
-                                <input type="checkbox" name="" id="">
-                                <input type="checkbox" name="" id="">
-                                <input type="checkbox" name="" id="">
-                                <input type="checkbox" name="" id="">
-                                <input type="checkbox" name="" id="">
-                                <input type="checkbox" name="" id="">
-                                <input type="checkbox" name="" id="">
-                                <input type="checkbox" name="" id="">
-                            </div>
+                                <div class="prod-grid">
+
+                                    <?php
+                                        getProducts();
+                                    ?>
+                                
+                                </div>
 
                         </div>
 
                         <input type="submit" value="Cadastrar">
                     </div>
                     <div class='half-2'>
-                        <img class='img-thumbnail' id='img-thumbnail'>
+                        <div class='img-frame'><img class='img-thumbnail' id='img-thumbnail'></div>
                         <p id='img-filename' style='font-style: italic;'></p>
                         <div class='img-input'>
                             <label for='img' class='label'>Imagem do Produto</label>
                             <input type='file' name='img' id='img' accept='image/*' onchange='changePlaceholder("img-filename", this.id, "img-thumbnail")'>
                         </div>
                     </div>
-
 
                     </div>
                 </form>
@@ -135,4 +150,5 @@
 </body>
 <script src="../js/masks.js"></script> <!-- Pacote de máscaras -->
 <script src="../js/imgPlaceholder_handler.js"></script> <!-- Função para a preview da imagem selecionada -->
+<script src="../js/show_qtdInput.js"></script>
 </html>
