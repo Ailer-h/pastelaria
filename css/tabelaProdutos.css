@@ -352,7 +352,7 @@ body{
 .center-absolute .header{
 
     height: 3em;
-    width: 50em;
+    width: 60em;
 
     display: flex;
     align-items: center;
@@ -385,7 +385,7 @@ body{
 
 .center-absolute .form-holder{
 
-    width: 50em;
+    width: 60em;
     height: 30em;
 
     border-radius: 0 0 1em 1em;
@@ -494,7 +494,7 @@ body{
 .center-absolute .form-holder .r-two .prod-grid{
     
     display: grid;
-    grid-template-columns: 40% 20% 40%;
+    grid-template-columns: 20% 10% 20% 20% 10% 20%;
     gap: .5em;
     
 }
@@ -508,6 +508,9 @@ body{
 .center-absolute .form-holder .r-two .prod-grid input[type="number"]{
     width: 5em;
     height: 1.5em;
+    padding-left: .5em;
+    padding-right: .5em;
+
 }
 
 .center-absolute .form-holder .img-thumbnail{
