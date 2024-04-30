@@ -355,7 +355,6 @@
         <?php
             if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new-item'])){
                 setForm(0);
-                echo"<script>console.log('here')</script>";
             
             }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_edit'])){
                 setForm(1);

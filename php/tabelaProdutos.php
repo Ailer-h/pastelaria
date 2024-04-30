@@ -8,49 +8,49 @@
 
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar'])){
 
-        echo"<script>console.log('wow')</script>";
+        include "utilities/mysql_connect.php";
 
         $nome = $_POST['nome'];
         $val_venda = $_POST['val_venda'];
         $img = $_FILES['image'];
+        
+        $search_nome = mysqli_fetch_array(mysqli_query($connection, "select nome_prod from produtos where nome_prod like '$nome' group by nome_prod"));
+        
+        if(empty($search_nome)){
 
-        if($img != NULL){
-            $temp_name = $img['tmp_name'];
-            $file_name = $img['name'];
-            
-            $pic = base64_encode(file_get_contents(addslashes($img['tmp_name'])));
+            if($img != NULL){
+                
+                $pic = base64_encode(file_get_contents(addslashes($img['tmp_name'])));
+                
+                $id_query = mysqli_query($connection, "select id_item, valor_custo, unidade_medida from estoque;");
+                
+                while($output = mysqli_fetch_array($id_query)){
 
-
-            include "utilities/mysql_connect.php";
-
-            $id_query = mysqli_query($connection, "select id_item, valor_custo, unidade_medida from estoque;");
-            $ingredients = [];
-            
-
-            while($output = mysqli_fetch_array($id_query)){
-
-                if(isset($_POST['qtd'.$output[0]])){
-
-                    echo"<script>console.log('wow')</script>";
-
-                    $qtd = $_POST['qtd'.$output[0]];
-
-                    $query = mysqli_query($connection, "insert into produtos(nome_prod, img_prod, id_ingrediente, preco_custo, qtd_ingrediente, valor_venda) values('$nome','$pic','$output[0]','$output[1]','$qtd','$val_venda')");
-
+                    if(isset($_POST['qtd'.$output[0]])){
+                        
+                        $qtd = $_POST['qtd'.$output[0]];
+                        
+                        $query = mysqli_query($connection, "insert into produtos(nome_prod, img_prod, id_ingrediente, preco_custo, qtd_ingrediente, valor_venda) values('$nome','$pic','$output[0]','$output[1]','$qtd','$val_venda')");
+                        
+                    }
+                    
                 }
-
+                
+                mysqli_close($connection);
+                
+                header("Location: tabelaProdutos.php");
+                
             }
-
-            unlink($temp_name);
-            mysqli_close($connection);
-
-            // header("Location: tabelaProdutos.php");
+            
+        }else{
+            echo"<script>alert('Produto já existe')</script>";
         
         }
 
-    }
 
-    function getProducts(){
+    }
+        
+        function getProducts(){
         
         $qtd_inputs = 0;
 
