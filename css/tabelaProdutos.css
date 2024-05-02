@@ -575,7 +575,7 @@ body{
 
 }
 
-.center-absolute .form-holder input[type="text"], input[type="email"], select{
+.center-absolute .form-holder input[type="text"], input[type="email"], input[type="number"], select{
 
     border-radius: .3em;
     margin-left: .1em;
