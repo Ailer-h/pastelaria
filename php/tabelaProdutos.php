@@ -52,8 +52,6 @@
         
         function getProducts(){
         
-        $qtd_inputs = 0;
-
         include "utilities/mysql_connect.php";
         $query = mysqli_query($connection, "select id_item, nome_item, unidade_medida, valor_custo from estoque;");
 

@@ -9,18 +9,26 @@
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar'])){
 
         include "utilities/mysql_connect.php";
-
+        
         $nome = $_POST['nome'];
         $cpf = $_POST['cpf'];
         $email = $_POST['email'];
         $senha = $_POST['senha'];
         $cargo = $_POST['cargo'];
         $tipo = $_POST['permissoes'];
+        
+        $search_email = mysqli_fetch_array(mysqli_query($connection, "select email_user from usuarios where email_user like '$email'"));
 
-        $query = mysqli_query($connection, "insert into usuarios(nome_user, email_user, senha_user, cpf_user, cargo_user, tipo_user) values ('$nome','$email','$senha','$cpf','$cargo','$tipo');");
+        if(empty($search_email)){
 
-        mysqli_close($connection);
-        header("Location: tabelaFuncionarios.php");
+            $query = mysqli_query($connection, "insert into usuarios(nome_user, email_user, senha_user, cpf_user, cargo_user, tipo_user) values ('$nome','$email','$senha','$cpf','$cargo','$tipo');");
+            
+            mysqli_close($connection);
+            header("Location: tabelaFuncionarios.php");
+        
+        }else{
+            echo"<script>alert('Email já cadastrado')</script>";
+        }
 
     }
 
@@ -205,10 +213,18 @@
 
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "update usuarios set nome_user='$info[0]', email_user='$info[1]', senha_user='$info[2]', cpf_user='$info[3]', cargo_user='$info[4]', tipo_user='$info[5]' where id_user=$id;");
-        mysqli_close($connection);
+        $search_email = mysqli_fetch_array(mysqli_query($connection, "select email_user from usuarios where email_user like '$info[1]'"));
 
-        header("Location: tabelaFuncionarios.php");
+        if(empty($search_email)){
+            
+            $query = mysqli_query($connection, "update usuarios set nome_user='$info[0]', email_user='$info[1]', senha_user='$info[2]', cpf_user='$info[3]', cargo_user='$info[4]', tipo_user='$info[5]' where id_user=$id;");
+            mysqli_close($connection);
+            
+            header("Location: tabelaFuncionarios.php");
+        
+        }else{
+            echo"<script>alert('Produto já existe')</script>";
+        }
 
     }
 
@@ -327,7 +343,6 @@
         <?php
             if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new-item'])){
                 setForm(0);
-                echo'<script>console.log("WOW")</script>';
             
             }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_edit'])){
                 setForm(1);

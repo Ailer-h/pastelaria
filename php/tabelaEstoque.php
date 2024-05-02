@@ -17,10 +17,18 @@
         $qtd = $_POST['qtd'];
         $qtd_padrao = $_POST['qtd-controle'];
         
-        $query = mysqli_query($connection, "insert into estoque(nome_item,data_vencimento,valor_custo,unidade_medida,qtd,qtd_padrao) values ('$nome','$data_vencimento','$valor_custo','$unidade_medida','$qtd','$qtd_padrao');");
+        $search_nome = mysqli_fetch_array(mysqli_query($connection, "select nome_item from estoque where nome_item like '$nome'"));
 
-        mysqli_close($connection);
-        header("Location: tabelaEstoque.php");
+        if(empty($search_nome)){
+
+            $query = mysqli_query($connection, "insert into estoque(nome_item,data_vencimento,valor_custo,unidade_medida,qtd,qtd_padrao) values ('$nome','$data_vencimento','$valor_custo','$unidade_medida','$qtd','$qtd_padrao');");
+
+            mysqli_close($connection);
+            header("Location: tabelaEstoque.php");
+        
+        }else{
+            echo"<script>alert('Matéria prima já cadastrada')</script>";
+        }
         
     }
 
@@ -255,11 +263,18 @@
 
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "update estoque set nome_item='$info[0]', data_vencimento='$info[1]', valor_custo='$info[2]', unidade_medida='$info[3]', qtd='$info[4]', qtd_padrao='$info[5]' where id_item=$id;");
-        mysqli_close($connection);
+        $search_nome = mysqli_fetch_array(mysqli_query($connection, "select nome_item from estoque where nome_item like '$info[0]'"));
 
-        header("Location: tabelaEstoque.php");
-
+        if(empty($search_nome)){
+            
+            $query = mysqli_query($connection, "update estoque set nome_item='$info[0]', data_vencimento='$info[1]', valor_custo='$info[2]', unidade_medida='$info[3]', qtd='$info[4]', qtd_padrao='$info[5]' where id_item=$id;");
+            mysqli_close($connection);
+            
+            header("Location: tabelaEstoque.php");
+            
+        }else{
+            echo"<script>alert('Matéria prima já cadastrada')</script>";
+        }
     }
 
     //Recebe a solicitação de deleção
