@@ -22,7 +22,7 @@
                 
                 $pic = base64_encode(file_get_contents(addslashes($img['tmp_name'])));
                 
-                $id_query = mysqli_query($connection, "select id_item, valor_custo, unidade_medida from estoque;");
+                $id_query = mysqli_query($connection, "select id_item, valor_custo from estoque;");
                 
                 while($output = mysqli_fetch_array($id_query)){
 
@@ -116,7 +116,109 @@
                 </div>
             </form>
         </div>";
+        
+        }else if($form_id == 1){
+            echo"
+            <div class='center-absolute'>
+            <div class='header'>
+                <h1 id='titulo-form'>Editar Produto</h1>
+                <img src='../images/icons/close.png' id='close-register' onclick='location.href = location.href'>
+            </div>
+            <form action='tabelaProdutos.php' method='post' enctype='multipart/form-data'>
+            <div class='form-holder'>
+                <div class='half-1'>
+                    <div class='r-one'>
+                        <div style='display: flex; flex-direction: column;'>
+                            <label for='nome'>Nome:</label>
+                            <input type='text' name='nome' id='nome' required>
+                        </div>
+                        
+                        <div style='display: flex; flex-direction: column;'>
+                            <label for='val_venda'>Valor de Venda:</label>
+                            <input type='number' name='val_venda' id='val_venda' min='0.0001' step='any' required>
+                        </div>
+
+                    </div>
+
+                    <div class='r-two'>
+
+                            <div class='prod-grid'>";
+
+                                    getProducts();
+                            
+                            echo"</div>
+
+                    </div>
+
+                    <input type='submit' name='atualizar' value='Atualizar'>
+                </div>
+                <div class='half-2'>
+                    <div class='img-frame'><img class='img-thumbnail' id='img-thumbnail'></div>
+                    <p id='img-filename' style='font-style: italic;'></p>
+                    <div class='img-input'>
+                        <label for='img' class='label'>Imagem do Produto</label>
+                        <input type='file' name='image' id='img' accept='.jpg, .jpeg, .png' onchange='changePlaceholder(\"img-filename\", this.id, \"img-thumbnail\")' required>
+                    </div>
+                </div>
+
+                </div>
+            </form>
+        </div>
+            ";
         }
+
+    }
+
+    function getIngredients($nome){
+
+        $str_ingredients = "";
+
+        include "utilities/mysql_connect.php";
+
+        $ids = mysqli_query($connection, "select id_ingrediente, qtd_ingrediente, nome_prod from produtos where nome_prod like \"%$nome%\";");
+
+        while($output = mysqli_fetch_array($ids)){
+
+            $ing_info = mysqli_fetch_array(mysqli_query($connection, "select nome_item, unidade_medida from estoque where id_item = $output[0];"));
+
+            $str_ingredients = $str_ingredients."$output[1]$ing_info[1] $ing_info[0], ";
+
+        }
+
+        mysqli_close($connection);
+
+        echo substr($str_ingredients, 0, -2);
+
+    }
+
+    //Funções usadas na tabela
+    function table($search){
+
+        include "utilities/mysql_connect.php";
+
+        $query = mysqli_query($connection, "select nome_prod, qtd_ingrediente, sum(preco_custo*qtd_ingrediente), valor_venda, id_prod from produtos where nome_prod like \"%$search%\" group by nome_prod;");
+
+        while($output = mysqli_fetch_array($query)){
+
+            echo"<tr class='normal-row'>";
+
+            echo"<td>$output[0]</td>";
+            echo"<td style='width: 20em;'>";
+            getIngredients($output[0]);
+            echo"</td>";
+            echo"<td>$output[2]</td>";
+            echo"<td>$output[3]</td>";
+
+            echo"<td><div style='display: flex; justify-content: center; gap: 1em;'>";
+            echo"<form action='tabelaProdutos.php' method='post'><input type='hidden' name='id_info' value='$output[4]'><button name='get_info' type='submit'><img src='../images/icons/info.png'></button></form>";
+            echo"<form action='tabelaProdutos.php' method='post'><input type='hidden' name='id_delete-confirmar' value='$output[4]'><button name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";
+            echo"<form action='tabelaProdutos.php' method='post'><input type='hidden' name='id_edit' value='$output[4]'><button name='edit' type='submit'><img src='../images/icons/edit.png'></button></form>";
+            echo"</div></td></tr>";
+
+            echo"</tr>";
+        }
+
+        mysqli_close($connection);
 
     }
 
@@ -185,7 +287,26 @@
                 <th style="border-left: none;">Nome</th>
                 <th>Ingredientes</th>
                 <th>Preço</th>
-                <th style="border-right: none;">Valor de Venda</th>
+                <th>Valor de Venda</th>
+                <th style="border-right: none;">Ações</th></tr>
+
+                <?php
+
+                    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])){
+                        $search = $_POST['search'];
+                        table($search);
+
+                        echo "<script>
+                                document.getElementById('searchbar').value='$search'
+                                document.getElementById('close-search').style.display = 'block'
+                            </script>";
+                    
+                    }else{
+                        table("");
+
+                    }
+
+                ?>
 
             </table>
         </div>
@@ -197,13 +318,16 @@
         if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new-item'])){
             setForm(0);
         
+        }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_edit'])){
+
         }
         
         ?>
+
     </div>
 
 </body>
 <script src="../js/masks.js"></script> <!-- Pacote de máscaras -->
 <script src="../js/imgPlaceholder_handler.js"></script> <!-- Função para a preview da imagem selecionada -->
-<script src="../js/show_qtdInput.js"></script>
+<script src="../js/show_qtdInput.js"></script> <!-- Mostrar o input de quantidade -->
 </html>
