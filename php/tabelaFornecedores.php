@@ -243,7 +243,7 @@
 
     function edit($id){
 
-        '$info = []';
+        $info = [];
 
         $info[0] = $_POST['nome'];
         $info[1] = $_POST['tel1'];
@@ -256,7 +256,7 @@
         $info[8] = $_POST['produto'];
 
         include "utilities/mysql_connect.php";
-        $query = mysqli_query($connection, "update fornecedores set nome='$info[0]', celular1='$info[1]', celular2='$info[2]', email='$info[3]', endereco='$info[4]', cnpj='$info[5]', descricao='$info[6]', ramo_atividade='$info[7]', produto_oferecido='$info[8]' where id_fornecedor=$id");
+        mysqli_query($connection, "update fornecedores set nome='$info[0]', celular1='$info[1]', celular2='$info[2]', email='$info[3]', endereco='$info[4]', cnpj='$info[5]', descricao='$info[6]', ramo_atividade='$info[7]', produto_oferecido='$info[8]' where id_fornecedor=$id");
         mysqli_close($connection);
 
         header("Location: tabelaFornecedores.php");
@@ -268,6 +268,7 @@
     
     }
 
+    //Recebe a solicitação de edição
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['atualizar'])){
         edit($_POST['id']);
     }
