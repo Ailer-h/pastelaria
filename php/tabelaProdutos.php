@@ -160,6 +160,7 @@
                 <img src='../images/icons/close.png' id='close-register' onclick='location.href = location.href'>
             </div>
             <form action='tabelaProdutos.php' method='post' enctype='multipart/form-data'>
+            <input type='hidden' name='nome_prod' id='nome_prod'>
             <div class='form-holder'>
                 <div class='half-1'>
                     <div class='r-one'>
@@ -256,81 +257,44 @@
     }
 
     //Funções das ações
-    function edit(){
+    function edit($nome_prod){
         
         $nome = $_POST['nome'];
         $val_venda = $_POST['val_venda'];
-        $img = $_FILES['image']['size'] > 0 ? $_FILES['image'] : NULL;
-
+        
         include "utilities/mysql_connect.php";
 
-        if($img != NULL){ //Cadastrar com a imagem
+        $img = $_FILES['image']['size'] > 0 ? $_FILES['image'] : mysqli_fetch_array(mysqli_query($connection, "select img_prod from produtos where nome_prod like \"$nome_prod\";"))[0];
 
-            $pic = base64_encode(file_get_contents(addslashes($img['tmp_name'])));
-                
-            $id_query = mysqli_query($connection, "select id_item, valor_custo from estoque;");
-                
-            while($output = mysqli_fetch_array($id_query)){
+        $pic = base64_encode(file_get_contents(addslashes($img['tmp_name'])));
 
-                $prod_exists = !empty(mysqli_fetch_array(mysqli_query($connection, "select * from produtos where id_ingrediente = $output[0] and nome_prod like \"$nome\"")));
-                
-                if(isset($_POST['qtd'.$output[0]])){
-                    
-                    $qtd = $_POST['qtd'.$output[0]];
-
-                    if($prod_exists){ //WORKING
-                        mysqli_query($connection, "update produtos set nome_prod = '$nome', img_prod = '$pic', id_ingrediente = '$output[0]', preco_custo = '$output[1]', qtd_ingrediente = '$qtd', valor_venda = '$val_venda', where nome_prod like \"$nome\" and id_ingrediente = $output[0];");
-                        
-                    }else{
-                        mysqli_query($connection, "insert into produtos(nome_prod, img_prod, id_ingrediente, preco_custo, qtd_ingrediente, valor_venda) values('$nome','$pic','$output[0]','$output[1]','$qtd','$val_venda');");
-                        
-                    }
-
-                        
-                }else{ //WORKING
-
-                    if($prod_exists){
-                        mysqli_query($connection, "delete from produtos where nome_prod like \"$nome\" and id_ingrediente = $output[0];");
-                        
-                    }
-
-                }
-
-            }
-        
-        }else{ //Cadastrar sem a imagem
-
-            $id_query = mysqli_query($connection, "select id_item, valor_custo from estoque;");
-                
-            while($output = mysqli_fetch_array($id_query)){
-
-                $prod_exists = !empty(mysqli_fetch_array(mysqli_query($connection, "select * from produtos where id_ingrediente = $output[0] and nome_prod like \"$nome\"")));
-
-                if(isset($_POST['qtd'.$output[0]])){
-                    
-                    $qtd = $_POST['qtd'.$output[0]];
-
-                    if($prod_exists){
-                        
-                        mysqli_query($connection, "update produtos set nome_prod = '$nome', preco_custo = '$output[1]', qtd_ingrediente = '$qtd', valor_venda = '$val_venda' where nome_prod like \"$nome\" and id_ingrediente = $output[0];");
-                        
-                    }else{
-                        mysqli_query($connection, "insert into produtos(nome_prod, id_ingrediente, preco_custo, qtd_ingrediente, valor_venda) values('$nome','$output[0]','$output[1]','$qtd','$val_venda');");
-                        
-                    }
-
-                        
-                }else{
-
-                    if($prod_exists){
-                        mysqli_query($connection, "delete from produtos where nome_prod like \"$nome\" and id_ingrediente = $output[0];");
-                        
-                    }
-
-                }
-
-            }
+        $id_query = mysqli_query($connection, "select id_item, valor_custo from estoque;");
             
+        while($output = mysqli_fetch_array($id_query)){
+
+            $prod_exists = !empty(mysqli_fetch_array(mysqli_query($connection, "select * from produtos where id_ingrediente = $output[0] and nome_prod like \"$nome_prod\"")));
+            
+            if(isset($_POST['qtd'.$output[0]])){
+                
+                $qtd = $_POST['qtd'.$output[0]];
+
+                if($prod_exists){
+                    mysqli_query($connection, "update produtos set nome_prod = '$nome', img_prod = '$pic', id_ingrediente = '$output[0]', preco_custo = '$output[1]', qtd_ingrediente = '$qtd', valor_venda = '$val_venda' where nome_prod like \"$nome_prod\" and id_ingrediente = $output[0];");
+                    
+                }else{
+                    mysqli_query($connection, "insert into produtos(nome_prod, img_prod, id_ingrediente, preco_custo, qtd_ingrediente, valor_venda) values('$nome','$pic','$output[0]','$output[1]','$qtd','$val_venda');");
+                    
+                }
+
+                    
+            }else{
+
+                if($prod_exists){
+                    mysqli_query($connection, "delete from produtos where nome_prod like \"$nome_prod\" and id_ingrediente = $output[0];");
+                    
+                }
+
+            }
         }
 
         mysqli_close($connection);
@@ -343,11 +307,7 @@
 
     }
 
-    //Recebe a solicitação de edição
-    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['atualizar'])){
-        edit();
-
-    }
+    
 
 ?>
 
@@ -460,6 +420,7 @@
 
                     document.getElementById('nome').value = '$values[0]';
                     document.getElementById('val_venda').value = '$values[1]';
+                    document.getElementById('nome_prod').value = '$values[0]';
             
             </script>";
 
@@ -474,7 +435,7 @@
             //WIP
 
         }
-        
+
         ?>
 
     </div>

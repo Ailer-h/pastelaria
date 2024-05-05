@@ -16,7 +16,7 @@
         $produto = $_POST['produto'];
         $descricao = $_POST['descricao'];
         $tel1 = $_POST['tel1'];
-        $tel2 = isset($_POST['tel2']) ? $tel2 = $_POST['tel2'] : null;
+        $tel2 = isset($_POST['tel2']) ? $_POST['tel2'] : null;
 
         include "utilities/mysql_connect.php";
 
@@ -247,7 +247,7 @@
 
         $info[0] = $_POST['nome'];
         $info[1] = $_POST['tel1'];
-        $info[2] = isset($_POST['tel2']) ? $tel2 = $_POST['tel2'] : null;
+        $info[2] = isset($_POST['tel2']) ? $_POST['tel2'] : null;
         $info[3] = $_POST['email'];
         $info[4] = $_POST['endereco'];
         $info[5] = $_POST['cnpj'];
