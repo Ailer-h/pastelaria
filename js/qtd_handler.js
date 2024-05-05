@@ -28,16 +28,12 @@ function calculateValue(label_id){
 
     let inputs = document.getElementsByTagName('input');
 
-    for(let i = 0; i < inputs.length; i++){
-        if(inputs[i].type.toLowerCase() == "number" && inputs[i].id.toLocaleLowerCase() != "val_venda" && inputs[i].value != "" ){
+    Array.from(inputs).forEach(e => {
+        let id = parseInt(e.id.toString().split('qtd')[1]);
+        let price = document.getElementById('lb' + id).textContent.split("(R$")[1].split("/")[0];
 
-            let id = parseInt(inputs[i].id.toString().split('qtd')[1]);
-            let price = document.getElementById('lb' + id).textContent.split("(R$")[1].split("/")[0];
-
-            total_value += (parseFloat(price) * parseFloat(inputs[i].value));
-
-        }
-    }
+        total_value += (parseFloat(price) * parseFloat(e.value));
+    });
 
     document.getElementById(label_id).textContent = "R$" + total_value.toFixed(2);
 

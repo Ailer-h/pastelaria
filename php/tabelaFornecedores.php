@@ -235,7 +235,7 @@
     //Funções das ações
     function delete_item($id){
         include "utilities/mysql_connect.php";
-        $query = mysqli_query($connection, "delete from fornecedores where id_fornecedor = $id;");
+        mysqli_query($connection, "delete from fornecedores where id_fornecedor = $id;");
         mysqli_close($connection);
 
         header("Location: tabelaFornecedores.php");
@@ -433,18 +433,12 @@
                     document.querySelector('#produto').value = '$values[8]';
                     document.getElementById('id').value = '$values[9]';
 
-                    document.getElementById('nome').disabled = true;
-                    document.getElementById('tel1').disabled = true;
-                    document.getElementById('tel2').disabled = true;
-                    document.getElementById('email').disabled = true;
-                    document.getElementById('endereco').disabled = true;
-                    document.getElementById('cnpj').disabled = true;
+                    Array.from(document.getElementsByTagName('input')).forEach(e => {
+                        e.disabled = true;
+                    });
                     
                     document.getElementById('descricao').disabled = true;
-
-                    document.getElementById('ramo').disabled = true;
                     document.querySelector('#produto').disabled = true;
-                    document.getElementById('id').disabled = true;
 
                     document.getElementById('atualizar').style.display = 'none';
                     document.getElementById('titulo-form').textContent = 'Informações';

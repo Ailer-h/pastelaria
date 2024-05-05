@@ -69,6 +69,26 @@
 
     }
 
+    function show_delbox(){
+        echo"<div class='center-absolute'>
+        <div class='delete-header'>
+            <img src='../images/icons/close.png' onclick='location.href = location.href'>
+        </div>
+        <div class='delete-form'>
+            <div style='display: flex; align-items: center; flex-direction: column;'>
+                <h1>Você deseja deletar as informações de</h1>
+                <h1 id='info'>[nome]</h1>
+            </div>
+        
+            <div class='btns'>
+                <form action='tabelaProdutos.php' method='post'><input type='hidden' name='nome_delete' id='id' value='0'><button class='del'>Deletar</button></form>
+                <a href='tabelaProdutos.php'><button class='cancel'>Cancelar</button></a>
+            </div>
+        </div>
+        </div>
+        ";
+    }
+
     function setProducts($nome_prod){
         include "utilities/mysql_connect.php";
         $query = mysqli_query($connection, "select id_item, nome_item, unidade_medida, valor_custo from estoque;");
@@ -117,7 +137,7 @@
                     <div class='r-one'>
                         <div style='display: flex; flex-direction: column;'>
                             <label for='nome'>Nome:</label>
-                            <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this); letters_js(this.value, this)' required>
+                            <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this);' required>
                         </div>
                         
                         <div style='display: flex; flex-direction: column;'>
@@ -133,7 +153,7 @@
                     </div>
 
                     <div class='r-two'>
-
+                        <h3>Ingredientes:</h3>
                             <div class='prod-grid'>";
 
                                     getProducts();
@@ -171,7 +191,7 @@
                     <div class='r-one'>
                         <div style='display: flex; flex-direction: column;'>
                             <label for='nome'>Nome:</label>
-                            <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this); letters_js(this.value, this)' required>
+                            <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this);' required>
                         </div>
                         
                         <div style='display: flex; flex-direction: column;'>
@@ -187,7 +207,7 @@
                     </div>
 
                     <div class='r-two'>
-
+                        <h3>Ingredientes:</h3>
                             <div class='prod-grid'>";
 
                                 setProducts($nome_prod);
@@ -196,12 +216,12 @@
 
                     </div>
 
-                    <input type='submit' name='atualizar' value='Atualizar'>
+                    <input type='submit' name='atualizar' id='atualizar' value='Atualizar'>
                 </div>
                 <div class='half-2'>
                     <div class='img-frame'><img class='img-thumbnail' id='img-thumbnail' src='data:image;base64,$img'></div>
                     <p id='img-filename' style='font-style: italic;'></p>
-                    <div class='img-input'>
+                    <div class='img-input' id='img-input'>
                         <label for='img' class='label'>Imagem do Produto</label>
                         <input type='file' name='image' id='img' accept='.jpg, .jpeg, .png' onchange='changePlaceholder(\"img-filename\", this.id, \"img-thumbnail\")'>
                     </div>
@@ -274,9 +294,14 @@
         
         include "utilities/mysql_connect.php";
 
-        $img = $_FILES['image']['size'] > 0 ? $_FILES['image'] : mysqli_fetch_array(mysqli_query($connection, "select img_prod from produtos where nome_prod like \"$nome_prod\";"))[0];
+        if($_FILES['image']['size'] > 0){
+            $img = $_FILES['image'];
+            $pic = base64_encode(file_get_contents(addslashes($img['tmp_name'])));
+        
+        }else{
+            $pic = mysqli_fetch_array(mysqli_query($connection, "select img_prod from produtos where nome_prod like \"$nome_prod\";"))[0];
 
-        $pic = base64_encode(file_get_contents(addslashes($img['tmp_name'])));
+        }
 
         $id_query = mysqli_query($connection, "select id_item, valor_custo from estoque;");
             
@@ -308,16 +333,28 @@
         }
 
         mysqli_close($connection);
+        header("Location: tabelaProdutos.php");
 
+    }
+
+    function delete_item($nome_prod){
+        include "utilities/mysql_connect.php";
+        mysqli_query($connection, "delete from produtos where nome_prod like \"$nome_prod\";");
+        mysqli_close($connection);
+
+        header("Location: tabelaProdutos.php");
     }
 
     //Recebe a solicitação de deleção
-    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_delete'])){
-        // delete_item($_POST['id_delete']);
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome_delete'])){
+        delete_item($_POST['nome_delete']);
 
     }
 
-    
+    //Recebe a solicitação de edição
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['atualizar'])){
+        edit($_POST['nome_prod']);
+    }
 
 ?>
 
@@ -411,14 +448,13 @@
 
     <div id="form-box">
         <?php
-        
+
         if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new-item'])){
             setForm(0,"","");
         
         }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome_edit'])){
 
             $id = $_POST['nome_edit'];
-            echo"<script>console.log('$id')</script>";
         
             include "utilities/mysql_connect.php";
 
@@ -434,18 +470,49 @@
 
             </script>";
 
-            $info_ingredients = mysqli_query($connection, "select id_ingrediente, qtd_ingrediente, nome_prod from produtos where nome_prod like \"$id\";");
-
             mysqli_close($connection);
         
         }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome_delete-confirmar'])){
-            //WIP
+            show_delbox();
+
+            $nome = $_POST['nome_delete-confirmar'];
+
+            echo"<script>
+
+                    document.getElementById('info').textContent = '$nome?';
+                    document.getElementById('id').value = '$nome';
+
+                </script>";
 
         }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome_info'])){
-            //WIP
+            
+            $id = $_POST['nome_info'];
+        
+            include "utilities/mysql_connect.php";
+
+            $values = mysqli_fetch_array(mysqli_query($connection, "select nome_prod, valor_venda, img_prod from produtos WHERE nome_prod like \"$id\" group by nome_prod;"));
+
+            setForm(1, $values[2],$values[0]);
+
+            echo"<script>
+
+                    document.getElementById('nome').value = '$values[0]';
+                    document.getElementById('val_venda').value = '$values[1]';
+                    document.getElementById('nome_prod').value = '$values[0]';
+
+                    Array.from(document.getElementsByTagName('input')).forEach(e => {
+                        e.disabled = true;
+                        if(e.type.toLowerCase() == 'checkbox'){ e.style.opacity = 0;}
+                    });
+
+                    document.getElementById('img-input').style.display = 'none';
+                    document.getElementById('atualizar').style.display = 'none';
+                    document.getElementById('titulo-form').textContent = 'Informações';
+
+            </script>";
 
         }
-        
+
         ?>
 
     </div>
