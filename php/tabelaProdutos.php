@@ -57,10 +57,10 @@
 
         while($output = mysqli_fetch_array($query)){
 
-            echo"<label for='check$output[0]'>$output[1] (R$$output[3]/$$output[2])</label>";
+            echo"<label id='lb$output[0]' for='check$output[0]'>$output[1] (R$$output[3]/$output[2])</label>";
             echo"<input type='checkbox' name='check$output[0]' id='check$output[0]' onchange='showInput(\"qtd$output[0]\", \"p$output[0]\")'>";
             echo"<div style='display: flex; gap: .4em;'>
-                    <input type='number' name='qtd$output[0]' id='qtd$output[0]' style='opacity: 0; width: 5em;' disabled>
+                    <input type='number' name='qtd$output[0]' id='qtd$output[0]' style='opacity: 0; width: 5em;' oninput='calculateValue(\"label_valor\")' disabled>
                     <p id='p$output[0]' style='opacity: 0;'>$output[2]</p>
                 </div>";
         }
@@ -79,19 +79,19 @@
 
             if(empty($check)){
 
-                echo"<label for='check$output[0]'>$output[1] (R$$output[3]/$$output[2])</label>";
+                echo"<label id='lb$output[0]' for='check$output[0]'>$output[1] (R$$output[3]/$output[2])</label>";
                 echo"<input type='checkbox' name='check$output[0]' id='check$output[0]' onchange='showInput(\"qtd$output[0]\", \"p$output[0]\")'>";
                 echo"<div style='display: flex; gap: .4em;'>
-                        <input type='number' name='qtd$output[0]' id='qtd$output[0]' style='opacity: 0; width: 5em;' disabled>
+                        <input type='number' name='qtd$output[0]' id='qtd$output[0]' style='opacity: 0; width: 5em;' oninput='calculateValue(\"label_valor\")' disabled>
                         <p id='p$output[0]' style='opacity: 0;'>$output[2]</p>
                     </div>";
             
             }else{
 
-                echo"<label for='check$output[0]'>$output[1] (R$$output[3]/$$output[2])</label>";
+                echo"<label id='lb$output[0]' for='check$output[0]'>$output[1] (R$$output[3]/$output[2])</label>";
                 echo"<input type='checkbox' name='check$output[0]' id='check$output[0]' onchange='showInput(\"qtd$output[0]\", \"p$output[0]\")' checked>";
                 echo"<div style='display: flex; gap: .4em;'>
-                        <input type='number' name='qtd$output[0]' id='qtd$output[0]' style='opacity: 1; width: 5em;' value='$check[1]' required>
+                        <input type='number' name='qtd$output[0]' id='qtd$output[0]' style='opacity: 1; width: 5em;' value='$check[1]' oninput='calculateValue(\"label_valor\")' required>
                         <p id='p$output[0]' style='opacity: 1;'>$output[2]</p>
                     </div>";
 
@@ -117,12 +117,17 @@
                     <div class='r-one'>
                         <div style='display: flex; flex-direction: column;'>
                             <label for='nome'>Nome:</label>
-                            <input type='text' name='nome' id='nome' required>
+                            <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this); letters_js(this.value, this)' required>
                         </div>
                         
                         <div style='display: flex; flex-direction: column;'>
                             <label for='val_venda'>Valor de Venda:</label>
                             <input type='number' name='val_venda' id='val_venda' min='0.0001' step='any' required>
+                        </div>
+
+                        <div style='display: flex; flex-direction: column;'>
+                            <p>Valor de Custo:</p>
+                            <p id='label_valor'>R$0.00</p>
                         </div>
 
                     </div>
@@ -166,12 +171,17 @@
                     <div class='r-one'>
                         <div style='display: flex; flex-direction: column;'>
                             <label for='nome'>Nome:</label>
-                            <input type='text' name='nome' id='nome' required>
+                            <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this); letters_js(this.value, this)' required>
                         </div>
                         
                         <div style='display: flex; flex-direction: column;'>
                             <label for='val_venda'>Valor de Venda:</label>
                             <input type='number' name='val_venda' id='val_venda' min='0.0001' step='any' required>
+                        </div>
+
+                        <div style='display: flex; flex-direction: column;'>
+                            <p>Valor de Custo:</p>
+                            <p id='label_valor'>R$0.00</p>
                         </div>
 
                     </div>
@@ -421,7 +431,7 @@
                     document.getElementById('nome').value = '$values[0]';
                     document.getElementById('val_venda').value = '$values[1]';
                     document.getElementById('nome_prod').value = '$values[0]';
-            
+
             </script>";
 
             $info_ingredients = mysqli_query($connection, "select id_ingrediente, qtd_ingrediente, nome_prod from produtos where nome_prod like \"$id\";");
@@ -435,7 +445,7 @@
             //WIP
 
         }
-
+        
         ?>
 
     </div>
@@ -443,5 +453,5 @@
 </body>
 <script src="../js/masks.js"></script> <!-- Pacote de máscaras -->
 <script src="../js/imgPlaceholder_handler.js"></script> <!-- Função para a preview da imagem selecionada -->
-<script src="../js/show_qtdInput.js"></script> <!-- Mostrar o input de quantidade -->
+<script src="../js/qtd_handler.js"></script> <!-- Mostrar o input de quantidade -->
 </html>

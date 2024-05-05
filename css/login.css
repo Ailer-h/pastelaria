@@ -82,7 +82,7 @@ body{
 
     cursor: pointer;
     
-    background: linear-gradient(90deg, rgb(252, 196, 67) 0%, rgb(248, 227, 150) 50%, rgb(252, 196, 67) 100%);
+    background-color: #fcc443;
 
     width: 4em;
 
@@ -91,8 +91,6 @@ body{
 }
 
 .form-login input[type="submit"]:hover{
-
-    background: linear-gradient(90deg, rgb(252, 196, 67) 0%, rgb(248, 227, 150) 35%, rgb(248, 227, 150) 65%, rgb(252, 196, 67) 100%);
 
     transform: scale(1.15);
     transition: 200ms;
