@@ -192,7 +192,7 @@
                     <p id='img-filename' style='font-style: italic;'></p>
                     <div class='img-input'>
                         <label for='img' class='label'>Imagem do Produto</label>
-                        <input type='file' name='image' id='img' accept='.jpg, .jpeg, .png' onchange='changePlaceholder(\"img-filename\", this.id, \"img-thumbnail\")' required>
+                        <input type='file' name='image' id='img' accept='.jpg, .jpeg, .png' onchange='changePlaceholder(\"img-filename\", this.id, \"img-thumbnail\")'>
                     </div>
                 </div>
 
@@ -256,8 +256,85 @@
     }
 
     //Funções das ações
-    function edit($nome_edit){
+    function edit(){
         
+        $nome = $_POST['nome'];
+        $val_venda = $_POST['val_venda'];
+        $img = $_FILES['image']['size'] > 0 ? $_FILES['image'] : NULL;
+
+        include "utilities/mysql_connect.php";
+
+        if($img != NULL){ //Cadastrar com a imagem
+
+            $pic = base64_encode(file_get_contents(addslashes($img['tmp_name'])));
+                
+            $id_query = mysqli_query($connection, "select id_item, valor_custo from estoque;");
+                
+            while($output = mysqli_fetch_array($id_query)){
+
+                $prod_exists = !empty(mysqli_fetch_array(mysqli_query($connection, "select * from produtos where id_ingrediente = $output[0] and nome_prod like \"$nome\"")));
+                
+                if(isset($_POST['qtd'.$output[0]])){
+                    
+                    $qtd = $_POST['qtd'.$output[0]];
+
+                    if($prod_exists){ //WORKING
+                        mysqli_query($connection, "update produtos set nome_prod = '$nome', img_prod = '$pic', id_ingrediente = '$output[0]', preco_custo = '$output[1]', qtd_ingrediente = '$qtd', valor_venda = '$val_venda', where nome_prod like \"$nome\" and id_ingrediente = $output[0];");
+                        
+                    }else{
+                        mysqli_query($connection, "insert into produtos(nome_prod, img_prod, id_ingrediente, preco_custo, qtd_ingrediente, valor_venda) values('$nome','$pic','$output[0]','$output[1]','$qtd','$val_venda');");
+                        
+                    }
+
+                        
+                }else{ //WORKING
+
+                    if($prod_exists){
+                        mysqli_query($connection, "delete from produtos where nome_prod like \"$nome\" and id_ingrediente = $output[0];");
+                        
+                    }
+
+                }
+
+            }
+        
+        }else{ //Cadastrar sem a imagem
+
+            $id_query = mysqli_query($connection, "select id_item, valor_custo from estoque;");
+                
+            while($output = mysqli_fetch_array($id_query)){
+
+                $prod_exists = !empty(mysqli_fetch_array(mysqli_query($connection, "select * from produtos where id_ingrediente = $output[0] and nome_prod like \"$nome\"")));
+
+                if(isset($_POST['qtd'.$output[0]])){
+                    
+                    $qtd = $_POST['qtd'.$output[0]];
+
+                    if($prod_exists){
+                        
+                        mysqli_query($connection, "update produtos set nome_prod = '$nome', preco_custo = '$output[1]', qtd_ingrediente = '$qtd', valor_venda = '$val_venda' where nome_prod like \"$nome\" and id_ingrediente = $output[0];");
+                        
+                    }else{
+                        mysqli_query($connection, "insert into produtos(nome_prod, id_ingrediente, preco_custo, qtd_ingrediente, valor_venda) values('$nome','$output[0]','$output[1]','$qtd','$val_venda');");
+                        
+                    }
+
+                        
+                }else{
+
+                    if($prod_exists){
+                        mysqli_query($connection, "delete from produtos where nome_prod like \"$nome\" and id_ingrediente = $output[0];");
+                        
+                    }
+
+                }
+
+            }
+            
+        }
+
+        mysqli_close($connection);
+
     }
 
     //Recebe a solicitação de deleção
@@ -268,7 +345,7 @@
 
     //Recebe a solicitação de edição
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['atualizar'])){
-        // edit($_POST['id']);
+        edit();
 
     }
 
