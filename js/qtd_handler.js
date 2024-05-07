@@ -29,10 +29,13 @@ function calculateValue(label_id){
     let inputs = document.getElementsByTagName('input');
 
     Array.from(inputs).forEach(e => {
-        let id = parseInt(e.id.toString().split('qtd')[1]);
-        let price = document.getElementById('lb' + id).textContent.split("(R$")[1].split("/")[0];
+        if(e.type.toLowerCase() == "number" && e.id.toLocaleLowerCase() != "val_venda" && e.value != ""){
 
-        total_value += (parseFloat(price) * parseFloat(e.value));
+            let id = parseInt(e.id.toString().split('qtd')[1]);
+            let price = document.getElementById('lb' + id).textContent.split("(R$")[1].split("/")[0];
+            
+            total_value += (parseFloat(price) * parseFloat(e.value));
+        }
     });
 
     document.getElementById(label_id).textContent = "R$" + total_value.toFixed(2);
