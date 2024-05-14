@@ -8,6 +8,10 @@
     font-family: "Kanit", Arial, Helvetica, sans-serif;
 
 }
+
+body{
+    overflow-y: hidden;
+}
 /* Fim das tags comuns */
 
 /* Navbar */
