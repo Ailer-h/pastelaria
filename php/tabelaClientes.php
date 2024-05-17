@@ -157,6 +157,7 @@
             <img src='../images/icons/close.png' id='close-register' onclick='location.href = location.href'>
         </div>
         <form action='tabelaClientes.php' method='post'>
+            <input type='hidden' name='id' id='id'>
             <div class='form-holder'>
                 <div class='half-1'>
                 <div class='r-one'>
@@ -227,19 +228,19 @@
 
         $info = [];
 
-        $info[0] = $_POST['cli_nome'];
-        $info[1] = $_POST['cli_cel'];
-        $info[2] = $_POST['cli_email'];
-        $info[3] = $_POST['cli_endereco'];
-        $info[4] = $_POST['cli_cpf'];
-        $info[5] = $_POST['cli_rg'];
-        $info[6] = $_POST['cli_descricao'];
+        $info[0] = $_POST['nome'];
+        $info[1] = $_POST['tel'];
+        $info[2] = $_POST['email'];
+        $info[3] = $_POST['endereco'];
+        $info[4] = $_POST['cpf'];
+        $info[5] = $_POST['rg'];
+        $info[6] = $_POST['descricao'];
 
         include "utilities/mysql_connect.php";
-        mysqli_query($connection, "update clientes set cli_nome='$info[0]', cli_cel='$info[1]', cli_email='$info[2]', cli_endereco='$info[3]', cli_cpf='$info[4]', cli_rg='$info[5]', cli_descricao='$info[6]', where cli_id=$id");
+        mysqli_query($connection, "update clientes set cli_nome='$info[0]', cli_cel='$info[1]', cli_email='$info[2]', cli_endereco='$info[3]', cli_cpf='$info[4]', cli_rg='$info[5]', cli_descricao='$info[6]' where cli_id=$id");
         mysqli_close($connection);
 
-        header("Location: tabelaClientes.php");
+        // header("Location: tabelaClientes.php");
     }
 
     //Recebe a solicitação de deleção
@@ -367,6 +368,8 @@
                     document.getElementById('rg').value = '$values[5]';
                     
                     document.getElementById('descricao').value = '$values[6]';
+
+                    document.getElementById('id').value = $id;
 
                 </script>";
                 

@@ -34,7 +34,7 @@
 
         while($output = mysqli_fetch_array($query)){
 
-            $produto = mysqli_fetch_array(mysqli_query($connection, "select nome_item from estoque where id_item=$output[5]"))[0];
+            $produto = mysqli_fetch_array(mysqli_query($connection, "select nome_item from estoque where id_item=$output[4]"))[0];
 
             echo"<tr class='normal-row'>";
 
@@ -155,7 +155,7 @@
                         <div class='half-2'>
                             <div style='display: flex; flex-direction: column;'>
                                 <label for='descricao'>Descrição:</label>
-                                <textarea name='descricao' id='descricao' cols='30' rows='20' spellcheck='true' oninput='noBackslashes(this.value, this)' requied></textarea>
+                                <textarea name='descricao' id='descricao' cols='30' rows='20' spellcheck='true' oninput='noBackslashes(this.value, this)'></textarea>
                             </div>
                         </div>
                     </div>
@@ -222,7 +222,7 @@
                 <div class='half-2'>
                     <div style='display: flex; flex-direction: column;'>
                         <label for='descricao'>Descrição:</label>
-                        <textarea name='descricao' id='descricao' cols='30' rows='20' spellcheck='true' oninput='noBackslashes(this.value, this)' requied></textarea>
+                        <textarea name='descricao' id='descricao' cols='30' rows='20' spellcheck='true' oninput='noBackslashes(this.value, this)'></textarea>
                     </div>
                 </div>
             </div>
