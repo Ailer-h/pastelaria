@@ -34,7 +34,7 @@
 
         while($output = mysqli_fetch_array($query)){
 
-            $produto = mysqli_fetch_array(mysqli_query($connection, "select nome_item from estoque where id_item=$output[4]"))[0];
+            $produto = mysqli_fetch_array(mysqli_query($connection, "select nome_item from estoque where id_item=$output[5]"))[0];
 
             echo"<tr class='normal-row'>";
 
@@ -293,7 +293,7 @@
 
         <h1>Fornecedores</h1>
         <div class="menu">
-            <button>Produtos</button>
+            <a href="tabelaProdutos.php"><button>Produtos</button></a>
             <button>Pedidos</button>
             
             <div class="user-area">

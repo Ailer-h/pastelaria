@@ -377,7 +377,6 @@
 
         <h1>Produtos</h1>
         <div class="menu">
-            <button>Produtos</button>
             <button>Pedidos</button>
 
             <div class="user-area">

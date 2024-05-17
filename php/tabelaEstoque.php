@@ -263,18 +263,10 @@
 
         include "utilities/mysql_connect.php";
 
-        $search_nome = mysqli_fetch_array(mysqli_query($connection, "select nome_item from estoque where nome_item like '$info[0]'"));
-
-        if(empty($search_nome)){
+        $query = mysqli_query($connection, "update estoque set nome_item='$info[0]', data_vencimento='$info[1]', valor_custo='$info[2]', unidade_medida='$info[3]', qtd='$info[4]', qtd_padrao='$info[5]' where id_item=$id;");
+        mysqli_close($connection);
             
-            $query = mysqli_query($connection, "update estoque set nome_item='$info[0]', data_vencimento='$info[1]', valor_custo='$info[2]', unidade_medida='$info[3]', qtd='$info[4]', qtd_padrao='$info[5]' where id_item=$id;");
-            mysqli_close($connection);
-            
-            header("Location: tabelaEstoque.php");
-            
-        }else{
-            echo"<script>alert('Matéria prima já cadastrada')</script>";
-        }
+        header("Location: tabelaEstoque.php");
     }
 
     //Recebe a solicitação de deleção
@@ -308,7 +300,7 @@
 
         <h1>Estoque</h1>
         <div class="menu">
-            <button>Produtos</button>
+            <a href="tabelaProdutos.php"><button>Produtos</button></a>
             <button>Pedidos</button>
             
             <div class="user-area">
