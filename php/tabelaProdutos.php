@@ -13,38 +13,32 @@
         $nome = $_POST['nome'];
         $val_venda = $_POST['val_venda'];
         $img = $_FILES['image'];
-        
-        $search_nome = mysqli_fetch_array(mysqli_query($connection, "select nome_prod from produtos where nome_prod like '$nome' group by nome_prod"));
-        
-        if(empty($search_nome)){
 
-            if($img != NULL){
-                
-                $pic = base64_encode(file_get_contents(addslashes($img['tmp_name'])));
-                
-                $id_query = mysqli_query($connection, "select id_item, valor_custo from estoque;");
-                
-                while($output = mysqli_fetch_array($id_query)){
+        if($img != NULL){
+            
+            $pic = base64_encode(file_get_contents(addslashes($img['tmp_name'])));
+            
+            mysqli_query($connection, "insert into produtos(nome_prod, img_prod, valor_venda) values ('$nome','$pic','$val_venda');");
+            $id_prod = mysqli_fetch_array(mysqli_query($connection, "select id_prod from produtos order by id_prod desc;"))[0];
 
-                    if(isset($_POST['qtd'.$output[0]])){
-                        
-                        $qtd = $_POST['qtd'.$output[0]];
-                        
-                        $query = mysqli_query($connection, "insert into produtos(nome_prod, img_prod, id_ingrediente, preco_custo, qtd_ingrediente, valor_venda) values('$nome','$pic','$output[0]','$output[1]','$qtd','$val_venda')");
-                        
-                    }
+            $query = mysqli_query($connection, "select id_item, valor_custo from estoque;");
+            
+            while($output = mysqli_fetch_array($query)){
+
+                if(isset($_POST['qtd'.$output[0]])){
+                    
+                    $qtd = $_POST['qtd'.$output[0]];
+                    
+                    mysqli_query($connection, "insert into ingredientes_prod(id_ingrediente, qtd_ingrediente, preco_ingrediente, id_produto) values('$output[0]', '$qtd', '$output[1]','$id_prod')");
                     
                 }
                 
-                mysqli_close($connection);
-                
-                header("Location: tabelaProdutos.php");
-                
             }
             
-        }else{
-            echo"<script>alert('Produto já existe')</script>";
-        
+            mysqli_close($connection);
+            
+            header("Location: tabelaProdutos.php");
+            
         }
 
 
@@ -81,7 +75,7 @@
             </div>
         
             <div class='btns'>
-                <form action='tabelaProdutos.php' method='post'><input type='hidden' name='nome_delete' id='id' value='0'><button class='del'>Deletar</button></form>
+                <form action='tabelaProdutos.php' method='post'><input type='hidden' name='id_delete' id='id' value='0'><button class='del'>Deletar</button></form>
                 <a href='tabelaProdutos.php'><button class='cancel'>Cancelar</button></a>
             </div>
         </div>
@@ -89,13 +83,13 @@
         ";
     }
 
-    function setProducts($nome_prod){
+    function setProducts($id){
         include "utilities/mysql_connect.php";
         $query = mysqli_query($connection, "select id_item, nome_item, unidade_medida, valor_custo from estoque;");
 
         while($output = mysqli_fetch_array($query)){
 
-            $check = mysqli_fetch_array(mysqli_query($connection, "select id_ingrediente, qtd_ingrediente, nome_prod from produtos where nome_prod like \"$nome_prod\" and id_ingrediente = $output[0];"));
+            $check = mysqli_fetch_array(mysqli_query($connection, "select id_ingrediente, qtd_ingrediente, id from produtos where id like \"$id\" and id_ingrediente = $output[0];"));
 
             if(empty($check)){
 
@@ -122,7 +116,7 @@
         mysqli_close($connection);
     }
 
-    function setForm($form_id,$img,$nome_prod){
+    function setForm($form_id,$img,$id){
 
         if($form_id == 0){
             echo"<div class='center-absolute'>
@@ -131,7 +125,7 @@
                 <img src='../images/icons/close.png' id='close-register' onclick='location.href = location.href'>
             </div>
             <form action='tabelaProdutos.php' method='post' enctype='multipart/form-data'>
-            <input type='hidden' name='name_id' id='name_id'>
+            <input type='hidden' name='id' id='id'>
             <div class='form-holder'>
                 <div class='half-1'>
                     <div class='r-one'>
@@ -185,7 +179,7 @@
                 <img src='../images/icons/close.png' id='close-register' onclick='location.href = location.href'>
             </div>
             <form action='tabelaProdutos.php' method='post' enctype='multipart/form-data'>
-            <input type='hidden' name='nome_prod' id='nome_prod'>
+            <input type='hidden' name='id' id='id'>
             <div class='form-holder'>
                 <div class='half-1'>
                     <div class='r-one'>
@@ -210,7 +204,7 @@
                         <h3>Ingredientes:</h3>
                             <div class='prod-grid'>";
 
-                                setProducts($nome_prod);
+                                setProducts($id);
                             
                             echo"</div>
 
@@ -236,17 +230,17 @@
     }
 
     //Funções usadas na tabela
-    function getIngredients($nome){
+    function getIngredients($id){
 
         $str_ingredients = "";
 
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "select prod.id_ingrediente, prod.qtd_ingrediente, prod.nome_prod, est.nome_item, est.unidade_medida from produtos prod, estoque est where prod.nome_prod like \"$nome\" AND est.id_item = prod.id_ingrediente;");
+        $query = mysqli_query($connection, "select est.nome_item, est.unidade_medida, ig.id_ingrediente, ig.qtd_ingrediente from estoque est, produtos prod, ingredientes_prod ig WHERE ig.id_produto = $id and ig.id_ingrediente = est.id_item;");
 
         while($output = mysqli_fetch_array($query)){
 
-            $str_ingredients = $str_ingredients."$output[1]$output[4] $output[3], ";
+            $str_ingredients = $str_ingredients."$output[3]$output[1] $output[0], ";
 
         }
 
@@ -260,23 +254,26 @@
 
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "select nome_prod, qtd_ingrediente, sum(preco_custo*qtd_ingrediente), valor_venda from produtos where nome_prod like \"%$search%\" group by nome_prod;");
+        $query = mysqli_query($connection, "select prod.nome_prod, sum(ig.preco_ingrediente*ig.qtd_ingrediente), prod.valor_venda, prod.id_prod from produtos prod, ingredientes_prod ig where ig.id_produto = prod.id_prod and prod.nome_prod like \"%$search%\";");
 
         while($output = mysqli_fetch_array($query)){
+
+            $preco = sprintf("%1$.2f", $output[2]);
+            $val = sprintf("%1$.2f", $output[3]);
 
             echo"<tr class='normal-row'>";
 
             echo"<td>$output[0]</td>";
             echo"<td style='width: 20em;'>";
-            getIngredients($output[0]);
+            getIngredients($output[3]);
             echo"</td>";
-            echo"<td>$output[2]</td>";
-            echo"<td>$output[3]</td>";
+            echo"<td>R$$preco</td>";
+            echo"<td>R$$val</td>";
 
             echo"<td><div style='display: flex; justify-content: center; gap: 1em;'>";
-            echo"<form action='tabelaProdutos.php' method='post'><input type='hidden' name='nome_info' value='$output[0]'><button name='get_info' type='submit'><img src='../images/icons/info.png'></button></form>";
-            echo"<form action='tabelaProdutos.php' method='post'><input type='hidden' name='nome_delete-confirmar' value='$output[0]'><button name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";
-            echo"<form action='tabelaProdutos.php' method='post'><input type='hidden' name='nome_edit' value='$output[0]'><button name='edit' type='submit'><img src='../images/icons/edit.png'></button></form>";
+            echo"<form action='tabelaProdutos.php' method='post'><input type='hidden' name='id_info' value='$output[3]'><button name='get_info' type='submit'><img src='../images/icons/info.png'></button></form>";
+            echo"<form action='tabelaProdutos.php' method='post'><input type='hidden' name='id_delete-confirmar' value='$output[3]'><button name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";
+            echo"<form action='tabelaProdutos.php' method='post'><input type='hidden' name='id_info' value='$output[3]'><button name='edit' type='submit'><img src='../images/icons/edit.png'></button></form>";
             echo"</div></td></tr>";
 
             echo"</tr>";
@@ -287,7 +284,7 @@
     }
 
     //Funções das ações
-    function edit($nome_prod){
+    function edit($id){
         
         $nome = $_POST['nome'];
         $val_venda = $_POST['val_venda'];
@@ -299,7 +296,7 @@
             $pic = base64_encode(file_get_contents(addslashes($img['tmp_name'])));
         
         }else{
-            $pic = mysqli_fetch_array(mysqli_query($connection, "select img_prod from produtos where nome_prod like \"$nome_prod\";"))[0];
+            $pic = mysqli_fetch_array(mysqli_query($connection, "select img_prod from produtos where id like \"$id\";"))[0];
 
         }
 
@@ -307,17 +304,17 @@
             
         while($output = mysqli_fetch_array($id_query)){
 
-            $prod_exists = !empty(mysqli_fetch_array(mysqli_query($connection, "select * from produtos where id_ingrediente = $output[0] and nome_prod like \"$nome_prod\"")));
+            $prod_exists = !empty(mysqli_fetch_array(mysqli_query($connection, "select * from produtos where id_ingrediente = $output[0] and id like \"$id\"")));
             
             if(isset($_POST['qtd'.$output[0]])){
                 
                 $qtd = $_POST['qtd'.$output[0]];
 
                 if($prod_exists){
-                    mysqli_query($connection, "update produtos set nome_prod = '$nome', img_prod = '$pic', id_ingrediente = '$output[0]', preco_custo = '$output[1]', qtd_ingrediente = '$qtd', valor_venda = '$val_venda' where nome_prod like \"$nome_prod\" and id_ingrediente = $output[0];");
+                    mysqli_query($connection, "update produtos set id = '$nome', img_prod = '$pic', id_ingrediente = '$output[0]', preco_custo = '$output[1]', qtd_ingrediente = '$qtd', valor_venda = '$val_venda' where id like \"$id\" and id_ingrediente = $output[0];");
                     
                 }else{
-                    mysqli_query($connection, "insert into produtos(nome_prod, img_prod, id_ingrediente, preco_custo, qtd_ingrediente, valor_venda) values('$nome','$pic','$output[0]','$output[1]','$qtd','$val_venda');");
+                    mysqli_query($connection, "insert into produtos(id, img_prod, id_ingrediente, preco_custo, qtd_ingrediente, valor_venda) values('$nome','$pic','$output[0]','$output[1]','$qtd','$val_venda');");
                     
                 }
 
@@ -325,7 +322,7 @@
             }else{
 
                 if($prod_exists){
-                    mysqli_query($connection, "delete from produtos where nome_prod like \"$nome_prod\" and id_ingrediente = $output[0];");
+                    mysqli_query($connection, "delete from produtos where id like \"$id\" and id_ingrediente = $output[0];");
                     
                 }
 
@@ -337,23 +334,23 @@
 
     }
 
-    function delete_item($nome_prod){
+    function delete_item($id){
         include "utilities/mysql_connect.php";
-        mysqli_query($connection, "delete from produtos where nome_prod like \"$nome_prod\";");
+        mysqli_query($connection, "delete from produtos where id like \"$id\";");
         mysqli_close($connection);
 
         header("Location: tabelaProdutos.php");
     }
 
     //Recebe a solicitação de deleção
-    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome_delete'])){
-        delete_item($_POST['nome_delete']);
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_delete'])){
+        delete_item($_POST['id_delete']);
 
     }
 
     //Recebe a solicitação de edição
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['atualizar'])){
-        edit($_POST['nome_prod']);
+        edit($_POST['id']);
     }
 
 ?>
@@ -451,13 +448,13 @@
         if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new-item'])){
             setForm(0,"","");
         
-        }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome_edit'])){
+        }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_edit'])){
 
-            $id = $_POST['nome_edit'];
+            $id = $_POST['id_edit'];
         
             include "utilities/mysql_connect.php";
 
-            $values = mysqli_fetch_array(mysqli_query($connection, "select nome_prod, valor_venda, img_prod from produtos WHERE nome_prod like \"$id\" group by nome_prod;"));
+            $values = mysqli_fetch_array(mysqli_query($connection, "select id, valor_venda, img_prod from produtos WHERE id like \"$id\" group by id;"));
 
             setForm(1, $values[2],$values[0]);
 
@@ -465,16 +462,16 @@
 
                     document.getElementById('nome').value = '$values[0]';
                     document.getElementById('val_venda').value = '$values[1]';
-                    document.getElementById('nome_prod').value = '$values[0]';
+                    document.getElementById('id').value = '$values[0]';
 
             </script>";
 
             mysqli_close($connection);
         
-        }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome_delete-confirmar'])){
+        }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_delete-confirmar'])){
             show_delbox();
 
-            $nome = $_POST['nome_delete-confirmar'];
+            $nome = $_POST['id_delete-confirmar'];
 
             echo"<script>
 
@@ -483,13 +480,15 @@
 
                 </script>";
 
-        }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome_info'])){
+        }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_info'])){
             
-            $id = $_POST['nome_info'];
+            echo"<script>console.log('AAAAAAA')</script>";
+
+            $id = $_POST['id_info'];
         
             include "utilities/mysql_connect.php";
 
-            $values = mysqli_fetch_array(mysqli_query($connection, "select nome_prod, valor_venda, img_prod from produtos WHERE nome_prod like \"$id\" group by nome_prod;"));
+            $values = mysqli_fetch_array(mysqli_query($connection, "select id, valor_venda, img_prod from produtos WHERE id like \"$id\" group by id;"));
 
             setForm(1, $values[2],$values[0]);
 
@@ -497,7 +496,7 @@
 
                     document.getElementById('nome').value = '$values[0]';
                     document.getElementById('val_venda').value = '$values[1]';
-                    document.getElementById('nome_prod').value = '$values[0]';
+                    document.getElementById('id').value = '$values[0]';
 
                     Array.from(document.getElementsByTagName('input')).forEach(e => {
                         e.disabled = true;
