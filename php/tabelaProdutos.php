@@ -89,10 +89,11 @@
 
         while($output = mysqli_fetch_array($query)){
 
-            $check = mysqli_fetch_array(mysqli_query($connection, "select id_ingrediente, qtd_ingrediente, id from produtos where id like \"$id\" and id_ingrediente = $output[0];"));
+            $check = mysqli_fetch_array(mysqli_query($connection, "select id_ingrediente, qtd_ingrediente from ingredientes_prod where id_produto = $id and id_ingrediente = $output[0];"));
+            
 
             if(empty($check)){
-
+                // echo"<script>console.log('empty')</script>";
                 echo"<label id='lb$output[0]' for='check$output[0]'>$output[1] (R$$output[3]/$output[2])</label>";
                 echo"<input type='checkbox' name='check$output[0]' id='check$output[0]' onchange='showInput(\"qtd$output[0]\", \"p$output[0]\")'>";
                 echo"<div style='display: flex; gap: .4em;'>
@@ -101,7 +102,7 @@
                     </div>";
             
             }else{
-
+                // echo"<script>console.log('$check[0]')</script>";
                 echo"<label id='lb$output[0]' for='check$output[0]'>$output[1] (R$$output[3]/$output[2])</label>";
                 echo"<input type='checkbox' name='check$output[0]' id='check$output[0]' onchange='showInput(\"qtd$output[0]\", \"p$output[0]\")' checked>";
                 echo"<div style='display: flex; gap: .4em;'>
@@ -236,7 +237,7 @@
 
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "select est.nome_item, est.unidade_medida, ig.id_ingrediente, ig.qtd_ingrediente from estoque est, produtos prod, ingredientes_prod ig WHERE ig.id_produto = $id and ig.id_ingrediente = est.id_item;");
+        $query = mysqli_query($connection, "select est.nome_item, est.unidade_medida, ig.id_ingrediente, ig.qtd_ingrediente from estoque est, produtos prod, ingredientes_prod ig WHERE ig.id_produto = $id and ig.id_ingrediente = est.id_item group by ig.id_ingrediente;");
 
         while($output = mysqli_fetch_array($query)){
 
@@ -254,17 +255,17 @@
 
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "select prod.nome_prod, sum(ig.preco_ingrediente*ig.qtd_ingrediente), prod.valor_venda, prod.id_prod from produtos prod, ingredientes_prod ig where ig.id_produto = prod.id_prod and prod.nome_prod like \"%$search%\";");
+        $query = mysqli_query($connection, "select prod.nome_prod, sum(ig.preco_ingrediente*ig.qtd_ingrediente), prod.valor_venda, prod.id_prod from produtos prod, ingredientes_prod ig where ig.id_produto = prod.id_prod and prod.nome_prod like \"%$search%\" group by prod.id_prod;");
 
         while($output = mysqli_fetch_array($query)){
 
-            $preco = sprintf("%1$.2f", $output[2]);
-            $val = sprintf("%1$.2f", $output[3]);
+            $preco = sprintf("%1$.2f", $output[1]);
+            $val = sprintf("%1$.2f", $output[2]);
 
             echo"<tr class='normal-row'>";
 
             echo"<td>$output[0]</td>";
-            echo"<td style='width: 20em;'>";
+            echo"<td style='width: 20em; padding-left: .5em; padding-right: .5em;'>";
             getIngredients($output[3]);
             echo"</td>";
             echo"<td>R$$preco</td>";
@@ -273,7 +274,7 @@
             echo"<td><div style='display: flex; justify-content: center; gap: 1em;'>";
             echo"<form action='tabelaProdutos.php' method='post'><input type='hidden' name='id_info' value='$output[3]'><button name='get_info' type='submit'><img src='../images/icons/info.png'></button></form>";
             echo"<form action='tabelaProdutos.php' method='post'><input type='hidden' name='id_delete-confirmar' value='$output[3]'><button name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";
-            echo"<form action='tabelaProdutos.php' method='post'><input type='hidden' name='id_info' value='$output[3]'><button name='edit' type='submit'><img src='../images/icons/edit.png'></button></form>";
+            echo"<form action='tabelaProdutos.php' method='post'><input type='hidden' name='id_edit' value='$output[3]'><button name='edit' type='submit'><img src='../images/icons/edit.png'></button></form>";
             echo"</div></td></tr>";
 
             echo"</tr>";
@@ -296,25 +297,32 @@
             $pic = base64_encode(file_get_contents(addslashes($img['tmp_name'])));
         
         }else{
-            $pic = mysqli_fetch_array(mysqli_query($connection, "select img_prod from produtos where id like \"$id\";"))[0];
+            $pic = mysqli_fetch_array(mysqli_query($connection, "select img_prod from produtos where id_prod = $id;"))[0];
 
         }
+
+        mysqli_query($connection, "update produtos set nome_prod = '$nome', img_prod = '$pic', valor_venda = '$val_venda' where id_prod = $id;");
 
         $id_query = mysqli_query($connection, "select id_item, valor_custo from estoque;");
             
         while($output = mysqli_fetch_array($id_query)){
 
-            $prod_exists = !empty(mysqli_fetch_array(mysqli_query($connection, "select * from produtos where id_ingrediente = $output[0] and id like \"$id\"")));
+            $prod_exists = !empty(mysqli_fetch_array(mysqli_query($connection, "select id from ingredientes_prod where id_ingrediente = $output[0] and id_produto = $id;")));
             
+            echo"<script>console.log('$prod_exists')</script>";
+
             if(isset($_POST['qtd'.$output[0]])){
                 
                 $qtd = $_POST['qtd'.$output[0]];
 
                 if($prod_exists){
-                    mysqli_query($connection, "update produtos set id = '$nome', img_prod = '$pic', id_ingrediente = '$output[0]', preco_custo = '$output[1]', qtd_ingrediente = '$qtd', valor_venda = '$val_venda' where id like \"$id\" and id_ingrediente = $output[0];");
+            echo"<script>console.log('prod_exists')</script>";
+                    mysqli_query($connection, "update ingredientes_prod set qtd_ingrediente = '$qtd' where id_produto = $id and id_ingrediente = $output[0];");
                     
                 }else{
-                    mysqli_query($connection, "insert into produtos(id, img_prod, id_ingrediente, preco_custo, qtd_ingrediente, valor_venda) values('$nome','$pic','$output[0]','$output[1]','$qtd','$val_venda');");
+            echo"<script>console.log('prod_not_exists')</script>";
+
+                    mysqli_query($connection, "insert into ingredientes_prod(id_ingrediente, preco_ingrediente, qtd_ingrediente, id_produto) values('$output[0]','$output[1]','$qtd', '$id');");
                     
                 }
 
@@ -322,7 +330,7 @@
             }else{
 
                 if($prod_exists){
-                    mysqli_query($connection, "delete from produtos where id like \"$id\" and id_ingrediente = $output[0];");
+                    mysqli_query($connection, "delete from ingredientes_prod where id_produto = $id and id_ingrediente = $output[0];");
                     
                 }
 
@@ -330,7 +338,7 @@
         }
 
         mysqli_close($connection);
-        header("Location: tabelaProdutos.php");
+        // header("Location: tabelaProdutos.php");
 
     }
 
@@ -454,15 +462,15 @@
         
             include "utilities/mysql_connect.php";
 
-            $values = mysqli_fetch_array(mysqli_query($connection, "select id, valor_venda, img_prod from produtos WHERE id like \"$id\" group by id;"));
+            $values = mysqli_fetch_array(mysqli_query($connection, "select nome_prod, valor_venda, img_prod from produtos where id_prod = $id;"));
 
-            setForm(1, $values[2],$values[0]);
+            setForm(1, $values[2],$id);
 
             echo"<script>
 
                     document.getElementById('nome').value = '$values[0]';
                     document.getElementById('val_venda').value = '$values[1]';
-                    document.getElementById('id').value = '$values[0]';
+                    document.getElementById('id').value = '$id';
 
             </script>";
 
@@ -481,8 +489,6 @@
                 </script>";
 
         }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_info'])){
-            
-            echo"<script>console.log('AAAAAAA')</script>";
 
             $id = $_POST['id_info'];
         

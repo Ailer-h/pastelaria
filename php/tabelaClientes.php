@@ -44,19 +44,9 @@
             echo"<td>$output[5]</td>";
             
             echo"<td><div style='display: flex; justify-content: center; gap: 1em;'>";
-
-            echo"<form action='tabelaClientes.php' method='post'><input type='hidden' name='id_info' value='$output[6]'>
-            <button name='get_info' type='submit'><img src='../images/icons/info.png'></button>
-            </form>";
-
-            echo"<form action='tabelaClientes.php' method='post'><input type='hidden' name='id_delete-confirmar' value='$output[6]'>
-            <button name='delete' type='submit'><img src='../images/icons/delete.png'></button>
-            </form>";
-
-            echo"<form action='tabelaClientes.php' method='post'><input type='hidden' name='id_edit' value='$output[6]'>
-            <button name='edit' type='submit'><img src='../images/icons/edit.png'></button>
-            </form>";
-
+            echo"<form action='tabelaClientes.php' method='post'><input type='hidden' name='id_info' value='$output[6]'><button name='get_info' type='submit'><img src='../images/icons/info.png'></button></form>";
+            echo"<form action='tabelaClientes.php' method='post'><input type='hidden' name='id_delete-confirmar' value='$output[6]'><button name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";
+            echo"<form action='tabelaClientes.php' method='post'><input type='hidden' name='id_edit' value='$output[6]'><button name='edit' type='submit'><img src='../images/icons/edit.png'></button></form>";
             echo"</div></td></tr>";
 
             echo"</tr>";
