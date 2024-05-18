@@ -76,10 +76,11 @@
             $data = tratarData($output[1]);
             $percentageShow = getPercentageShow($output[4], $output[5]);
             $percentageReal = getPercentageReal($output[4], $output[5]);
+            $preco = str_replace(".", ",", sprintf("%1$.2f", $output[2]));
 
             echo"<td>$output[0]</td>";
             echo"<td>$data</td>";
-            echo"<td>$output[2]/$output[3]</td>";
+            echo"<td>$preco/$output[3]</td>";
             echo"<td>$output[4] $output[3]</td>";
                 
             if($output[4] <= $output[5]*0.1){

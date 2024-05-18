@@ -257,8 +257,8 @@
 
         while($output = mysqli_fetch_array($query)){
 
-            $preco = sprintf("%1$.2f", $output[1]);
-            $val = sprintf("%1$.2f", $output[2]);
+            $preco = str_replace(".", ",", sprintf("%1$.2f", $output[1]));
+            $val = str_replace(".", ",", sprintf("%1$.2f", $output[2]));
 
             echo"<tr class='normal-row'>";
 

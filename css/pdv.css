@@ -1,0 +1,266 @@
+/* Tags Comuns */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+*{
+
+    padding: 0;
+    margin: 0;
+    font-family: "Kanit", Arial, Helvetica, sans-serif;
+
+}
+
+body{
+
+    overflow: hidden;
+
+}
+
+/* Fim das tags comuns */
+
+/* Navbar */
+.navbar{
+
+    height: 6em;
+    background-color: #313131;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-left: 3em;
+    padding-right: 3em;
+
+}
+
+.navbar h1{
+
+    color: white;
+    font-size: 3em;
+
+}
+
+.navbar .logo{
+
+    height: 4.5em;
+    width: 4.5em;
+    border-radius: 3em;
+    background-color: #FFD369;
+
+    background-image: url('../images/logo.png');
+
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    background-position: center center;
+
+}
+
+.navbar .menu{
+
+    display: flex;
+    gap: 1.5em;
+
+}
+
+.navbar .menu button{
+
+    width: 9em;
+    height: 3.5em;
+    background-color: #FFD369;
+
+    border: none;
+    border-radius: 2em;
+
+    cursor: pointer;
+
+    transition: 200ms;
+
+}
+
+.navbar .menu button:hover{
+
+    transform: scale(1.1);
+    background-color: #d6b056;
+
+    transition: 200ms;
+
+}
+
+.navbar .menu .user-area{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    color: white;
+
+}
+
+.navbar .menu .user-area p{
+    margin-bottom: .1em;
+}
+
+.navbar .menu .user-area .logout{
+
+    display: flex;
+    align-items: center;
+
+}
+
+.navbar .menu .user-area a{
+
+    text-decoration: none;
+    color: white;
+
+}
+
+.navbar .menu .user-area p{
+    margin-left: .3em;
+}
+
+.navbar .menu .user-area .logout img{
+
+    width: 1em;
+    height: 1em;
+    filter: invert(100%);
+    margin-right: .2em;
+
+}
+/* Fim da navbar */
+
+/* Classes de corpo */
+.grid{
+
+    height: calc(100vh - 6em);
+
+    display: grid;
+    grid-template-columns: 30% 70%;
+
+}
+
+.left, .right{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-direction: column;
+
+}
+
+.left .order-header, .right .menu-header{
+    
+    width: calc(100% - 1em);
+    height: 3em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background-color: #313131;
+
+    border-radius: 1em 1em 0 0;
+
+}
+
+.left .order-header h1, .right .menu-header h1{
+    color: white;
+}
+
+.left .order-list, .right .menu{
+
+    width: calc(100% - 1em);
+    height: 29em;
+
+    background-color: #dcdcdc;
+
+    border-radius: 0 0 1em 1em;
+
+}
+
+.left .order-list .info-cliente{
+    height: 30%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+}
+
+.left .order-list .info-cliente label{
+    
+    margin-left: 1em;
+
+}
+
+.left .order-list .info-cliente h3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.left .order-list .pedido{
+    height: 55%;
+    overflow-y: scroll;
+}
+.left .order-list .confirmar{
+    height: 15%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.left .order-list .confirmar input[type="submit"]{
+
+    width: 10em;
+    height: 3em;
+
+    border: none;
+    border-radius: 1em;
+    background-color: #FFD369;
+
+    cursor: pointer;
+
+}
+
+.left .order-list .confirmar input[type="submit"]:hover{
+
+    transform: scale(1.1);
+    background-color: #d6b056;
+
+    transition: 200ms;
+
+}
+
+
+.left .order-list .pedido::-webkit-scrollbar{
+    display: none;
+}
+
+.left .order-list .pedido table{
+    width: 100%;
+    border-spacing: 0;
+    text-align: center;
+}
+
+.left .order-list .pedido table th{
+    border: .1em solid grey;
+
+}
+
+.left .order-list .pedido table td{
+    border-bottom: .1em solid grey;
+}
+
+.left .order-list .pedido table td img{
+    width: 1em;
+    height: 1em;
+}
+
+.left .order-list .pedido table .normal-row:hover{
+    background-color: #9a9a9a;
+}
+
+/* Fim das classes de corpo */

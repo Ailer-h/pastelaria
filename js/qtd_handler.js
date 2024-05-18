@@ -38,6 +38,6 @@ function calculateValue(label_id){
         }
     });
 
-    document.getElementById(label_id).textContent = "R$" + total_value.toFixed(2);
+    document.getElementById(label_id).textContent = "R$" + total_value.toFixed(2).replace(".",",");
 
 }
