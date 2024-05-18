@@ -338,13 +338,14 @@
         }
 
         mysqli_close($connection);
-        // header("Location: tabelaProdutos.php");
+        header("Location: tabelaProdutos.php");
 
     }
 
     function delete_item($id){
         include "utilities/mysql_connect.php";
-        mysqli_query($connection, "delete from produtos where id like \"$id\";");
+        mysqli_query($connection, "delete from produtos where id_prod = $id;");
+        mysqli_query($connection, "delete from ingredientes_prod where id_produto = $id;");
         mysqli_close($connection);
 
         header("Location: tabelaProdutos.php");
@@ -479,12 +480,15 @@
         }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_delete-confirmar'])){
             show_delbox();
 
-            $nome = $_POST['id_delete-confirmar'];
+            $id = $_POST['id_delete-confirmar'];
+
+            include "utilities/mysql_connect.php";
+            $nome = mysqli_fetch_array(mysqli_query($connection, "select nome_prod from produtos where id_prod = $id;"))[0];
 
             echo"<script>
 
                     document.getElementById('info').textContent = '$nome?';
-                    document.getElementById('id').value = '$nome';
+                    document.getElementById('id').value = '$id';
 
                 </script>";
 
