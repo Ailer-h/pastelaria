@@ -93,7 +93,6 @@
             
 
             if(empty($check)){
-                // echo"<script>console.log('empty')</script>";
                 echo"<label id='lb$output[0]' for='check$output[0]'>$output[1] (R$$output[3]/$output[2])</label>";
                 echo"<input type='checkbox' name='check$output[0]' id='check$output[0]' onchange='showInput(\"qtd$output[0]\", \"p$output[0]\")'>";
                 echo"<div style='display: flex; gap: .4em;'>
@@ -102,7 +101,6 @@
                     </div>";
             
             }else{
-                // echo"<script>console.log('$check[0]')</script>";
                 echo"<label id='lb$output[0]' for='check$output[0]'>$output[1] (R$$output[3]/$output[2])</label>";
                 echo"<input type='checkbox' name='check$output[0]' id='check$output[0]' onchange='showInput(\"qtd$output[0]\", \"p$output[0]\")' checked>";
                 echo"<div style='display: flex; gap: .4em;'>
@@ -495,13 +493,13 @@
         }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_info'])){
 
             $id = $_POST['id_info'];
-        
+            
             include "utilities/mysql_connect.php";
 
-            $values = mysqli_fetch_array(mysqli_query($connection, "select id, valor_venda, img_prod from produtos WHERE id like \"$id\" group by id;"));
+            $values = mysqli_fetch_array(mysqli_query($connection, "select nome_prod, valor_venda, img_prod from produtos WHERE id_prod = 2;"));
 
-            setForm(1, $values[2],$values[0]);
-
+            setForm(1, $values[2],$id);
+            
             echo"<script>
 
                     document.getElementById('nome').value = '$values[0]';
