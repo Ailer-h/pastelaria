@@ -53,6 +53,10 @@
         return round((100*$n)/$total, 2);
     }
 
+    function fixMoney($value){
+        return str_replace(".", ",", sprintf("%1$.2f", $value));
+    }
+
     function table($search){
 
         include "utilities/mysql_connect.php";
@@ -76,7 +80,7 @@
             $data = tratarData($output[1]);
             $percentageShow = getPercentageShow($output[4], $output[5]);
             $percentageReal = getPercentageReal($output[4], $output[5]);
-            $preco = str_replace(".", ",", sprintf("%1$.2f", $output[2]));
+            $preco = fixMoney($output[2]);
 
             echo"<td>$output[0]</td>";
             echo"<td>$data</td>";

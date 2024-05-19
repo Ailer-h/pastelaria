@@ -22,7 +22,7 @@
             $id_prod = mysqli_fetch_array(mysqli_query($connection, "select id_prod from produtos order by id_prod desc;"))[0];
 
             $query = mysqli_query($connection, "select id_item, valor_custo from estoque;");
-            
+
             while($output = mysqli_fetch_array($query)){
 
                 if(isset($_POST['qtd'.$output[0]])){
@@ -162,7 +162,7 @@
                     <p id='img-filename' style='font-style: italic;'></p>
                     <div class='img-input'>
                         <label for='img' class='label'>Imagem do Produto</label>
-                        <input type='file' name='image' id='img' accept='.jpg, .jpeg, .png' onchange='changePlaceholder(\"img-filename\", this.id, \"img-thumbnail\")' required>
+                        <input type='file' name='image' id='img' accept='.jpg, .jpeg' onchange='changePlaceholder(\"img-filename\", this.id, \"img-thumbnail\")' required>
                     </div>
                 </div>
 
@@ -216,7 +216,7 @@
                     <p id='img-filename' style='font-style: italic;'></p>
                     <div class='img-input' id='img-input'>
                         <label for='img' class='label'>Imagem do Produto</label>
-                        <input type='file' name='image' id='img' accept='.jpg, .jpeg, .png' onchange='changePlaceholder(\"img-filename\", this.id, \"img-thumbnail\")'>
+                        <input type='file' name='image' id='img' accept='.jpg, .jpeg' onchange='changePlaceholder(\"img-filename\", this.id, \"img-thumbnail\")'>
                     </div>
                 </div>
 
@@ -249,6 +249,10 @@
 
     }
 
+    function fixMoney($value){
+        return str_replace(".", ",", sprintf("%1$.2f", $value));
+    }
+
     function table($search){
 
         include "utilities/mysql_connect.php";
@@ -257,8 +261,8 @@
 
         while($output = mysqli_fetch_array($query)){
 
-            $preco = str_replace(".", ",", sprintf("%1$.2f", $output[1]));
-            $val = str_replace(".", ",", sprintf("%1$.2f", $output[2]));
+            $preco = fixMoney($output[1]);
+            $val = fixMoney($output[2]);
 
             echo"<tr class='normal-row'>";
 
@@ -307,19 +311,14 @@
 
             $prod_exists = !empty(mysqli_fetch_array(mysqli_query($connection, "select id from ingredientes_prod where id_ingrediente = $output[0] and id_produto = $id;")));
             
-            echo"<script>console.log('$prod_exists')</script>";
-
             if(isset($_POST['qtd'.$output[0]])){
                 
                 $qtd = $_POST['qtd'.$output[0]];
 
                 if($prod_exists){
-            echo"<script>console.log('prod_exists')</script>";
                     mysqli_query($connection, "update ingredientes_prod set qtd_ingrediente = '$qtd' where id_produto = $id and id_ingrediente = $output[0];");
                     
                 }else{
-            echo"<script>console.log('prod_not_exists')</script>";
-
                     mysqli_query($connection, "insert into ingredientes_prod(id_ingrediente, preco_ingrediente, qtd_ingrediente, id_produto) values('$output[0]','$output[1]','$qtd', '$id');");
                     
                 }
@@ -496,7 +495,7 @@
             
             include "utilities/mysql_connect.php";
 
-            $values = mysqli_fetch_array(mysqli_query($connection, "select nome_prod, valor_venda, img_prod from produtos WHERE id_prod = 2;"));
+            $values = mysqli_fetch_array(mysqli_query($connection, "select nome_prod, valor_venda, img_prod from produtos WHERE id_prod = $id;"));
 
             setForm(1, $values[2],$id);
             
@@ -504,7 +503,7 @@
 
                     document.getElementById('nome').value = '$values[0]';
                     document.getElementById('val_venda').value = '$values[1]';
-                    document.getElementById('id').value = '$values[0]';
+                    document.getElementById('id').value = '$id';
 
                     Array.from(document.getElementsByTagName('input')).forEach(e => {
                         e.disabled = true;

@@ -3,6 +3,31 @@
     //Checa se a sessão do usuário é valida
     include "utilities/checkSession.php";
 
+    function fixMoney($value){
+        return str_replace(".", ",", sprintf("%1$.2f", $value));
+    }
+
+    function showMenu(){
+        include "utilities/mysql_connect.php";
+
+        $query = mysqli_query($connection, "select id_prod, nome_prod, img_prod, valor_venda from produtos;");
+
+        while($output = mysqli_fetch_array($query)){
+
+            $price = fixMoney($output[3]);
+
+            echo"<div><div class='item'><div class='prod'>";
+            
+            echo"<img src='data:image;base64,$output[2]'>";
+            echo"<p>$output[1] - R$$price</p>";
+            echo"<button type='button'>Adicionar</button>";
+            echo"<input type='number' name='qtd$output[0]' id='qtd$output[0]' style='display: none;'>";
+            
+            echo"</div></div></div>";
+        }
+
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -61,13 +86,17 @@
             <div class="order-list">
                 <div class="info-cliente">
                     <h3>Informações do Cliente</h3>
-                    <div>
+                    <div class="fields">
                         <label for="nome_cli">Nome:</label>
                         <input type="text" name="nome_cli" id="nome_cli">
                     </div>
-                    <div>
+                    <div class="fields">
                         <label for="telefone_cli">Telefone:</label>
                         <input type="text" name="telefone_cli" id="telefone_cli">
+                    </div>
+                    <div class="fields">
+                        <label for="endereco_cli">Endereço:</label>
+                        <input type="text" name="endereco_cli" id="endereco_cli">
                     </div>
                 </div>
                 <div class="pedido">
@@ -97,9 +126,14 @@
 
         <div class="right">
             <div class="menu-header"><h1>Menu</h1></div>
-            <div class="menu"></div>
+            <div class="menu">
+                <div class="prod-grid">
+                    <?php showMenu(); ?>
+                </div>
+            </div>
         </div>
     </div>
 
 </body>
+<script src="../js/masks.js"></script>
 </html>
