@@ -12,12 +12,13 @@
         
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "select ig.id_ingrediente, (est.qtd - ig.qtd_ingrediente) from ingredientes_prod ig, estoque est where ig.id_produto = $id and ig.id_ingrediente = est.id_item;");
+        $query = mysqli_query($connection, "select ig.id_ingrediente, (est.qtd - ig.qtd_ingrediente) from ingredientes_prod ig, estoque est where ig.id_produto = $id and ig.id_ingrediente = est.id_item order by (est.qtd - ig.qtd_ingrediente) desc;");
 
         while($out = mysqli_fetch_array($query)){
-            if($out[1] < 0){ return false; }
+            if($out[1] < 0){ mysqli_close($connection); return false; }
         }
 
+        mysqli_close($connection);
         return true;
     }
 
@@ -31,6 +32,43 @@
         return floor($max);
     }
 
+    //Função que recebe o id do produto desejado e retorna seus ingredientes em forma de um JSON
+    function getRecipe($id){
+
+        include "utilities/mysql_connect.php";
+
+        $query = mysqli_query($connection, "select qtd_ingrediente, id_ingrediente from ingredientes_prod where id_produto = $id;");
+        $array = array();
+            
+        while($output = mysqli_fetch_array($query)){
+            array_push($array, array($output[1] => $output[0]));
+        }
+
+        mysqli_close($connection);
+
+        return json_encode($array);
+
+    }
+
+    //Função que retorna todos os elementos do estoque em forma de JSON
+    function getStock(){
+
+        include "utilities/mysql_connect.php";
+
+        $query = mysqli_query($connection, "select id_item, qtd from estoque;");
+        $array = array();
+
+        while($output = mysqli_fetch_array($query)){
+            array_push($array, array($output[0] => $output[1]));
+
+        }
+
+        mysqli_close($connection);
+        
+        return json_encode($array);
+
+    }
+
     function showMenu(){
         include "utilities/mysql_connect.php";
 
@@ -39,8 +77,8 @@
         while($output = mysqli_fetch_array($query)){
 
             $price = fixMoney($output[3]);
-            // echo"<script>console.log('$output[3]')</script>";
             $max = getMaxOrders($output[0]);
+            $recipe = getRecipe($output[0]);
 
             if(hasIngredients($output[0])){
 
@@ -48,9 +86,10 @@
                 
                 echo"<img src='data:image;base64,$output[2]'>";
                 echo"<p>$output[1] - R$$price</p>";
-                echo"<button class='button' type='button' id='btn$output[0]' onclick='getOrders($output[0])'>Adicionar</button>";
+                echo"<button class='button' type='button' id='btn$output[0]' onclick='getOrder($output[0])'>Adicionar</button>";
                 echo"<input type='number' max='$max' value='0' name='qtd$output[0]' id='qtd$output[0]' style='display: none;'>";
-                
+                echo"<input type='hidden' name='recipe$output[0]' id='recipe$output[0]' value='$recipe'>";
+
                 echo"</div></div></div>";
             }else{
 
@@ -58,9 +97,10 @@
                 
                 echo"<img src='data:image;base64,$output[2]'>";
                 echo"<p>$output[1] - R$$price</p>";
-                echo"<button class='disabled-btn' type='button' disabled>Adicionar</button>";
+                echo"<button class='disabled-btn' type='button' id='btn$output[0]' onclick='getOrder($output[0])' disabled>Adicionar</button>";
                 echo"<input type='number' name='qtd$output[0]' id='qtd$output[0]' style='display: none;' disabled>";
-                
+                echo"<input type='hidden' name='recipe$output[0]' id='recipe$output[0]' value='$recipe'>";
+
                 echo"</div></div></div>";
 
             }
@@ -83,6 +123,13 @@
     <title>Novo Pedido</title>
 </head>
 <body>
+
+    <?php
+
+        $estoque = getStock();
+        echo "<input type='hidden' id='estoque' value='$estoque'>";
+
+    ?>
 
     <div class="navbar">
         <?php
