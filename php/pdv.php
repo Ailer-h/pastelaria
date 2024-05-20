@@ -7,6 +7,30 @@
         return str_replace(".", ",", sprintf("%1$.2f", $value));
     }
 
+    //Função que recebe o id do produto desejado e checa se tem ingredientes para faze-lo
+    function hasIngredients($id){
+        
+        include "utilities/mysql_connect.php";
+
+        $query = mysqli_query($connection, "select ig.id_ingrediente, (est.qtd - ig.qtd_ingrediente) from ingredientes_prod ig, estoque est where ig.id_produto = $id and ig.id_ingrediente = est.id_item;");
+
+        while($out = mysqli_fetch_array($query)){
+            if($out[1] < 0){ return false; }
+        }
+
+        return true;
+    }
+
+    //Função que recebe o id do produto desejado e retorna o maximo de pedidos que podem ser feitos
+    function getMaxOrders($id){
+
+        include "utilities/mysql_connect.php";
+    
+        $max = mysqli_fetch_array(mysqli_query($connection, "select (est.qtd / ig.qtd_ingrediente) from ingredientes_prod ig, estoque est where ig.id_produto = $id and ig.id_ingrediente = est.id_item order by (est.qtd / ig.qtd_ingrediente) asc;"))[0];
+    
+        return floor($max);
+    }
+
     function showMenu(){
         include "utilities/mysql_connect.php";
 
@@ -15,16 +39,35 @@
         while($output = mysqli_fetch_array($query)){
 
             $price = fixMoney($output[3]);
+            // echo"<script>console.log('$output[3]')</script>";
+            $max = getMaxOrders($output[0]);
 
-            echo"<div><div class='item'><div class='prod'>";
-            
-            echo"<img src='data:image;base64,$output[2]'>";
-            echo"<p>$output[1] - R$$price</p>";
-            echo"<button type='button'>Adicionar</button>";
-            echo"<input type='number' name='qtd$output[0]' id='qtd$output[0]' style='display: none;'>";
-            
-            echo"</div></div></div>";
+            if(hasIngredients($output[0])){
+
+                echo"<div><div class='item'><div class='prod'>";
+                
+                echo"<img src='data:image;base64,$output[2]'>";
+                echo"<p>$output[1] - R$$price</p>";
+                echo"<button class='button' type='button' id='btn$output[0]' onclick='getOrders($output[0])'>Adicionar</button>";
+                echo"<input type='number' max='$max' value='0' name='qtd$output[0]' id='qtd$output[0]' style='display: none;'>";
+                
+                echo"</div></div></div>";
+            }else{
+
+                echo"<div><div class='item'><div class='prod'>";
+                
+                echo"<img src='data:image;base64,$output[2]'>";
+                echo"<p>$output[1] - R$$price</p>";
+                echo"<button class='disabled-btn' type='button' disabled>Adicionar</button>";
+                echo"<input type='number' name='qtd$output[0]' id='qtd$output[0]' style='display: none;' disabled>";
+                
+                echo"</div></div></div>";
+
+            }
+
         }
+
+        mysqli_close($connection);
 
     }
 
@@ -80,6 +123,7 @@
         </div>
     </div>
 
+    <form action="pdv.php" method="post">
     <div class="grid">
         <div class="left">
             <div class="order-header"><h1>Pedido</h1></div>
@@ -133,7 +177,9 @@
             </div>
         </div>
     </div>
+    </form>
 
 </body>
 <script src="../js/masks.js"></script>
+<script src="../js/pdv_controller.js"></script>
 </html>

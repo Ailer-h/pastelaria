@@ -303,7 +303,7 @@ body{
 }
 
 .right .menu .prod-grid .item .prod{
-    width: 15em;
+    width: 18em;
     height: 15em;
     
     border-radius: 1em;
@@ -326,7 +326,7 @@ body{
     font-size: 1.1em;
 }
 
-.right .menu .prod-grid .item .prod button{
+.right .menu .prod-grid .item .prod .button{
 
     width: 9em;
     height: 3em;
@@ -338,12 +338,21 @@ body{
     cursor: pointer;
 }
 
-.right .menu .prod-grid .item .prod button:hover{
+.right .menu .prod-grid .item .prod .button:hover{
 
     transform: scale(1.1);
     background-color: #d6b056;
 
     transition: 200ms;
 
+}
+
+.right .menu .prod-grid .item .prod .disabled-btn{
+    width: 9em;
+    height: 3em;
+
+    border: none;
+    border-radius: 1em;
+    background-color: #9a9a9a;
 }
 /* Fim das classes de corpo */
