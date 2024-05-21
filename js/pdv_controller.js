@@ -6,6 +6,7 @@ var stock = toJSON(document.getElementById('estoque').value);
 const order_table = document.getElementById('pedido');
 const label_total = document.getElementById('label-total');
 
+//Função que recebe uma string e retorna um JSON normalizado
 function toJSON(string){
     
     string = string.toString();
@@ -22,6 +23,7 @@ function toJSON(string){
 
 }
 
+//Função que normaliza um JSON (Converte os valores em string para valores numéricos)
 function convertJSONValues(json){
     let normalized_json = {};
 
@@ -32,31 +34,46 @@ function convertJSONValues(json){
     return normalized_json;
 }
 
+//Função que pega o pedido feito e aumenta a quantidade e inclui o pedido na fila
 function getOrder(id){
     if(!product_order.includes(id)){
         product_order.push(id);
+        updateArrayPedidos();
     }
 
     let qtd = document.getElementById('qtd'+id);
-    let max = qtd.max;
 
-    if((parseInt(qtd.value) + 1) <= max){
-        qtd.value = parseInt(qtd.value)+1;
+    qtd.value = parseInt(qtd.value)+1;
 
-        let recipe = toJSON(document.getElementById('recipe'+id).value);
-        removeIngredients(recipe);
+    let recipe = toJSON(document.getElementById('recipe'+id).value);
+    removeIngredients(recipe);
 
-        console.log(stock)
-
-        checkStock();
-        setOrders();
-    }
+    //Faz a checagem dos valores do estoque
+    checkStock();
+    setOrders();
 
 }
 
-function removeOrder(id){
+//Atualiza a fila de pedidos e a envia em forma de string para o php
+function updateArrayPedidos(){
 
-    console.log(stock)
+    let jsonPedidos = JSON.stringify(product_order);
+
+    document.getElementById('array_pedidos').value = jsonPedidos;
+
+}
+
+//Atualiza o JSON de estoque e a envia em forma de string bara o php
+function updateStockArray(){
+
+    let jsonStock = JSON.stringify(stock);
+
+    document.getElementById('estoque').value = jsonStock;
+
+}
+
+//Função que pega o pedido feito e diminui a quantidade e remove o pedido da fila caso necessário
+function removeOrder(id){
 
     let qtd = document.getElementById('qtd'+id);
 
@@ -68,7 +85,8 @@ function removeOrder(id){
         addIngredients(recipe);
 
         if(parseInt(qtd.value) == 0){
-            product_order.splice(product_order.indexOf(id), 1)
+            product_order.splice(product_order.indexOf(id), 1);
+            updateArrayPedidos();
         }
 
         checkStock();
@@ -78,6 +96,7 @@ function removeOrder(id){
 
 }
 
+//Passa os pedidos do usuários para a barra lateral do pdv
 function setOrders(){
 
     let total_value = 0;
@@ -111,18 +130,21 @@ function setOrders(){
 
 }
 
+//Remove os ingredientes do estoque baseado na receita de um produto
 function removeIngredients(recipe){
     Object.keys(recipe).forEach(key =>{
-        stock[key] -= recipe[key];
+        stock[key] -= parseInt(recipe[key]);
     });
 }
 
+//Adiciona os ingredientes de volta no estoque baseado na receita de um produto
 function addIngredients(recipe){
     Object.keys(recipe).forEach(key =>{
-        stock[key] += recipe[key];
+        stock[key] += parseInt(recipe[key]);
     });
 }
 
+//Checa o estoque e desabilita os produtos que não podem ser pedidos
 function checkStock(){
 
     let inputs = document.getElementsByTagName('input');
@@ -151,5 +173,8 @@ function checkStock(){
             
         }
     });
+
+    //Faz o update do array de estoque no php
+    updateStockArray();
 
 }

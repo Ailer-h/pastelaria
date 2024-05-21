@@ -22,16 +22,6 @@
         return true;
     }
 
-    //Função que recebe o id do produto desejado e retorna o maximo de pedidos que podem ser feitos
-    function getMaxOrders($id){
-
-        include "utilities/mysql_connect.php";
-    
-        $max = mysqli_fetch_array(mysqli_query($connection, "select (est.qtd / ig.qtd_ingrediente) from ingredientes_prod ig, estoque est where ig.id_produto = $id and ig.id_ingrediente = est.id_item order by (est.qtd / ig.qtd_ingrediente) asc;"))[0];
-    
-        return floor($max);
-    }
-
     //Função que recebe o id do produto desejado e retorna seus ingredientes em forma de um JSON
     function getRecipe($id){
 
@@ -69,6 +59,7 @@
 
     }
 
+    //Função que retorna todas as informações dos clientes em forma de JSON
     function getPhoneNumbers(){
         include "utilities/mysql_connect.php";
 
@@ -94,7 +85,6 @@
         while($output = mysqli_fetch_array($query)){
 
             $price = fixMoney($output[3]);
-            $max = getMaxOrders($output[0]);
             $recipe = getRecipe($output[0]);
 
             if(hasIngredients($output[0])){
@@ -104,7 +94,7 @@
                 echo"<img src='data:image;base64,$output[2]'>";
                 echo"<p id='info$output[0]'>$output[1] - R$$price</p>";
                 echo"<button class='button' type='button' id='btn$output[0]' onclick='getOrder($output[0])'>Adicionar</button>";
-                echo"<input type='number' max='$max' value='0' name='qtd$output[0]' id='qtd$output[0]' style='display: none;'>";
+                echo"<input type='number' value='0' name='qtd$output[0]' id='qtd$output[0]' style='display: none;'>";
                 echo"<input type='hidden' name='recipe$output[0]' id='recipe$output[0]' value='$recipe'>";
 
                 echo"</div></div></div>";
@@ -140,16 +130,6 @@
     <title>Novo Pedido</title>
 </head>
 <body>
-
-    <?php
-
-        $estoque = getStock();
-        $phoneNumbers = getPhoneNumbers();
-        
-        echo "<input type='hidden' id='estoque' value='$estoque'>";
-        echo "<input type='hidden' id='phoneNumbers' value='$phoneNumbers'>";
-
-    ?>
 
     <div class="navbar">
         <?php
@@ -191,6 +171,17 @@
     </div>
 
     <form action="pdv.php" method="post">
+    <?php
+
+        $estoque = getStock();
+        $phoneNumbers = getPhoneNumbers();
+
+        echo "<input type='hidden' id='estoque' name='estoque' value='$estoque'>";
+        echo "<input type='hidden' id='phoneNumbers' value='$phoneNumbers'>";
+
+    ?>
+
+    <input type='hidden' id='array_pedidos' name='array_pedidos' value=''>
     <div class="grid">
         <div class="left">
             <div class="order-header"><h1>Pedido</h1></div>
@@ -199,19 +190,19 @@
                     <h3>Informações do Cliente</h3>
                     <div class="fields">
                         <label for="nome_cli">Nome:</label>
-                        <input type="text" name="nome_cli" id="nome_cli">
+                        <input type="text" name="nome_cli" id="nome_cli" required>
                     </div>
                     <div class="fields">
                         <label for="telefone_cli">Telefone:</label>
                         <div class="searchbar">
-                            <input type="text" name="telefone_cli" id="telefone_cli" onkeyup="search()" autocomplete="off">
+                            <input type="text" name="telefone_cli" id="telefone_cli" onkeyup="search()" autocomplete="off" required>
                             <div id="results">
                             </div>
                         </div>
                     </div>
                     <div class="fields">
                         <label for="endereco_cli">Endereço:</label>
-                        <input type="text" name="endereco_cli" id="endereco_cli">
+                        <input type="text" name="endereco_cli" id="endereco_cli" required>
                     </div>
                 </div>
                 <div class="pedido">
@@ -249,3 +240,19 @@
 <script src="../js/pdv_controller.js"></script>
 <script src="../js/searchbar_controller.js"></script>
 </html>
+
+<?php
+
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])){
+
+    $nome = $_POST['nome_cli'];
+    $telefone = $_POST['telefone_cli'];
+    $endereco = $_POST['endereco_cli'];
+
+    $pedidos = json_decode($_POST['array_pedidos'],true);
+    $estoque = json_decode($_POST['estoque'], true);
+
+
+}
+
+?>
