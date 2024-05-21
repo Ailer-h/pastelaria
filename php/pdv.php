@@ -69,6 +69,23 @@
 
     }
 
+    function getPhoneNumbers(){
+        include "utilities/mysql_connect.php";
+
+        $query = mysqli_query($connection, "select cli_cel, cli_nome, cli_endereco cli_id from clientes;");
+        $array = array();
+
+        while($output = mysqli_fetch_array($query)){
+            array_push($array, array($output[0] => array($output[1], $output[2])));
+
+        }
+
+        mysqli_close($connection);
+        
+        return json_encode($array);
+
+    }
+
     function showMenu(){
         include "utilities/mysql_connect.php";
 
@@ -85,7 +102,7 @@
                 echo"<div><div class='item'><div class='prod'>";
                 
                 echo"<img src='data:image;base64,$output[2]'>";
-                echo"<p>$output[1] - R$$price</p>";
+                echo"<p id='info$output[0]'>$output[1] - R$$price</p>";
                 echo"<button class='button' type='button' id='btn$output[0]' onclick='getOrder($output[0])'>Adicionar</button>";
                 echo"<input type='number' max='$max' value='0' name='qtd$output[0]' id='qtd$output[0]' style='display: none;'>";
                 echo"<input type='hidden' name='recipe$output[0]' id='recipe$output[0]' value='$recipe'>";
@@ -96,7 +113,7 @@
                 echo"<div><div class='item'><div class='prod'>";
                 
                 echo"<img src='data:image;base64,$output[2]'>";
-                echo"<p>$output[1] - R$$price</p>";
+                echo"<p id='info$output[0]'>$output[1] - R$$price</p>";
                 echo"<button class='disabled-btn' type='button' id='btn$output[0]' onclick='getOrder($output[0])' disabled>Adicionar</button>";
                 echo"<input type='number' name='qtd$output[0]' id='qtd$output[0]' style='display: none;' disabled>";
                 echo"<input type='hidden' name='recipe$output[0]' id='recipe$output[0]' value='$recipe'>";
@@ -127,7 +144,10 @@
     <?php
 
         $estoque = getStock();
+        $phoneNumbers = getPhoneNumbers();
+        
         echo "<input type='hidden' id='estoque' value='$estoque'>";
+        echo "<input type='hidden' id='phoneNumbers' value='$phoneNumbers'>";
 
     ?>
 
@@ -183,7 +203,11 @@
                     </div>
                     <div class="fields">
                         <label for="telefone_cli">Telefone:</label>
-                        <input type="text" name="telefone_cli" id="telefone_cli">
+                        <div class="searchbar">
+                            <input type="text" name="telefone_cli" id="telefone_cli" onkeyup="search()" autocomplete="off">
+                            <div id="results">
+                            </div>
+                        </div>
                     </div>
                     <div class="fields">
                         <label for="endereco_cli">Endereço:</label>
@@ -191,22 +215,16 @@
                     </div>
                 </div>
                 <div class="pedido">
-                    <table>
+                    <table id="pedido">
                         <tr style="position: sticky; top: 0;">
                             <th style="border-left: none;">Nome:</th>
                             <th>Qtd:</th>
                             <th>Preço</th>
                             <th style="border-right: none; width: 3em;"></th>
                         </tr>
-
-                        <tr class="normal-row">
-                            <td>Comida</td>
-                            <td>2</td>
-                            <td>R$220.54</td>
-                            <td><img src="../images/icons/minus.png" alt="Remover"></td>
-                        </tr>
                     </table>
                 </div>
+                <p id="label-total">Total - R$0,00</p>
                 <hr>
                 <div class="confirmar">
                     <input type="submit" name="confirmar" id="confirmar" value="Confirmar">
@@ -229,4 +247,5 @@
 </body>
 <script src="../js/masks.js"></script>
 <script src="../js/pdv_controller.js"></script>
+<script src="../js/searchbar_controller.js"></script>
 </html>

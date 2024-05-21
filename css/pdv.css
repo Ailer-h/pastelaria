@@ -204,9 +204,36 @@ body{
     justify-content: space-between;
 }
 
+.left .order-list .info-cliente .fields #results{
+    position: absolute;
+    background-color: white;
+    
+    width: 10.65em;
+
+    z-index: 2;
+}
+
+.left .order-list .info-cliente .fields #results ul{
+    border: .1em solid black;
+}
+
+.left .order-list .info-cliente .fields #results ul li{
+    list-style: none;
+
+    padding-left: .5em;
+
+    cursor: pointer;
+}
+
+.left .order-list .info-cliente .fields #results ul li:hover{
+    background-color: #c3c2c2;
+}
+
 .left .order-list .info-cliente input[type='text']{
     padding-left: .5em;
     margin-right: 4.3em;
+
+    width: 12em;
 }
 
 .left .order-list .info-cliente h3{
@@ -216,7 +243,7 @@ body{
 }
 
 .left .order-list .pedido{
-    height: 55%;
+    height: 50%;
     overflow-y: scroll;
 }
 
@@ -224,9 +251,20 @@ body{
     height: 15%;
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
+}
+
+.left .order-list #label-total{
+
+    display: flex;
+    justify-content: end;
+
+    font-weight: bold;
+
+    margin-right: 1em;
 }
 
 .left .order-list .confirmar input[type="submit"]{
@@ -274,6 +312,7 @@ body{
 .left .order-list .pedido table td img{
     width: 1em;
     height: 1em;
+    cursor: pointer;
 }
 
 .left .order-list .pedido table .normal-row:hover{
@@ -316,14 +355,19 @@ body{
 
 }
 
+.right .menu .prod-grid .item .prod p{
+    text-align: center;
+}
+
 .right .menu .prod-grid .item .prod img{
-    width: 5em;
-    height: 5em;
+    width: 6em;
+    height: 6em;
 
 }
 
 .right .menu .prod-grid .item .prod p{
     font-size: 1.1em;
+    height: 2em;
 }
 
 .right .menu .prod-grid .item .prod .button{
