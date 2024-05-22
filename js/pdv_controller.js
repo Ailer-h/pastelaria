@@ -5,6 +5,7 @@ var stock = toJSON(document.getElementById('estoque').value);
 
 const order_table = document.getElementById('pedido');
 const label_total = document.getElementById('label-total');
+const input_total = document.getElementById('valor-total');
 
 //Função que recebe uma string e retorna um JSON normalizado
 function toJSON(string){
@@ -127,6 +128,7 @@ function setOrders(){
 
     order_table.innerHTML = orders_str;
     label_total.textContent = 'R$' + total_value.toFixed(2).replace('.',',');
+    input_total.value = total_value;
 
 }
 

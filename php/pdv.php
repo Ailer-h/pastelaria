@@ -63,11 +63,11 @@
     function getPhoneNumbers(){
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "select cli_cel, cli_nome, cli_endereco cli_id from clientes;");
+        $query = mysqli_query($connection, "select cli_cel, cli_nome, cli_endereco, cli_id from clientes;");
         $array = array();
 
         while($output = mysqli_fetch_array($query)){
-            array_push($array, array($output[0] => array($output[1], $output[2])));
+            array_push($array, array($output[0] => array($output[1], $output[2], $output[3])));
 
         }
 
@@ -170,18 +170,18 @@
         </div>
     </div>
 
-    <form action="pdv.php" method="post">
+    <form action="recibo.php" method="post">
     <?php
 
         $estoque = getStock();
         $phoneNumbers = getPhoneNumbers();
 
         echo "<input type='hidden' id='estoque' name='estoque' value='$estoque'>";
-        echo "<input type='hidden' id='phoneNumbers' value='$phoneNumbers'>";
+        echo "<input type='hidden' id='phoneNumbers' name='phoneNumbers' value='$phoneNumbers'>";
 
     ?>
-
     <input type='hidden' id='array_pedidos' name='array_pedidos' value=''>
+
     <div class="grid">
         <div class="left">
             <div class="order-header"><h1>Pedido</h1></div>
@@ -216,6 +216,7 @@
                     </table>
                 </div>
                 <p id="label-total">Total - R$0,00</p>
+                <input type="hidden" name="valor-total" id="valor-total">
                 <hr>
                 <div class="confirmar">
                     <input type="submit" name="confirmar" id="confirmar" value="Confirmar">
@@ -240,19 +241,3 @@
 <script src="../js/pdv_controller.js"></script>
 <script src="../js/searchbar_controller.js"></script>
 </html>
-
-<?php
-
-if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])){
-
-    $nome = $_POST['nome_cli'];
-    $telefone = $_POST['telefone_cli'];
-    $endereco = $_POST['endereco_cli'];
-
-    $pedidos = json_decode($_POST['array_pedidos'],true);
-    $estoque = json_decode($_POST['estoque'], true);
-
-
-}
-
-?>
