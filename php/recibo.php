@@ -120,7 +120,7 @@
     window.print();
 
     window.onafterprint = () => {
-        location.href = location.href.replace('recibo','adm_dashboard');
+        location.href = location.href.replace('recibo','pdv');
     }
 </script>
 
