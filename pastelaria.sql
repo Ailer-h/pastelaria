@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 21, 2024 at 02:10 PM
+-- Generation Time: May 23, 2024 at 02:03 PM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `pastelaria`
 --
-CREATE DATABASE IF NOT EXISTS `pastelaria` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `pastelaria`;
 
 -- --------------------------------------------------------
 
@@ -32,13 +30,13 @@ USE `pastelaria`;
 DROP TABLE IF EXISTS `clientes`;
 CREATE TABLE IF NOT EXISTS `clientes` (
   `cli_id` int NOT NULL AUTO_INCREMENT,
-  `cli_nome` varchar(70) COLLATE utf8mb4_general_ci NOT NULL,
-  `cli_cel` varchar(14) COLLATE utf8mb4_general_ci NOT NULL,
-  `cli_email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `cli_endereco` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `cli_cpf` varchar(14) COLLATE utf8mb4_general_ci NOT NULL,
-  `cli_rg` varchar(12) COLLATE utf8mb4_general_ci NOT NULL,
-  `cli_descricao` varchar(1000) COLLATE utf8mb4_general_ci NOT NULL,
+  `cli_nome` varchar(70) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `cli_cel` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `cli_email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `cli_endereco` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `cli_cpf` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `cli_rg` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `cli_descricao` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`cli_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -60,10 +58,10 @@ INSERT INTO `clientes` (`cli_id`, `cli_nome`, `cli_cel`, `cli_email`, `cli_ender
 DROP TABLE IF EXISTS `estoque`;
 CREATE TABLE IF NOT EXISTS `estoque` (
   `id_item` int NOT NULL AUTO_INCREMENT,
-  `nome_item` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `nome_item` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `data_vencimento` date NOT NULL,
   `valor_custo` decimal(10,2) NOT NULL,
-  `unidade_medida` varchar(2) COLLATE utf8mb4_general_ci NOT NULL,
+  `unidade_medida` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `qtd` int NOT NULL,
   `qtd_padrao` int NOT NULL,
   PRIMARY KEY (`id_item`)
@@ -75,12 +73,12 @@ CREATE TABLE IF NOT EXISTS `estoque` (
 
 INSERT INTO `estoque` (`id_item`, `nome_item`, `data_vencimento`, `valor_custo`, `unidade_medida`, `qtd`, `qtd_padrao`) VALUES
 (1, 'Frango', '2025-11-11', '0.05', 'g', 200, 30000),
-(2, 'Bacon', '2026-12-11', '0.10', 'g', 20000, 20000),
-(3, 'Catupiry', '2030-11-11', '0.03', 'g', 150, 10000),
-(4, 'Carne Seca', '2027-12-11', '0.07', 'g', 25000, 25000),
-(5, 'Massa', '2030-11-11', '0.05', 'g', 30000, 25000),
+(2, 'Bacon', '2026-12-11', '0.10', 'g', 19980, 20000),
+(3, 'Catupiry', '2030-11-11', '0.03', 'g', 0, 10000),
+(4, 'Carne Seca', '2027-12-11', '0.07', 'g', 24800, 25000),
+(5, 'Massa', '2030-11-11', '0.05', 'g', 29920, 25000),
 (6, 'Oleo', '2029-11-11', '0.09', 'ml', 1000, 15000),
-(7, 'Calabresa', '2025-11-11', '0.03', 'g', 25000, 20000),
+(7, 'Calabresa', '2025-11-11', '0.03', 'g', 24400, 20000),
 (8, 'Carne Moida', '2024-11-11', '0.01', 'g', 20000, 20000),
 (9, 'Presunto', '2024-11-11', '0.01', 'g', 28000, 30000),
 (10, 'Queijo', '2024-11-11', '0.01', 'g', 28000, 30000);
@@ -94,15 +92,15 @@ INSERT INTO `estoque` (`id_item`, `nome_item`, `data_vencimento`, `valor_custo`,
 DROP TABLE IF EXISTS `fornecedores`;
 CREATE TABLE IF NOT EXISTS `fornecedores` (
   `id_fornecedor` int NOT NULL AUTO_INCREMENT,
-  `nome` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `celular1` varchar(14) COLLATE utf8mb4_general_ci NOT NULL,
-  `celular2` varchar(14) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `endereco` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
-  `cnpj` varchar(18) COLLATE utf8mb4_general_ci NOT NULL,
-  `descricao` text COLLATE utf8mb4_general_ci,
-  `ramo_atividade` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `produto_oferecido` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `nome` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `celular1` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `celular2` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `endereco` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `cnpj` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `descricao` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `ramo_atividade` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `produto_oferecido` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_fornecedor`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -166,6 +164,8 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
   `id_pedido` int NOT NULL AUTO_INCREMENT,
   `id_cliente` int NOT NULL,
   `data_pedido` date NOT NULL,
+  `valor_total` decimal(10,2) NOT NULL,
+  `estado` varchar(15) NOT NULL,
   PRIMARY KEY (`id_pedido`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
 DROP TABLE IF EXISTS `produtos`;
 CREATE TABLE IF NOT EXISTS `produtos` (
   `id_prod` int NOT NULL AUTO_INCREMENT,
-  `nome_prod` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `nome_prod` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `img_prod` longblob NOT NULL,
   `valor_venda` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id_prod`)
@@ -211,6 +211,7 @@ DROP TABLE IF EXISTS `produtos_pedido`;
 CREATE TABLE IF NOT EXISTS `produtos_pedido` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_prod` int NOT NULL,
+  `qtd_prod` int NOT NULL,
   `id_pedido` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -224,12 +225,12 @@ CREATE TABLE IF NOT EXISTS `produtos_pedido` (
 DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id_user` int NOT NULL AUTO_INCREMENT,
-  `nome_user` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `email_user` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `senha_user` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `cpf_user` varchar(14) COLLATE utf8mb4_general_ci NOT NULL,
-  `cargo_user` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `tipo_user` char(1) COLLATE utf8mb4_general_ci NOT NULL,
+  `nome_user` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email_user` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `senha_user` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `cpf_user` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `cargo_user` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `tipo_user` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
