@@ -208,8 +208,8 @@
                 <div class="pedido">
                     <table id="pedido">
                         <tr style="position: sticky; top: 0;">
-                            <th style="border-left: none;">Nome:</th>
-                            <th>Qtd:</th>
+                            <th style="border-left: none;">Nome</th>
+                            <th>Qtd</th>
                             <th>Preço</th>
                             <th style="border-right: none; width: 3em;"></th>
                         </tr>

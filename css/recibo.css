@@ -1,0 +1,90 @@
+/* Tags Comuns */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+*{
+
+    padding: 0;
+    margin: 0;
+    font-family: "Kanit", Arial, Helvetica, sans-serif;
+
+}
+
+body{
+
+    overflow: hidden;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100vh;
+
+}
+/* Fim das tags comuns */
+.nota{
+    min-height: 40em;
+    width: 35em;
+
+    background-color: rgb(255, 244, 192);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nota .nome_cli{
+    display: flex;
+    justify-content: start;
+    width: 100%
+}
+
+.nota .nome_cli h1{
+
+    width: fit-content;
+
+    padding-left: .5em;
+    padding-right: .5em;
+
+    font-size: 1.7em;
+
+    margin-left: 1em;
+    margin-top: 1em;
+    margin-bottom: .3em;
+
+    background-color: #313131;
+    color: rgb(255, 244, 192);
+
+}
+
+.nota hr{
+    border: .05em dashed black;
+}
+
+.nota .tableHolder{
+    width: 90%;
+    min-height: 35em;
+}
+
+.nota .tableHolder table{
+    width: 100%;
+    
+    text-align: center;
+    
+}
+
+.nota .tableHolder table td, th{
+    
+    border-bottom: .05em dashed black;
+    
+}
+
+.nota #valor-total{
+
+    width: 90%;
+
+    display: flex;
+    justify-content: end;
+
+    margin-bottom: 1em;
+
+}
