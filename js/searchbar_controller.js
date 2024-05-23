@@ -36,20 +36,27 @@ function search(){
     }
     display(result);
 
-    if(!result.length){
+    if(!result.length && !searchbar.value){
         results.innerHTML = '';
 
         document.getElementById('nome_cli').value = '';
         document.getElementById('endereco_cli').value = '';
+    
     }
+
 }
 
 function display(result){
-    const content = result.map((list) => {
+    let content = result.map((list) => {
         return "<li onclick=selectResult(this)>" + list + "</li>"
     });
 
     results.innerHTML = "<ul>"+ content.join("") +"</ul>";
+
+    if(!results.innerText && searchbar.value){
+        results.innerHTML = "<ul><a href='adm_dashboard.php'><li><img src='../images/icons/add_user.png'>Novo Cliente</li></a></ul>";
+    }
+
 }
 
 function selectResult(list){

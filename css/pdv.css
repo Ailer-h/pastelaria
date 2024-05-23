@@ -217,12 +217,26 @@ body{
     border: .1em solid black;
 }
 
+.left .order-list .info-cliente .fields #results ul a{
+    text-decoration: none;
+    color: black;
+}
+
 .left .order-list .info-cliente .fields #results ul li{
     list-style: none;
+
+    display: flex;
+    align-items: center;
 
     padding-left: .5em;
 
     cursor: pointer;
+}
+
+.left .order-list .info-cliente .fields #results ul li img{
+    width: .9em;
+    height: .9em;
+    margin-right: .5em;
 }
 
 .left .order-list .info-cliente .fields #results ul li:hover{
