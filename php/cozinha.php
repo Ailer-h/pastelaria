@@ -3,6 +3,9 @@
     //Checa se a sessão do usuário é valida
     include "utilities/checkSession.php";
 
+    //Função que recebe a classe referente a tag de status
+    include "utilities/getStatusClass.php";
+
     function getProducts($id){
 
         include "utilities/mysql_connect.php";
@@ -19,16 +22,6 @@
 
         echo substr($str_prods, 0, -2).".";
 
-    }
-
-    function getStatusClass($status){
-        $status_list = [
-            "Não Iniciado" => "n-iniciado",
-            "Em Andamento" => "em-andamento",
-            "Feito" => "feito",
-            "Cancelado" => "cancelado"
-        ];
-        return $status_list[$status];
     }
 
     function table(){
