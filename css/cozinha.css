@@ -208,7 +208,7 @@ body{
     padding: .5em;
     border-radius: 1em;
 
-    font-weight: bold;
+    font-weight: 600;
     color: white;
 
     background-color: #313131;
@@ -221,7 +221,7 @@ body{
     padding: .5em;
     border-radius: 1em;
 
-    font-weight: bold;
+    font-weight: 600;
     color: white;
 
     background-color: #FFC436;
@@ -235,7 +235,7 @@ body{
     padding: .5em;
     border-radius: 1em;
 
-    font-weight: bold;
+    font-weight: 600;
     color: white;
 
     background-color: #65B741;
@@ -249,7 +249,7 @@ body{
     padding: .5em;
     border-radius: 1em;
 
-    font-weight: bold;
+    font-weight: 600;
     color: white;
 
     background-color: #EE4E4E;

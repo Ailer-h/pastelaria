@@ -3,6 +3,9 @@
     //Checa se a sessão do usuário é valida
     include "utilities/checkSession.php";
 
+    //Função para substituir pontos por virgula em valores monetários
+    include "utilities/fixMoney.php";
+
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])){
 
         date_default_timezone_set('America/Sao_Paulo');
@@ -45,10 +48,6 @@
 
         mysqli_close($connection);
 
-    }
-
-    function fixMoney($value){
-        return str_replace(".", ",", sprintf("%1$.2f", $value));
     }
 
     function printNF(){

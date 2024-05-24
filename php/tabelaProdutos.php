@@ -6,6 +6,9 @@
     //Checa se o usuário tem permissões para entrar na pagina
     include "utilities/checkPermissions.php";
 
+    //Função para substituir pontos por virgula em valores monetários
+    include "utilities/fixMoney.php";
+
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar'])){
 
         include "utilities/mysql_connect.php";
@@ -247,10 +250,6 @@
 
         echo substr($str_ingredients, 0, -2).".";
 
-    }
-
-    function fixMoney($value){
-        return str_replace(".", ",", sprintf("%1$.2f", $value));
     }
 
     function table($search){

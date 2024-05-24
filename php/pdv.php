@@ -3,9 +3,8 @@
     //Checa se a sessão do usuário é valida
     include "utilities/checkSession.php";
 
-    function fixMoney($value){
-        return str_replace(".", ",", sprintf("%1$.2f", $value));
-    }
+    //Função para substituir pontos por virgula em valores monetários
+    include "utilities/fixMoney.php";
 
     //Função que recebe o id do produto desejado e checa se tem ingredientes para faze-lo
     function hasIngredients($id){

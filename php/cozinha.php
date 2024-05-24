@@ -9,7 +9,7 @@
 
         $str_prods = "";
 
-        $prods = mysqli_query($connection, "select pr.nome_prod, pp.qtd_prod from produtos_pedido pp, produtos pr where pp.id_prod = pr.id_prod and pp.id_pedido = 1;");
+        $prods = mysqli_query($connection, "select pr.nome_prod, pp.qtd_prod from produtos_pedido pp, produtos pr where pp.id_prod = pr.id_prod and pp.id_pedido = $id;");
 
         while($output = mysqli_fetch_array($prods)){
             $str_prods = $str_prods."$output[0] x$output[1], ";
