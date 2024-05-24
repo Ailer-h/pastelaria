@@ -36,7 +36,7 @@
         if($values[2] == "a" || $values[2] == "d"){
             header("Location: ../adm_dashboard.php");
         
-        }else if($values[2] == "f" || $values[2] == "c"){
+        }else if($values[2] == "f"){
             header("Location: ../user_dashboard.php");
             
         }else{ //Precaução de erro na flag
