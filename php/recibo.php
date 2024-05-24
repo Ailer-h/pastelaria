@@ -5,10 +5,12 @@
 
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar'])){
 
+        date_default_timezone_set('America/Sao_Paulo');
+
         $nome = $_POST['nome_cli'];
         $telefone = $_POST['telefone_cli'];
-        $data = date('Y-m-d');
         $total = $_POST['valor-total'];
+        $data = date('Y-m-d H:i:s');
 
         $pedidos = json_decode($_POST['array_pedidos'],true);
         $estoque = json_decode($_POST['estoque'], true);
@@ -27,7 +29,7 @@
 
         include "utilities/mysql_connect.php";
 
-        mysqli_query($connection, "insert into pedidos(id_cliente, data_pedido, valor_total, estado) values ('$id_cli', '$data', '$total', 'Não Iniciado');");
+        mysqli_query($connection, "insert into pedidos(id_cliente, valor_total, dataHora_pedido, estado) values ('$id_cli', '$total', '$data','Não Iniciado');");
 
         $id_pedido = mysqli_fetch_array(mysqli_query($connection, "select id_pedido from pedidos order by id_pedido desc;"))[0];
 
@@ -38,7 +40,7 @@
 
         //Dá baixa no estoque
         foreach($estoque as $id => $item){
-            mysqli_query($connection, "update estoque set qtd = '$item' where id_item = $id");
+            // mysqli_query($connection, "update estoque set qtd = '$item' where id_item = $id");
         }
 
         mysqli_close($connection);
