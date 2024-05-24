@@ -35,35 +35,47 @@
     <!-- Dashboard de páginas -->
     <div class="center">
         <div class="grid">
+        <div class="holder">
             <div class="item">
                 <h1>Produtos</h1>
-                    <a href="tabelaProdutos.php"><button>Ver produtos</button></a>
+                <a href="tabelaProdutos.php"><button>Ver produtos</button></a>
             </div>
+        </div>    
 
+        <div class="holder">
             <div class="item">
                 <h1>Estoque</h1>
-                    <a href="tabelaEstoque.php"><button>Ver estoque</button></a>
+                <a href="tabelaEstoque.php"><button>Ver estoque</button></a>
             </div>
+        </div>
 
+        <div class="holder">
             <div class="item">
                 <h1>Pedidos</h1>
-                    <a><button>Ver pedidos</button></a>
+                <a><button>Ver pedidos</button></a>
             </div>
+        </div>
 
+        <div class="holder">
             <div class="item">
                 <h1>Clientes</h1>
-                    <a href="tabelaClientes.php"><button>Ver clientes</button></a>
+                <a href="tabelaClientes.php"><button>Ver clientes</button></a>
             </div>
+        </div>
 
+        <div class="holder">
             <div class="item">
                 <h1>Fornecedores</h1>
-                    <a href="tabelaFornecedores.php"><button>Ver fornecedores</button></a>
+                <a href="tabelaFornecedores.php"><button>Ver fornecedores</button></a>
             </div>
+        </div>
 
+        <div class="holder">
             <div class="item">
                 <h1>Funcionários</h1>
-                    <a href="tabelaFuncionarios.php"><button>Ver funcionarios</button></a>
+                <a href="tabelaFuncionarios.php"><button>Ver funcionarios</button></a>
             </div>
+        </div>
         </div>
     </div>
 

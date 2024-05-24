@@ -113,13 +113,21 @@ body{
     place-items: center;
     grid-template-columns: 33% 33% 33%;
 
-    gap: 3em 3em;
-
-    margin-right: 6.5em;
+    row-gap: 3em;
+    width: 80%;
 
 }
 
-.grid .item{
+.grid .holder{
+
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.grid .holder .item{
 
     width: 15em;
     height: 10em;
@@ -135,14 +143,14 @@ body{
 
 }
 
-.grid .item h1{
+.grid .holder .item h1{
 
     font-size: 1.5em;
     margin-top: 1em;
 
 }
 
-.grid .item button{
+.grid .holder .item button{
 
     width: 11em;
     height: 2em;
@@ -160,7 +168,7 @@ body{
 
 }
 
-.grid .item button:hover{
+.grid .holder .item button:hover{
 
     transform: scale(1.1);
     background-color: #d6b056;

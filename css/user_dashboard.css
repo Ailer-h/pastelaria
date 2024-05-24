@@ -113,9 +113,8 @@ body{
     place-items: center;
     grid-template-columns: 50% 50%;
 
-    gap: 3em 3em;
-
-    margin-right: 6.5em;
+    row-gap: 3em;
+    width: 80%;
 
 }
 
