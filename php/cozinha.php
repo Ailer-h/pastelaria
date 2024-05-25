@@ -88,20 +88,20 @@
         
         <div class="menu">
 
-        <?php
+            <?php
         
-            if($_SESSION['user_flag'] != 'f' && $_SESSION['user_flag'] != 'c'){
-                echo"<a href='tabelaProdutos.php'><button>Produtos</button></a>
-                    <a href='cozinha.php'><button>Cozinha</button></a>
-                    <button>Pedidos</button>";
+                if($_SESSION['user_flag'] != 'f' && $_SESSION['user_flag'] != 'c'){
+                    echo"<a href='tabelaProdutos.php'><button>Produtos</button></a>
+                        <a href='cozinha.php'><button>Cozinha</button></a>
+                        <button>Pedidos</button>";
             
-            }else{
-                echo"<a href='pdv.php'><button>PDV</button></a>
-                    <a href=''><button>Pedidos</button></a>";
+                }else{
+                    echo"<a href='pdv.php'><button>PDV</button></a>
+                        <a href=''><button>Pedidos</button></a>";
 
-            }
+                }
         
-        ?>
+            ?>
 
             <div class="user-area">
                 <?php
