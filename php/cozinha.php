@@ -6,6 +6,43 @@
     //Função que recebe a classe referente a tag de status
     include "utilities/getStatusClass.php";
 
+    //Função que recebe o id do produto desejado e retorna seus ingredientes em forma de um JSON
+    function getRecipe($id){
+
+        include "utilities/mysql_connect.php";
+
+        $query = mysqli_query($connection, "select qtd_ingrediente, id_ingrediente from ingredientes_prod where id_produto = $id;");
+        $array = array();
+
+        while($output = mysqli_fetch_array($query)){
+            array_push($array, array($output[1] => $output[0]));
+        }
+
+        mysqli_close($connection);
+
+        return json_encode($array);
+
+    }
+
+    //Função que retorna todos os elementos do estoque em forma de JSON
+    function getStock(){
+
+        include "utilities/mysql_connect.php";
+
+        $query = mysqli_query($connection, "select id_item, qtd from estoque;");
+        $array = array();
+
+        while($output = mysqli_fetch_array($query)){
+            array_push($array, array($output[0] => $output[1]));
+
+        }
+
+        mysqli_close($connection);
+        
+        return json_encode($array);
+
+    }
+
     function getProducts($id){
 
         include "utilities/mysql_connect.php";
@@ -28,11 +65,12 @@
 
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "select id_pedido, estado from pedidos WHERE estado not in ('Cancelado', 'Finalizado') and dataHora_pedido >= CURRENT_DATE;");
+        $query = mysqli_query($connection, "select id_pedido, estado from pedidos WHERE estado not in ('Cancelado', 'Concluído') and dataHora_pedido >= CURRENT_DATE;");
 
         while($output = mysqli_fetch_array($query)){
 
             $status_class = getStatusClass($output[1]);
+            $recipe = getRecipe($output[0]);
 
             echo"<tr class='normal-row'>";
             
@@ -43,8 +81,24 @@
             echo"<td id='timer$output[0]'>00:00:00</td>";
             echo"<td><div style='display: flex; justify-content: center; gap: 1em;'><div class='$status_class'>$output[1]</div></div></td>";
             echo"<td><div id='actions$output[0]' style='display: flex; justify-content: center; gap: 1em;'>";
-            echo"<button><img src='../images/icons/play.png'></button>";
+            
+            if($output[1] == "Não Iniciado"){
+                echo"<button type='button' onclick='start($output[0])'><img src='../images/icons/play.png'></button>";
+                echo"<button type='button' onclick='cancel($output[0],false)'><img src='../images/icons/close.png'></button>";
+            
+            }else{
+                echo"<button type='button' onclick='done($output[0])'><img src='../images/icons/done.png'></button>";
+                echo"<button type='button' onclick='cancel($output[0],true)'><img src='../images/icons/close.png'></button>";
+            
+            }
+
             echo"</div></td>";
+
+            //Metadata para os itens
+            echo"<input type='hidden' name='recipe$output[0]' id='recipe$output[0]' value='$recipe'>";
+            echo"<input type='hidden' name='start$output[0]' id='start$output[0]'>";
+            echo"<input type='hidden' name='newState$output[0]' id='newState$output[0]'>";
+            
 
             echo"</tr>";
 
@@ -53,7 +107,33 @@
     }
 
     //<button><img src='../images/icons/done.png'></button>
-    //<button><img src='../images/icons/close.png'></button>
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updatedProd'])){
+        echo"<script>console.log('IF')</script>";
+
+        $id = $_POST['updatedProd'];
+        $newState = $_POST['newState'.$id];
+
+        echo"<script>console.log('$id')</script>";
+        echo"<script>console.log('$newState')</script>";
+
+
+        include "utilities/mysql_connect.php";
+
+        if($newState == "Em Andamento"){
+            $starttime = date('Y-m-d H:i:s');
+            mysqli_query($connection, "update pedidos set estado = '$newState', pedido_iniciado = '$starttime' where id_pedido = $id;");
+
+        }else if($newState == "Concluído" || $newState == "Cancelado"){
+            $endtime = date('Y-m-d H:i:s');
+            mysqli_query($connection, "update pedidos set estado = '$newState', pedido_finalizado = '$endtime' where id_pedido = $id;");
+        
+        }
+
+        mysqli_close($connection);
+        header("Location: cozinha.php");
+
+    }
 
 ?>
 
@@ -124,12 +204,20 @@
                 <th style='border-right: none;'>Ações</th>
             </tr>
 
-            <?php
-                table();
-            ?>
+            <form action="cozinha.php" method="post" id='infos'>
+                <input type="hidden" name="updatedProd" id="updatedProd">
+                <?php
+
+                    $estoque = getStock();
+                    echo "<input type='hidden' id='estoque' name='estoque' value='$estoque'>";
+
+                    table();
+                ?>
+            </form>
 
         </table>
     </div>
 
 </body>
+<script src="../js/orderHandler.js"></script>
 </html>

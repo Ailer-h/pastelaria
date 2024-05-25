@@ -3,8 +3,9 @@
         $status_list = [
             "Não Iniciado" => "n-iniciado",
             "Em Andamento" => "em-andamento",
-            "Feito" => "feito",
-            "Cancelado" => "cancelado"
+            "Concluído" => "concluido",
+            "Cancelado" => "cancelado",
+            "Entregue" => "entregue"
         ];
         return $status_list[$status];
     }

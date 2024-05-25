@@ -227,7 +227,7 @@ body{
     background-color: #FFC436;
 }
 
-.feito{
+.concluido{
 
     text-transform: uppercase;
     width: 9em;
@@ -239,6 +239,21 @@ body{
     color: white;
 
     background-color: #65B741;
+
+}
+
+.entregue{
+
+    text-transform: uppercase;
+    width: 9em;
+
+    padding: .5em;
+    border-radius: 1em;
+
+    font-weight: 600;
+    color: white;
+
+    background-color: #49862f;
 
 }
 
