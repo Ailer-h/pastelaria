@@ -43,7 +43,7 @@
 
         //Dá baixa no estoque
         foreach($estoque as $id => $item){
-            // mysqli_query($connection, "update estoque set qtd = '$item' where id_item = $id");
+            mysqli_query($connection, "update estoque set qtd = '$item' where id_item = $id");
         }
 
         mysqli_close($connection);

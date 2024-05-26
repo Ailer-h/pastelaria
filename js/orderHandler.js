@@ -1,4 +1,5 @@
 var stock = toJSON(document.getElementById('estoque').value);
+updateStockArray();
 
 //Funções de apoio
 //Função que recebe uma string e retorna um JSON normalizado
@@ -33,6 +34,8 @@ function addIngredients(recipe){
     Object.keys(recipe).forEach(key =>{
         stock[key] += parseInt(recipe[key]);
     });
+
+    console.log(stock)
 }
 
 //Atualiza o JSON de estoque e a envia em forma de string bara o php
@@ -89,11 +92,13 @@ function start(id){
 }
 
 function cancel(id, started){
-    console.log(id)
+
     document.getElementById('newState' + id).value = 'Cancelado';
     
     if(!started){
         let recipe = toJSON(document.getElementById('recipe'+id).value);
+
+        console.log("R" + document.getElementById('recipe'+id).value)
 
         addIngredients(recipe);
         updateStockArray();

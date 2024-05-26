@@ -6,16 +6,37 @@
     //Função que recebe a classe referente a tag de status
     include "utilities/getStatusClass.php";
 
+    function getProductIds($id){
+
+        $array = array();
+
+        include "utilities/mysql_connect.php";
+
+        $query = mysqli_query($connection, "select id_prod, qtd_prod from produtos_pedido where id_pedido = $id;");
+            
+        while($output = mysqli_fetch_array($query)){
+            array_push($array, array($output[0], $output[1]));
+        }
+
+        mysqli_close($connection);
+
+        return $array;
+    }
+
     //Função que recebe o id do produto desejado e retorna seus ingredientes em forma de um JSON
     function getRecipe($id){
 
         include "utilities/mysql_connect.php";
-
-        $query = mysqli_query($connection, "select qtd_ingrediente, id_ingrediente from ingredientes_prod where id_produto = $id;");
         $array = array();
 
-        while($output = mysqli_fetch_array($query)){
-            array_push($array, array($output[1] => $output[0]));
+        $prods = getProductIds($id);
+
+        foreach($prods as $item){
+            $query = mysqli_query($connection, "select qtd_ingrediente, id_ingrediente from ingredientes_prod where id_produto = $item[0];");
+            
+            while($output = mysqli_fetch_array($query)){
+                array_push($array, array($output[1] => ($output[0] * $item[1])));
+            }
         }
 
         mysqli_close($connection);
@@ -96,9 +117,7 @@
 
             //Metadata para os itens
             echo"<input type='hidden' name='recipe$output[0]' id='recipe$output[0]' value='$recipe'>";
-            echo"<input type='hidden' name='start$output[0]' id='start$output[0]'>";
             echo"<input type='hidden' name='newState$output[0]' id='newState$output[0]'>";
-            
 
             echo"</tr>";
 
@@ -109,14 +128,9 @@
     //<button><img src='../images/icons/done.png'></button>
 
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updatedProd'])){
-        echo"<script>console.log('IF')</script>";
 
         $id = $_POST['updatedProd'];
         $newState = $_POST['newState'.$id];
-
-        echo"<script>console.log('$id')</script>";
-        echo"<script>console.log('$newState')</script>";
-
 
         include "utilities/mysql_connect.php";
 
@@ -124,12 +138,23 @@
             $starttime = date('Y-m-d H:i:s');
             mysqli_query($connection, "update pedidos set estado = '$newState', pedido_iniciado = '$starttime' where id_pedido = $id;");
 
-        }else if($newState == "Concluído" || $newState == "Cancelado"){
+        }else{
             $endtime = date('Y-m-d H:i:s');
             mysqli_query($connection, "update pedidos set estado = '$newState', pedido_finalizado = '$endtime' where id_pedido = $id;");
         
         }
 
+        $estoque = json_decode($_POST['estoque'], true);
+
+        if($newState == "Cancelado"){
+
+            //Retorna os itens pro estoque
+            foreach($estoque as $id => $item){
+                mysqli_query($connection, "update estoque set qtd = '$item' where id_item = $id");
+            }
+            
+        }
+        
         mysqli_close($connection);
         header("Location: cozinha.php");
 
