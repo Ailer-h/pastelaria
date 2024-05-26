@@ -18,7 +18,9 @@
     <div class="navbar">
         <div class="logo"></div>
         <div class="menu">
-            
+            <a href='cozinha.php'><button>Cozinha</button></a>
+            <a><button>Relatórios</button></a>
+
             <div class="user-area">
                 
                 <?php

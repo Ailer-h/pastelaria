@@ -30,7 +30,8 @@
 
         <h1>Produtos</h1>
         <div class="menu">
-            <button>Pedidos</button>
+            <a href="tabelaProdutos.php"><button>Produtos</button></a>
+            <a href="tabelaEstoque.php"><button>Estoque</button></a>
 
             <div class="user-area">
                 <?php

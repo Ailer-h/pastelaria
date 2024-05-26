@@ -379,7 +379,8 @@
 
         <h1>Produtos</h1>
         <div class="menu">
-            <button>Pedidos</button>
+            <a href="tabelaEstoque.php"><button>Estoque</button></a>
+            <a href="tabelaPedidos.php"><button>Pedidos</button></a>
 
             <div class="user-area">
                 <?php

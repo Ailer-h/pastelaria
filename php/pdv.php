@@ -155,11 +155,11 @@
             if($_SESSION['user_flag'] != 'f' && $_SESSION['user_flag'] != 'c'){
                 echo"<a href='tabelaProdutos.php'><button>Produtos</button></a>
                     <a href='cozinha.php'><button>Cozinha</button></a>
-                    <button>Pedidos</button>";
+                    <a href='tabelaPedidos.php'><button>Pedidos</button></a>";
             
             }else{
                 echo"<a href='cozinha.php'><button>Cozinha</button></a>
-                    <a href=''><button>Pedidos</button></a>";
+                    <a href='tabelaPedidos.php'><button>Pedidos</button></a>";
 
             }
         

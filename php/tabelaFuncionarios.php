@@ -270,8 +270,8 @@
 
         <h1>Funcionários</h1>
         <div class="menu">
-            <a href="tabelaProdutos.php"><button>Produtos</button></a>
-            <button>Pedidos</button>
+        <a href="tabelaFornecedores.php"><button>Fornecedores</button></a>
+            <a href="tabelaClientes.php"><button>Clientes</button></a>
 
             <div class="user-area">
                 <?php
