@@ -330,7 +330,6 @@
             </form>
 
             <div id="menu">
-                <button onclick=""><img src="../images/icons/report.png"></button>
                 <form action="tabelaEstoque.php" method="post">
                     <input type="hidden" name="new-item" value="0">
                     <button><img src="../images/icons/plus.png"></button>

@@ -52,7 +52,7 @@
         <div class="holder">
             <div class="item">
                 <h1>Pedidos</h1>
-                <a><button>Ver pedidos</button></a>
+                <a href="tabelaPedidos.php"><button>Ver pedidos</button></a>
             </div>
         </div>
 
