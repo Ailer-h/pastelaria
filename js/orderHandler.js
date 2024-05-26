@@ -1,6 +1,9 @@
 var stock = toJSON(document.getElementById('estoque').value);
 updateStockArray();
 
+const form = document.getElementById('infos');
+const updatedProd = document.getElementById('updatedProd');
+
 //Funções de apoio
 //Função que recebe uma string e retorna um JSON normalizado
 function toJSON(string){
@@ -49,45 +52,12 @@ function updateStockArray(){
 
 //FIm das funções de apoio
 
-//Funções do Timer
-function timeout(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function timer(startDate, id){
-
-    while(true){
-        let time = Math.abs(new Date() - new Date(startDate.replace(/-/g, '/')))
-    
-        time = Math.floor(time/1000);
-
-        let h = Math.floor(time/3600);
-        let m = Math.floor((time%3600)/60);
-        let s = time%60;
-
-        let formatedTimer = h.toString().padStart(2,"0") + ":" +
-                            m.toString().padStart(2,"0") + ":" +
-                            s.toString().padStart(2,"0");
-    
-
-        document.getElementById(id).innerHTML = formatedTimer;
-
-        await timeout(1000);
-
-    }
-
-}
-//Fim das funções do timer
-
 //Funções de controle
 function start(id){
 
-    document.getElementById('actions'+id).innerHTML = `<button type='button' onclick='done(${id})'><img src='../images/icons/done.png'></button>
-                                                        <button type='button' onclick='cancel(${id},true)'><img src='../images/icons/close.png'></button>`;
-
     document.getElementById('newState' + id).value = 'Em Andamento';
-    document.getElementById('updatedProd').value = id;
-    document.getElementById('infos').submit();
+    updatedProd.value = id;
+    form.submit();
 
 }
 
@@ -98,21 +68,19 @@ function cancel(id, started){
     if(!started){
         let recipe = toJSON(document.getElementById('recipe'+id).value);
 
-        console.log("R" + document.getElementById('recipe'+id).value)
-
         addIngredients(recipe);
         updateStockArray();
     }
 
-    document.getElementById('updatedProd').value = id;
-    document.getElementById('infos').submit();
+    updatedProd.value = id;
+    form.submit();
 
 }
 
 function done(id){
 
     document.getElementById('newState' + id).value = 'Concluído';
-    document.getElementById('updatedProd').value = id;
-    document.getElementById('infos').submit();
+    updatedProd.value = id;
+    form.submit();
 
 }

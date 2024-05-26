@@ -86,7 +86,7 @@
 
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "select id_pedido, estado from pedidos WHERE estado not in ('Cancelado', 'Concluído') and dataHora_pedido >= CURRENT_DATE;");
+        $query = mysqli_query($connection, "select id_pedido, estado, pedido_iniciado from pedidos WHERE estado not in ('Cancelado', 'Concluído') and dataHora_pedido >= CURRENT_DATE;");
 
         while($output = mysqli_fetch_array($query)){
 
@@ -110,6 +110,8 @@
             }else{
                 echo"<button type='button' onclick='done($output[0])'><img src='../images/icons/done.png'></button>";
                 echo"<button type='button' onclick='cancel($output[0],true)'><img src='../images/icons/close.png'></button>";
+
+                echo"<script>timer('$output[2]',$output[0]);</script>";
             
             }
 
@@ -125,9 +127,9 @@
 
     }
 
-    //<button><img src='../images/icons/done.png'></button>
-
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updatedProd'])){
+
+        date_default_timezone_set('America/Sao_Paulo');
 
         $id = $_POST['updatedProd'];
         $newState = $_POST['newState'.$id];
@@ -169,6 +171,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/cozinha.css">
     <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
+    <script src="../js/timer.js"></script>
     <title>Pedidos</title>
 </head>
 <body>
