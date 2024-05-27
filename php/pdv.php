@@ -117,6 +117,26 @@
 
     }
 
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar'])){
+
+        $cli_nome = $_POST['nome'];
+        $cli_cell = $_POST['tel'];
+        $cli_email = $_POST['email'];
+        $cli_endereco = $_POST['endereco'];
+        $cli_cpf = $_POST['cpf'];
+        $cli_rg = $_POST['rg'];
+        $cli_descricao = $_POST['descricao'];
+        
+        include "utilities/mysql_connect.php";
+
+        $query = mysqli_query($connection, "insert into clientes(cli_nome, cli_cel, cli_email, cli_endereco, cli_cpf,cli_rg, cli_descricao) values ('$cli_nome','$cli_cell','$cli_email','$cli_endereco','$cli_cpf','$cli_rg','$cli_descricao');");
+
+        mysqli_close($connection);
+
+        header("Location: pdv.php");
+
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -242,6 +262,68 @@
         </div>
     </div>
     </form>
+
+    <div id="form-box" style="display: none;">
+        <div class='center-absolute'>
+            <div class='header'>
+                <h1 id='titulo-form'>Novo Cliente</h1>
+                <img src='../images/icons/close.png' id='close-register' onclick='document.getElementById("form-box").style.display = "none";'>
+            </div>
+            <form action='pdv.php' method='post'>
+                <div class='form-holder'>
+                    <div class='half-1'>
+                        <div class='r-one'>
+                            <div>
+                                <label for='nome'>Nome:</label>
+                                <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this); letters_js(this.value, this);' required>
+                            </div>
+                            <div>
+                                <label for='email'>Email:</label>
+                                <input type='email' name='email' id='email' oninput='noBackslashes(this.value, this)' required>
+
+                            </div>
+
+                    </div>
+
+
+                    <div class='r-two'>
+                        <div>
+                            <label for='endereco'>Endereço:</label>
+                            <input type='text' name='endereco' id='endereco' oninput='noBackslashes(this.value, this)' required>
+                        </div>
+
+                        <div>
+                            <label for='tel'>Telefone:</label>
+                            <input type='text' name='tel' id='tel' maxlength='15' oninput='noBackslashes(this.value, this); nums_js(this.value, this)' onkeyup='mask_js(this.value, this, "(##) #####-####")' required>
+                        </div>
+
+                    </div>
+
+
+                    <div class='r-three'>
+                        <div>
+                            <label for='cpf'>CPF:</label>
+                            <input type='text' name='cpf' id='cpf' maxlength='14' oninput='noBackslashes(this.value, this); nums_js(this.value, this)' onkeyup='mask_js(this.value, this, "###.###.###-##")' required>
+                        </div>
+                            
+                        <div>
+                            <label for='rg'>RG:</label>
+                            <input type='text' name='rg' id='rg' maxlength='12' oninput='noBackslashes(this.value, this); nums_js(this.value, this)' onkeyup='mask_js(this.value, this, "##.###.###-#")' required>
+                        </div>
+                    </div>
+
+                    <input type='submit' name='cadastrar' id='cadastrar' value='Cadastrar'>
+                </div>
+                <div class='half-2'>
+                    <div style='display: flex; flex-direction: column;'>
+                        <label for='descricao'>Descrição:</label>
+                        <textarea name='descricao' id='descricao' cols='30' rows='20' spellcheck='true' oninput='noBackslashes(this.value, this)'></textarea>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
 
 </body>
 <script src="../js/masks.js"></script>

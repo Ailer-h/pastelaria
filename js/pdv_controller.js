@@ -180,3 +180,23 @@ function checkStock(){
     updateStockArray();
 
 }
+
+//Printa o forms de novo cliente na tela
+function newClient(){
+    
+    let nome = document.getElementById('nome_cli').value;
+    let tel = document.getElementById('telefone_cli').value;
+    let endereco = document.getElementById('endereco_cli').value;
+    
+    document.getElementById('form-box').style.display = 'block';
+
+    document.getElementById('nome').value = nome;
+    document.getElementById('tel').value = tel;
+    document.getElementById('email').value = '';
+    document.getElementById('endereco').value = endereco;
+    document.getElementById('cpf').value = '';
+    document.getElementById('rg').value = '';
+    
+    document.getElementById('descricao').value = '';
+                    
+}

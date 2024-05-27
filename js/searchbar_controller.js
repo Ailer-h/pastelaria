@@ -54,7 +54,7 @@ function display(result){
     results.innerHTML = "<ul>"+ content.join("") +"</ul>";
 
     if(!results.innerText && searchbar.value){
-        results.innerHTML = "<ul><a href='adm_dashboard.php'><li><img src='../images/icons/add_user.png'>Novo Cliente</li></a></ul>";
+        results.innerHTML = "<ul><li onclick='newClient()'><img src='../images/icons/add_user.png'>Novo Cliente</li></ul>";
     }
 
 }

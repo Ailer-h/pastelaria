@@ -91,7 +91,7 @@
                         <div class='r-one'>
                             <div>
                                 <label for='nome'>Nome:</label>
-                                <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this); letters_js(this.value, this);' requied>
+                                <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this); letters_js(this.value, this);' required>
                             </div>
                             <div>
                                 <label for='email'>Email:</label>
@@ -133,7 +133,7 @@
                         <div class='half-2'>
                             <div style='display: flex; flex-direction: column;'>
                                 <label for='descricao'>Descrição:</label>
-                                <textarea name='descricao' id='descricao' cols='30' rows='20' spellcheck='true' oninput='noBackslashes(this.value, this)' requied></textarea>
+                                <textarea name='descricao' id='descricao' cols='30' rows='20' spellcheck='true' oninput='noBackslashes(this.value, this)'></textarea>
                             </div>
                         </div>
                     </div>
@@ -153,7 +153,7 @@
                 <div class='r-one'>
                     <div>
                         <label for='nome'>Nome:</label>
-                        <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this); letters_js(this.value, this);' requied>
+                        <input type='text' name='nome' id='nome' oninput='noBackslashes(this.value, this); letters_js(this.value, this);' required>
                     </div>
                     <div>
                         <label for='email'>Email:</label>
@@ -195,7 +195,7 @@
                 <div class='half-2'>
                     <div style='display: flex; flex-direction: column;'>
                         <label for='descricao'>Descrição:</label>
-                        <textarea name='descricao' id='descricao' cols='30' rows='20' spellcheck='true' oninput='noBackslashes(this.value, this)' requied></textarea>
+                        <textarea name='descricao' id='descricao' cols='30' rows='20' spellcheck='true' oninput='noBackslashes(this.value, this)' required></textarea>
                     </div>
                 </div>
             </div>

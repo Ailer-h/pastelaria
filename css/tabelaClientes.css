@@ -393,12 +393,6 @@ body{
     
     background-color: #dcdcdc;
 
-    /* display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 3em; */
-
     display: grid;
     grid-template-columns: 70% 30%;
 

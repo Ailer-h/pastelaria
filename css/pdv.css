@@ -414,3 +414,173 @@ body{
     background-color: #9a9a9a;
 }
 /* Fim das classes de corpo */
+
+/* Forms de cadastro de novo cliente */
+
+.center-absolute{
+
+    position: absolute;
+    z-index: 2;
+    top: 6em;
+    
+    height: calc(100vh - 6em);
+    width: 100vw;
+    padding-bottom: 2em;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    backdrop-filter: brightness(50%) blur(.3em);
+
+}
+
+.center-absolute .header{
+
+    height: 3em;
+    width: 55em;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: #313131;
+    border-radius: 1em 1em 0 0;
+
+}
+
+.center-absolute .header img{
+
+    margin-right: 1em;
+
+    height: 1em;
+    width: 1em;
+
+    filter: invert(100%);
+
+    cursor: pointer;
+
+}
+
+.center-absolute .header h1{
+
+    margin-left: 1em;
+    color: white;
+
+}
+
+.center-absolute .form-holder{
+
+    width: 55em;
+    height: 30em;
+
+    border-radius: 0 0 1em 1em;
+    
+    background-color: #dcdcdc;
+
+    display: grid;
+    grid-template-columns: 70% 30%;
+
+}
+
+.center-absolute .form-holder .half-1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 3em;
+}
+
+.center-absolute .form-holder .half-2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 3em;
+}
+
+.center-absolute .form-holder .r-one{
+
+    width: calc(100% - 2em);
+
+    display: flex;
+    justify-content: start;
+    gap: 5em;
+
+    padding-left: 2em;
+
+
+}
+
+.center-absolute .form-holder .r-two{
+
+    width: calc(100% - 2em);
+
+    display: flex;
+    justify-content: start;
+    gap: 2em;
+
+    padding-left: 2em;
+
+
+}
+
+.center-absolute .form-holder .r-three{
+
+    width: calc(100% - 2em);
+
+    display: flex;
+    justify-content: start;
+    gap: 2em;
+
+    padding-left: 2em;
+
+
+}
+
+.center-absolute .form-holder .r-three input[type="text"]{
+    margin-left: .5em;
+}
+
+.center-absolute .form-holder .half-2 textarea{
+    resize: none;
+}
+
+.center-absolute .form-holder input[type="submit"]{
+
+    width: 7em;
+    height: 3em;
+
+    border: none;
+    border-radius: 1em;
+    background-color: #FFD369;
+
+    cursor: pointer;
+
+}
+
+.center-absolute .form-holder input[type="text"], input[type="email"], select, textarea{
+
+    border-radius: .3em;
+    margin-left: .1em;
+    padding-left: .3em;
+
+    border: .001em solid black;
+
+}
+
+.center-absolute .form-holder input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus{
+    outline: none;
+}
+
+.center-absolute .form-holder input[type="submit"]:hover{
+
+    transform: scale(1.1);
+    background-color: #d6b056;
+
+    transition: 200ms;
+
+}
+
+/* Fim do forms de cadastro de novo cliente */
