@@ -151,62 +151,10 @@ body{
     border-radius: 1em 1em 0 0;
 
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
 
 }
-
-/* Barra de pesquisa */
-.table-header #searchbox{
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: fit-content;
-
-}
-
-.table-header #searchbox img{
-
-    width: .7em;
-    height: .7em;
-    margin-left: 1em;
-
-    filter: invert(100%);
-
-    display: none;
-
-}
-
-.table-header #searchbox input[type="text"]{
-
-    margin-left: 2em;
-    padding-left: 1em;
-    padding-right: 1em;
-
-    border: none;
-
-    border-radius: 1em 0 0 1em;
-
-}
-
-.table-header #searchbox input[type="text"]:focus, input[type="submit"]:focus{
-    outline: none;
-}
-
-.table-header #searchbox input[type="submit"]{
-
-    border: none;
-
-    background-color: #FFD369;
-
-    width: 2em;
-    border-radius: 0 1em 1em 0;
-
-    cursor: pointer;
-
-}
-/* Fim da barra de pesquisa */
 
 /* Menu */
 .table-header #menu{
@@ -265,7 +213,7 @@ body{
     border: none;
     border-radius: 1em;
 
-    background-color: #dcdcdc;
+    background-color: #9a9a9a;
 }
 
 .table-header #menu .toggle::before{
@@ -288,7 +236,7 @@ body{
 }
 
 .table-header #menu input[type='checkbox']:checked + .toggle{
-    background-color: #FFC436;
+    background-color: #FFD369;
 }
 
 .table-header #menu input[type='checkbox']:checked + .toggle::before{

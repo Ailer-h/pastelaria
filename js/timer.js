@@ -18,6 +18,10 @@ async function timer(startDate, id){
                             s.toString().padStart(2,"0");
     
 
+        if(m >= 15){
+            document.getElementById("timer"+id).style.color = 'red';
+        }
+
         document.getElementById("timer"+id).innerHTML = formatedTimer;
 
         await timeout(1000);

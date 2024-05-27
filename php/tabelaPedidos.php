@@ -36,7 +36,7 @@
         
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "select id_pedido, estado, valor_total, pedido_iniciado, pedido_finalizado from pedidos order by estado, dataHora_pedido;");
+        $query = mysqli_query($connection, "select id_pedido, estado, valor_total, pedido_iniciado, pedido_finalizado from pedidos order by dataHora_pedido desc, estado;");
 
 
         while($output = mysqli_fetch_array($query)){
@@ -161,12 +161,6 @@
 
     <div class="center">
         <div class="table-header">
-
-            <form action="tabelaPedidos.php" method="post" id="searchbox">
-                <input type="text" placeholder="Pesquisar..." name="search" id="searchbar">
-                <input type="submit" value="🔎︎">
-                <a href="tabelaPedidos.php"><img src="../images/icons/close.png" id="close-search"></a>
-            </form>
 
             <div id="menu">
                 <div style="display: flex; justify-content: center; align-items: center; gap: .5em;">
