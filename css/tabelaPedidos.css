@@ -213,14 +213,10 @@ body{
     align-items: center;
     justify-content: center;
     
-    background-color: #DE5D35;
+    background-color: #d6b056;
+
+    transform: scale(.95);
     
-    transition: 200ms;
-}
-
-.table-header #filter .selected:hover{
-    background-color: #a74628;
-
     transition: 200ms;
 }
 
