@@ -177,7 +177,7 @@ body{
 }
 
 .table-header #filter button{
-    width: 4em;
+    width: 6em;
     height: 2em;
 
     border: none;
@@ -201,7 +201,7 @@ body{
 }
 
 .table-header #filter .selected{
-    width: 4em;
+    width: 6em;
     height: 2em;
 
     border: none;

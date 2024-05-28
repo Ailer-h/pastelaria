@@ -186,9 +186,9 @@
     <div class="center">
         <div class="table-header">
             <div id="filter">
-                <button id='filterDia' onclick='filter("dia", this.id)'>Dia</button>
-                <button id='filterMes' onclick='filter("mes", this.id)'>Mês</button>
-                <button id='filterAno' onclick='filter("ano", this.id)'>Ano</button>
+                <button id='filterDia' onclick='filter("dia", this.id)'>Hoje</button>
+                <button id='filterMes' onclick='filter("mes", this.id)'>Esse mês</button>
+                <button id='filterAno' onclick='filter("ano", this.id)'>Esse ano</button>
                 <img src="../images/icons/close.png" id="clean" onclick="cleanFilter()" style="display: none;">
             </div>
 
