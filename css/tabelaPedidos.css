@@ -151,10 +151,80 @@ body{
     border-radius: 1em 1em 0 0;
 
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     align-items: center;
 
 }
+
+/* Filtro */
+
+.table-header #filter{
+    margin-left: 2em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.table-header #filter img{
+    width: 1em;
+    height: 1em;
+
+    filter: invert(100%);
+
+    cursor: pointer;
+}
+
+.table-header #filter button{
+    width: 4em;
+    height: 2em;
+
+    border: none;
+    border-radius: .5em;
+
+    cursor: pointer;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: #FFD369;
+    
+    transition: 200ms;
+}
+
+.table-header #filter button:hover{
+    background-color: #d6b056;
+
+    transition: 200ms;
+}
+
+.table-header #filter .selected{
+    width: 4em;
+    height: 2em;
+
+    border: none;
+    border-radius: .5em;
+
+    cursor: pointer;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: #DE5D35;
+    
+    transition: 200ms;
+}
+
+.table-header #filter .selected:hover{
+    background-color: #a74628;
+
+    transition: 200ms;
+}
+
+/* Fim do filtro */
 
 /* Menu */
 .table-header #menu{

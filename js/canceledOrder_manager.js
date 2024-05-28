@@ -1,7 +1,5 @@
 let elements = document.getElementsByTagName("tr");
 
-// changeVisibiltyState();
-
 function getNewVisibilityState(input){
     if(input.style.display == 'table-row'){
         return 'none';
@@ -12,7 +10,7 @@ function getNewVisibilityState(input){
 
 function changeVisibiltyState(){
     Array.from(elements).forEach(e => {
-        if(e.id.includes('canceled')){
+        if(e.id.includes('cancelado')){
             e.style.display = getNewVisibilityState(e);
         }
     })
