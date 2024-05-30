@@ -23,8 +23,11 @@ function toJSON(string){
 
 const results = document.getElementById('results');
 const searchbar = document.getElementById('telefone_cli');
+var order_btn = document.getElementById('confirmar');
 
 function search(){
+
+    order_btn.disabled = true;
 
     let result = [];
     let input = searchbar.value;
@@ -62,6 +65,16 @@ function display(result){
 function selectResult(list){
     searchbar.value = list.innerHTML;
     results.innerHTML = '';
+
+    //Habilita ou desabilita o botão de confirmar
+    let array_pedidos = toJSON(document.getElementById('array_pedidos').value); 
+
+    if(array_pedidos.length > 0 && phoneNumbers.includes(searchbar.value)){
+        console.log(product_order.length)
+    
+    }else{
+        order_btn.disabled = true;
+    }
 
     placeUserInfo(list.innerHTML);
 }

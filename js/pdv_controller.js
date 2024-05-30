@@ -130,6 +130,14 @@ function setOrders(){
     label_total.textContent = 'R$' + total_value.toFixed(2).replace('.',',');
     input_total.value = total_value;
 
+    //Habilita ou desabilita o botão de confirmar
+    if(product_order.length > 0 && phoneNumbers.includes(searchbar.value)){
+        order_btn.disabled = false;
+    
+    }else{
+        order_btn.disabled = true;
+    }
+
 }
 
 //Remove os ingredientes do estoque baseado na receita de um produto

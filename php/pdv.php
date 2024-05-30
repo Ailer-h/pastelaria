@@ -312,7 +312,7 @@
                         </div>
                     </div>
 
-                    <input type='submit' name='cadastrar' id='cadastrar' value='Cadastrar'>
+                    <input type='submit' name='cadastrar' id='cadastrar' value='Cadastrar' disabled>
                 </div>
                 <div class='half-2'>
                     <div style='display: flex; flex-direction: column;'>
@@ -327,6 +327,6 @@
 
 </body>
 <script src="../js/masks.js"></script>
-<script src="../js/pdv_controller.js"></script>
 <script src="../js/searchbar_controller.js"></script>
+<script src="../js/pdv_controller.js"></script>
 </html>
