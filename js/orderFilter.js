@@ -30,11 +30,11 @@ function filter(tag, buttonId){
     })
     
     document.getElementById(buttonId).className = 'selected';
-    document.getElementById('clean').style.display = 'block';
+    document.getElementById('clear').style.display = 'block';
 
 }
 
-function cleanFilter(){
+function clearFilter(){
 
     let showCanceled = document.getElementById('visibilityCheckbox').checked;
 
@@ -56,6 +56,6 @@ function cleanFilter(){
         }
     })
 
-    document.getElementById('clean').style.display = 'none';
+    document.getElementById('clear').style.display = 'none';
 
 }

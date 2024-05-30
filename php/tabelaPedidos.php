@@ -167,7 +167,7 @@
                 <button id='filterDia' onclick='filter("dia", this.id)'>Hoje</button>
                 <button id='filterMes' onclick='filter("mes", this.id)'>Esse mês</button>
                 <button id='filterAno' onclick='filter("ano", this.id)'>Esse ano</button>
-                <img src="../images/icons/close.png" id="clean" onclick="cleanFilter()" style="display: none;">
+                <img src="../images/icons/close.png" id="clear" onclick="clearFilter()" style="display: none;">
             </div>
 
             <div id="menu">

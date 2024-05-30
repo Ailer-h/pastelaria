@@ -165,9 +165,11 @@ body{
     gap: 1em;
 }
 
-.center .header #filter img{
+.center .header img{
     width: 1em;
     height: 1em;
+
+    margin-left: 1em;
 
     filter: invert(100%);
 

@@ -8,17 +8,20 @@
     //Função para substituir pontos por virgula em valores monetários
     include "utilities/fixMoney.php";
 
+    //Função que retorna uma data de filtro baseada na tag enviada
+    include "utilities/getFilterDate.php";
+
     function getCost($id){
         include "utilities/mysql_connect.php";
 
-        $val = mysqli_fetch_array(mysqli_query($connection, "select sum(qtd_ingrediente*preco_ingrediente) from ingredientes_prod where id_produto = 1 group by id_produto;"))[0];
+        $val = mysqli_fetch_array(mysqli_query($connection, "select sum(qtd_ingrediente*preco_ingrediente) from ingredientes_prod where id_produto = $id group by id_produto;"))[0];
 
         mysqli_close($connection);
 
         return $val;
     }
 
-    function table(){
+    function table($filter){
 
         include "utilities/mysql_connect.php";
 
@@ -26,8 +29,7 @@
 
         while($prod = mysqli_fetch_array($query)){
 
-            $qtd_vendida = !empty(mysqli_fetch_array(mysqli_query($connection, "select sum(qtd_prod) from produtos_pedido where id_prod = $prod[0] group by id_prod;"))) ? mysqli_fetch_array(mysqli_query($connection, "select sum(qtd_prod) from produtos_pedido where id_prod = $prod[0] group by id_prod;"))[0] : 0;
-            
+            $qtd_vendida = !empty(mysqli_fetch_array(mysqli_query($connection, "select sum(pp.qtd_prod) from produtos_pedido pp, pedidos pd where pp.id_pedido = pd.id_pedido and pp.id_prod = $prod[0] and pd.dataHora_pedido $filter group by id_prod;"))) ? mysqli_fetch_array(mysqli_query($connection, "select sum(pp.qtd_prod) from produtos_pedido pp, pedidos pd where pp.id_pedido = pd.id_pedido and pp.id_prod = $prod[0] and pd.dataHora_pedido $filter group by id_prod;"))[0] : 0;            
             if($qtd_vendida > 0){
                 
                 $preco_custo = getCost($prod[0]);
@@ -85,29 +87,60 @@
 
     <div class="center">
         <div class="header">
-            <div style="display: flex;">
-                <label for="specifier" id="lb_specifier">Especifique um dia: </label>
-                <input type="date" name="specifier" id="specifier">
-                <button class="search">🔎︎</button>
-            </div>
+            <form action="relatorios.php" method="post">
+                <div style="display: flex; align-items: center;">
+                    <label for="date" id="lb_date">Especifique um dia: </label>
+                    <input type="date" name="date" id="date" required>
+                    <button class="search">🔎︎</button>
+                    <img src="../images/icons/close.png" id="clearDate" onclick="location.href = location.href" style="display: none;">
+                </div>
+            </form>
 
             <div id="filter">
-                <img src="../images/icons/close.png" id="clean" onclick="cleanFilter()" style="display: none;">
-                <button id='filterAno' onclick='filter("ano", this.id)'>Esse ano</button>
-                <button id='filterDia' onclick='filter("dia", this.id)'>Hoje</button>
-                <button id='filterMes' onclick='filter("mes", this.id)'>Esse mês</button>
+                <img src="../images/icons/close.png" id="clear" onclick="location.href = location.href" style="display: none;">
+                <form action="relatorios.php" method="post" id='filterForm'>
+                    <input type="hidden" name="filterTag" id="filterTag">
+                </form>
+                <button id='filterAno' onclick='filter("Ano", this.id)'>Esse ano</button>
+                <button id='filterMes' onclick='filter("Mes", this.id)'>Esse mês</button>
+                <button id='filterDia' onclick='filter("Dia", this.id)'>Hoje</button>
             </div>
         </div>
         <div class="reports">
             <table>
                 <th style="border-left: none;">Produto</th>
-                <th>Qtd Vendida</th>
-                <th>Gastos</th>
-                <th>Receita</th>
-                <th style="border-right: none;">Lucro</th>
+                <th style="width: 10em;">Qtd Vendida</th>
+                <th style="width: 10em;">Gastos</th>
+                <th style="width: 10em;">Receita</th>
+                <th style="border-right: none; width: 10em;">Lucro</th>
 
                 <?php
-                    table();
+                
+                    if(isset($_POST['date'])){
+                        $date = $_POST['date'];
+                        table("between '$date 00:00:00' and '$date 23:59:59'");
+
+                        echo"<script>
+                            document.getElementById('date').value = '$date';
+                            document.getElementById('clearDate').style.display = 'block';
+                        </script>";
+
+                    }else if(isset($_POST['filterTag'])){
+                        $tag = $_POST['filterTag'];
+                        $filter = getFilterDate($tag);
+
+                        table(">= '$filter' ");
+
+                        echo"<script>
+                            document.getElementById('filter$tag').className = 'selected';
+                            document.getElementById('clear').style.display = 'block';
+                            console.log('>= $filter ');
+                        </script>";
+
+                    }else{
+                        table("");
+
+                    }
                 ?>
             
             </table>
