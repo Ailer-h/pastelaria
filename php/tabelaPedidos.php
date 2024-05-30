@@ -206,5 +206,5 @@
 
 </body>
 <script src="../js/canceledOrder_manager.js"></script>
-<script src="../js/filter.js"></script>
+<script src="../js/orderFilter.js"></script>
 </html>

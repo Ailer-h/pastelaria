@@ -170,6 +170,7 @@
                                     <option value='' selected hidden></option>
                                     <option value='g'>g</option>
                                     <option value='ml'>ml</option>
+                                    <option value='u'>Unidade</option>
                                 </select>
                             </div>
 
@@ -222,6 +223,7 @@
                                 <option value='' selected hidden></option>
                                 <option value='g'>g</option>
                                 <option value='ml'>ml</option>
+                                <option value='u'>Unidade</option>
                             </select>
                         </div>
             

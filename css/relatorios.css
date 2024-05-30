@@ -126,3 +126,164 @@ body{
 
 }
 /* Fim da navbar */
+
+/* Classes do corpo */
+.center{
+
+    height: calc(100vh - 6em);
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    flex-direction: column;
+
+}
+
+.center .header{
+    width: 90%;
+    height: 4em;
+    
+    margin-top: 3em;
+    border-radius: 1em 1em 0 0 ;
+    
+    background-color: #313131;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Filtro */
+
+.center .header #filter{
+    margin-right: 2em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.center .header #filter img{
+    width: 1em;
+    height: 1em;
+
+    filter: invert(100%);
+
+    cursor: pointer;
+}
+
+.center .header #filter button{
+    width: 6em;
+    height: 2em;
+
+    border: none;
+    border-radius: .5em;
+
+    cursor: pointer;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: #FFD369;
+    
+    transition: 200ms;
+}
+
+.center .header #filter button:hover{
+    background-color: #d6b056;
+
+    transition: 200ms;
+}
+
+.center .header #filter .selected{
+    width: 6em;
+    height: 2em;
+
+    border: none;
+    border-radius: .5em;
+
+    cursor: pointer;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: #d6b056;
+
+    transform: scale(.95);
+    
+    transition: 200ms;
+}
+
+/* Fim do filtro */
+
+.center .header input[type='date']{
+    
+    height: 2em;
+    
+    padding-left: .5em;
+    padding-right: .5em;
+    
+    border-radius: 1em 0 0 1em;
+    border: none;
+    
+}
+
+.center .header label{
+    margin-left: 3em;
+    margin-right: .5em;
+    color: white;
+    
+}
+.center .header .search{
+    height: 2em;
+    width: 2em;
+
+    background-color: #FFD369;
+
+    border-radius: 0 1em 1em 0;
+    border: none;
+
+    cursor: pointer;
+
+}
+
+.center .reports{
+    width: 90%;
+    height: 25em;
+
+    background-color: #dcdcdc;
+
+    border-radius: 0 0 1em 1em;
+    overflow-y: scroll;
+}
+
+.center .reports::-webkit-scrollbar{
+    display: none;
+}
+
+.center .reports table{
+
+    width: 100%;
+    border-spacing: 0;
+    text-align: center;
+
+}
+
+.center .reports table th{
+    
+    border: .1em solid grey;
+    
+}
+
+.center .reports table td{
+    border-bottom: .1em solid grey;
+}
+
+.center .reports table .normal-row:hover{
+    background-color: #9a9a9a;
+}
+/* Fim das classes do corpo */
