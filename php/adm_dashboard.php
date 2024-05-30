@@ -1,7 +1,9 @@
 <?php
+    //Checa se a sessão do usuário é valida
     include "utilities/checkSession.php";
-    include "utilities/checkPermissions.php";
 
+    //Checa se o usuário tem permissões para entrar na pagina
+    include "utilities/checkPermissions.php";
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +21,7 @@
         <div class="logo"></div>
         <div class="menu">
             <a href='cozinha.php'><button>Cozinha</button></a>
-            <a><button>Relatórios</button></a>
+            <a href='relatorios.php'><button>Relatórios</button></a>
 
             <div class="user-area">
                 

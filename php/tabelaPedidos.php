@@ -9,6 +9,12 @@
     //Função que recebe a classe referente a tag de status
     include "utilities/getStatusClass.php";
 
+    //Função que cria um timer para display usando as timestamps de inicio e fim
+    include "utilities/getTimer.php";
+
+    //Função que retorna as tags de dia/mes/ano para o filtro de pedidos
+    include "utilities/getFilterTags.php";
+
     function getProducts($id){
 
         include "utilities/mysql_connect.php";
@@ -42,33 +48,12 @@
 
         while($output = mysqli_fetch_array($query)){
 
-            $tag = "";
+            $tags = getFilterTags($output[5]);
 
             $status_class = getStatusClass($output[1]);
             $price = fixMoney($output[2]);
-            $arrayDate = explode("-", explode(" ", $output[5])[0]);
-            $date = explode("-", date("Y-m-d"));
-            
-            //Da as tags de dia/mes/ano para o filtro
-            if($arrayDate[0] == $date[0] && $arrayDate[1] == $date[1] && $arrayDate[2] == $date[2]){
-                $tag = $tag."dia;";
 
-            }
-
-            if($arrayDate[0] == $date[0] && $arrayDate[1] == $date[1]){
-                $tag = $tag."mes;";
-
-            }
-
-            if($arrayDate[0] == $date[0]){
-                $tag = $tag."ano;";
-
-            }
-
-            echo"<script>console.log('$arrayDate[0]/$arrayDate[1]/$arrayDate[2]')</script>";
-            echo"<script>console.log('$tag')</script>";
-
-            if($output[1] != "Não Iniciado"){
+            if($output[3] != null){
                 $date_time = explode(" ", $output[3]);
                 $date = tratarData($date_time[0]);
                 $time = $date_time[1];
@@ -80,27 +65,20 @@
             }
 
 
-            if($output[1] == "Não Iniciado" || $output[1] == "Em Andamento"){
+            if($output[3] == null || $output[1] == "Em Andamento"){
                 $timer = "<i>00:00:00</i>";
             
             }else{
                 
-                $tempo_preparo = abs(strtotime($output[3]) - strtotime($output[4]));
-                $hours = floor($tempo_preparo / 3600);
-                $minutes = floor(($tempo_preparo % 3600) / 60);
-                $seconds = $tempo_preparo % 60;
-
-                $timer = sprintf("%02d", $hours) . ":" .
-                sprintf("%02d", $minutes) . ":" .
-                sprintf("%02d", $seconds);
+                $timer = getTimer($output[4], $output[3]);
 
             }
 
             if($output[1] == "Cancelado"){
-                echo"<tr class='normal-row' style='display: none;' id='$tag-cancelado'>";
+                echo"<tr class='normal-row' style='display: none;' id='$tags-cancelado'>";
                 
             }else{
-                echo"<tr class='normal-row' id='$tag'>";
+                echo"<tr class='normal-row' id='$tags'>";
 
             }
             

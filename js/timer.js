@@ -13,6 +13,8 @@ async function timer(startDate, id){
         let m = Math.floor((time%3600)/60);
         let s = time%60;
 
+        console.log(time)
+
         let formatedTimer = h.toString().padStart(2,"0") + ":" +
                             m.toString().padStart(2,"0") + ":" +
                             s.toString().padStart(2,"0");
