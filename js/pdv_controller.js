@@ -133,9 +133,11 @@ function setOrders(){
     //Habilita ou desabilita o botão de confirmar
     if(product_order.length > 0 && phoneNumbers.includes(searchbar.value)){
         order_btn.disabled = false;
-    
+        order_btn.className = 'btn';
+        
     }else{
         order_btn.disabled = true;
+        order_btn.className = 'disabled-btn';
     }
 
 }

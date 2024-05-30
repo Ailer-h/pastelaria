@@ -281,20 +281,30 @@ body{
     margin-right: 1em;
 }
 
-.left .order-list .confirmar input[type="submit"]{
+.left .order-list .confirmar .btn{
+    
+    width: 10em;
+    height: 3em;
+    
+    border: none;
+    border-radius: 1em;
+    background-color: #FFD369;
+    
+    cursor: pointer;
+    
+}
+.left .order-list .confirmar .disabled-btn{
 
     width: 10em;
     height: 3em;
 
     border: none;
     border-radius: 1em;
-    background-color: #FFD369;
-
-    cursor: pointer;
+    background-color: #9a9a9a;
 
 }
 
-.left .order-list .confirmar input[type="submit"]:hover{
+.left .order-list .confirmar .btn:hover{
 
     transform: scale(1.1);
     background-color: #d6b056;

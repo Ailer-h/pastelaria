@@ -28,6 +28,7 @@ var order_btn = document.getElementById('confirmar');
 function search(){
 
     order_btn.disabled = true;
+    order_btn.className = 'disabled-btn';
 
     let result = [];
     let input = searchbar.value;
@@ -69,12 +70,14 @@ function selectResult(list){
     //Habilita ou desabilita o botão de confirmar
     let array_pedidos = toJSON(document.getElementById('array_pedidos').value); 
 
-    if(array_pedidos.length > 0 && phoneNumbers.includes(searchbar.value)){
-        console.log(product_order.length)
-    
+    if(Object.keys(array_pedidos).length > 0 && phoneNumbers.includes(searchbar.value)){
+        order_btn.disabled = false;
+        order_btn.className = 'btn';
+        
     }else{
         order_btn.disabled = true;
-    }
+        order_btn.className = 'disabled-btn';
+    }   
 
     placeUserInfo(list.innerHTML);
 }

@@ -246,7 +246,7 @@
                 <input type="hidden" name="valor-total" id="valor-total">
                 <hr>
                 <div class="confirmar">
-                    <input type="submit" name="confirmar" id="confirmar" value="Confirmar">
+                    <input type="submit" name="confirmar" id="confirmar" value="Confirmar" class="disabled-btn" disabled>
                 </div>
             
             </div>
