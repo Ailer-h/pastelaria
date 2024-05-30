@@ -86,7 +86,7 @@
 
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "select id_pedido, estado, pedido_iniciado from pedidos WHERE estado not in ('Cancelado', 'Concluído') and dataHora_pedido >= CURRENT_DATE;");
+        $query = mysqli_query($connection, "select id_pedido, estado, dataHora_pedido from pedidos WHERE estado not in ('Cancelado', 'Concluído') and dataHora_pedido >= CURRENT_DATE;");
 
         while($output = mysqli_fetch_array($query)){
 
@@ -111,15 +111,14 @@
                 echo"<button type='button' onclick='done($output[0])'><img src='../images/icons/done.png'></button>";
                 echo"<button type='button' onclick='cancel($output[0],true)'><img src='../images/icons/close.png'></button>";
 
-                echo"<script>timer('$output[2]',$output[0]);</script>";
-            
             }
-
+            
             echo"</div></td>";
-
+            
             //Metadata para os itens
             echo"<input type='hidden' name='recipe$output[0]' id='recipe$output[0]' value='$recipe'>";
             echo"<input type='hidden' name='newState$output[0]' id='newState$output[0]'>";
+            echo"<script>timer('$output[2]',$output[0]);</script>";
 
             echo"</tr>";
 

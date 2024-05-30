@@ -18,7 +18,7 @@ async function timer(startDate, id){
                             s.toString().padStart(2,"0");
     
 
-        if(m >= 10){
+        if(time >= 900){
             document.getElementById("timer"+id).style.color = 'red';
         }
 
