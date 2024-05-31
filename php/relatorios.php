@@ -101,9 +101,9 @@
                 <form action="relatorios.php" method="post" id='filterForm'>
                     <input type="hidden" name="filterTag" id="filterTag">
                 </form>
-                <button id='filterAno' onclick='filter("Ano", this.id)'>Esse ano</button>
-                <button id='filterMes' onclick='filter("Mes", this.id)'>Esse mês</button>
-                <button id='filterDia' onclick='filter("Dia", this.id)'>Hoje</button>
+                <button id='filterAno' onclick='filter("Ano")'>Esse ano</button>
+                <button id='filterMes' onclick='filter("Mes")'>Esse mês</button>
+                <button id='filterDia' onclick='filter("Dia")'>Hoje</button>
             </div>
         </div>
         <div class="reports">

@@ -1,4 +1,4 @@
-function filter(tag, buttonId){
+function filter(tag){
     
     Array.from(document.getElementsByTagName("button")).forEach(btn => {
         if(btn.id.includes('filter')){
