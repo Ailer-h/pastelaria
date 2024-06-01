@@ -29,12 +29,14 @@
 
         while($prod = mysqli_fetch_array($query)){
 
-            $qtd_vendida = !empty(mysqli_fetch_array(mysqli_query($connection, "select sum(pp.qtd_prod) from produtos_pedido pp, pedidos pd where pp.id_pedido = pd.id_pedido and pp.id_prod = $prod[0] and pd.dataHora_pedido $filter group by id_prod;"))) ? mysqli_fetch_array(mysqli_query($connection, "select sum(pp.qtd_prod) from produtos_pedido pp, pedidos pd where pp.id_pedido = pd.id_pedido and pp.id_prod = $prod[0] and pd.dataHora_pedido $filter group by id_prod;"))[0] : 0;            
+            $qtd_vendida = !empty(mysqli_fetch_array(mysqli_query($connection, "select sum(pp.qtd_prod) from produtos_pedido pp, pedidos pd where pp.id_pedido = pd.id_pedido and pp.id_prod = $prod[0] and $filter (pd.estado not like 'Cancelado') group by id_prod;"))) ? mysqli_fetch_array(mysqli_query($connection, "select sum(pp.qtd_prod) from produtos_pedido pp, pedidos pd where pp.id_pedido = pd.id_pedido and pp.id_prod = $prod[0] and $filter (pd.estado not like 'Cancelado') group by id_prod;"))[0] : 0;
+            $qtd_cancelada = !empty(mysqli_fetch_array(mysqli_query($connection, "select sum(pp.qtd_prod) from produtos_pedido pp, pedidos pd where pp.id_pedido = pd.id_pedido and pp.id_prod = $prod[0] and $filter (pd.estado like 'Cancelado' and pd.pedido_iniciado is not null) group by id_prod;"))) ? mysqli_fetch_array(mysqli_query($connection, "select sum(pp.qtd_prod) from produtos_pedido pp, pedidos pd where pp.id_pedido = pd.id_pedido and pp.id_prod = $prod[0] and $filter (pd.estado like 'Cancelado' and pd.pedido_iniciado is not null) group by id_prod;"))[0] : 0;
+            
             if($qtd_vendida > 0){
                 
                 $preco_custo = getCost($prod[0]);
-                $gasto_total = $preco_custo * $qtd_vendida;
-                $receita = $prod[2] * $qtd_vendida;
+                $gasto_total = $preco_custo * ($qtd_vendida + $qtd_cancelada);
+                $receita = ($prod[2] * $qtd_vendida);
                 $lucro = $receita - $gasto_total;
                 
                 echo"<tr class='normal-row'>";
@@ -118,7 +120,7 @@
                 
                     if(isset($_POST['date'])){
                         $date = $_POST['date'];
-                        table("between '$date 00:00:00' and '$date 23:59:59'");
+                        table("pd.dataHora_pedido between '$date 00:00:00' and '$date 23:59:59' and");
 
                         echo"<script>
                             document.getElementById('date').value = '$date';
@@ -129,12 +131,12 @@
                         $tag = $_POST['filterTag'];
                         $filter = getFilterDate($tag);
 
-                        table(">= '$filter' ");
+                        table("pd.dataHora_pedido >= '$filter' and");
 
                         echo"<script>
                             document.getElementById('filter$tag').className = 'selected';
                             document.getElementById('clear').style.display = 'block';
-                            console.log('>= $filter ');
+                            console.log('>= $filter and');
                         </script>";
 
                     }else{
