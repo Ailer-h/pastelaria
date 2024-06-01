@@ -255,11 +255,10 @@ body{
 
 .center .reports{
     width: 90%;
-    height: 25em;
+    height: 23em;
 
     background-color: #dcdcdc;
 
-    border-radius: 0 0 1em 1em;
     overflow-y: scroll;
 }
 
@@ -287,5 +286,20 @@ body{
 
 .center .reports table .normal-row:hover{
     background-color: #9a9a9a;
+}
+
+.center .total{
+    width: 90%;
+    height: 2em;
+
+    background-color: #dcdcdc;
+
+    border-radius: 0 0 1em 1em;
+    border-top: .1em solid grey;
+
+}
+
+.center .total table{
+    width: 100%;
 }
 /* Fim das classes do corpo */

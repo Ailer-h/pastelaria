@@ -21,6 +21,12 @@
         return $val;
     }
 
+    //Totais de vendas declarados como globais para uso posterior em script
+    $GLOBALS['total_qtdVenda'] = 0;
+    $GLOBALS['total_gastos'] = 0;
+    $GLOBALS['total_receita'] = 0;
+    $GLOBALS['total_saldo'] = 0;
+
     function table($filter){
 
         include "utilities/mysql_connect.php";
@@ -36,16 +42,24 @@
                 
                 $preco_custo = getCost($prod[0]);
                 $gasto_total = $preco_custo * ($qtd_vendida + $qtd_cancelada);
-                $receita = ($prod[2] * $qtd_vendida);
-                $lucro = $receita - $gasto_total;
+                $receita = $prod[2] * $qtd_vendida;
+                $saldo = $receita - $gasto_total;
                 
+                //Adicionando nos contadores de total
+                $GLOBALS['total_qtdVenda'] += $qtd_vendida;
+                $GLOBALS['total_gastos'] += $gasto_total;
+                $GLOBALS['total_receita'] += $receita;
+                $GLOBALS['total_saldo'] += $saldo;
+
+                $color = $saldo > 0 ? "#00ae00" : "#E72929";
+
                 echo"<tr class='normal-row'>";
                 
                 echo"<td>$prod[1]</td>";
                 echo"<td>$qtd_vendida</td>";
                 echo"<td>R$".fixMoney($gasto_total)."</td>";
                 echo"<td>R$".fixMoney($receita)."</td>";
-                echo"<td>R$".fixMoney($lucro)."</td>";
+                echo"<td style='color: $color;'>R$".fixMoney($saldo)."</td>";
                 
                 echo"</tr>";
             }
@@ -114,7 +128,7 @@
                 <th style="width: 10em;">Qtd Vendida</th>
                 <th style="width: 10em;">Gastos</th>
                 <th style="width: 10em;">Receita</th>
-                <th style="border-right: none; width: 10em;">Lucro</th>
+                <th style="border-right: none; width: 10em;">Saldo</th>
 
                 <?php
                 
@@ -145,6 +159,21 @@
                     }
                 ?>
             
+            </table>
+        </div>
+        <div class="total">
+            <table>
+                <th style="border-left: none; display: flex; justify-content: end;">
+                    Total:
+                </th>
+                <?php
+                    $color = $GLOBALS['total_saldo'] > 0 ? "#00ae00" : "#E72929";
+
+                    echo"<th style='width: 10em;'>R$". fixMoney($GLOBALS['total_qtdVenda']) ."</th>";
+                    echo"<th style='width: 10em;'>R$". fixMoney($GLOBALS['total_gastos']) ."</th>";
+                    echo"<th style='width: 10em;'>R$". fixMoney($GLOBALS['total_receita']) ."</th>";
+                    echo"<th style='border-right: none; width: 10em; color: $color;'>R$". fixMoney($GLOBALS['total_saldo']) ."</th>";
+                ?>
             </table>
         </div>
     </div>
