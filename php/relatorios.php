@@ -150,7 +150,6 @@
                         echo"<script>
                             document.getElementById('filter$tag').className = 'selected';
                             document.getElementById('clear').style.display = 'block';
-                            console.log('>= $filter and');
                         </script>";
 
                     }else{
