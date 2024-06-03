@@ -217,19 +217,19 @@
                     <h3>Informações do Cliente</h3>
                     <div class="fields">
                         <label for="nome_cli">Nome:</label>
-                        <input type="text" name="nome_cli" id="nome_cli" required>
+                        <input type="text" name="nome_cli" id="nome_cli" oninput='noBackslashes(this.value, this); letters_js(this.value, this)' required>
                     </div>
                     <div class="fields">
                         <label for="telefone_cli">Telefone:</label>
                         <div class="searchbar">
-                            <input type="text" name="telefone_cli" id="telefone_cli" onkeyup="search()" autocomplete="off" required>
+                            <input type="text" name="telefone_cli" id="telefone_cli" onkeyup="search()" oninput='noBackslashes(this.value, this); nums_js(this.value, this)' autocomplete="off" required>
                             <div id="results">
                             </div>
                         </div>
                     </div>
                     <div class="fields">
                         <label for="endereco_cli">Endereço:</label>
-                        <input type="text" name="endereco_cli" id="endereco_cli" required>
+                        <input type="text" name="endereco_cli" id="endereco_cli" oninput='noBackslashes(this.value, this)' required>
                     </div>
                 </div>
                 <div class="pedido">
