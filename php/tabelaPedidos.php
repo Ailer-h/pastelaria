@@ -53,16 +53,9 @@
             $status_class = getStatusClass($output[1]);
             $price = fixMoney($output[2]);
 
-            if($output[3] != null){
-                $date_time = explode(" ", $output[3]);
-                $date = tratarData($date_time[0]);
-                $time = $date_time[1];
-
-            }else{
-                $date = "---";
-                $time = "";
-
-            }
+            $date_time = explode(" ", $output[5]);
+            $date = tratarData($date_time[0]);
+            $time = $date_time[1];
 
 
             if($output[3] == null || $output[1] == "Em Andamento"){
@@ -70,7 +63,7 @@
             
             }else{
                 
-                $timer = getTimer($output[4], $output[3]);
+                $timer = getTimer($output[4], $output[5]);
 
             }
 
@@ -189,7 +182,7 @@
                 <th style="border-left: none;">Produtos Pedidos</th>
                 <th>Valor Total</th>
                 <th>Estado</th>
-                <th>Iniciado em</th>
+                <th>Feito em</th>
                 <th style="border-right: none;">Tempo de Preparo</th></tr>
 
                 <?php
