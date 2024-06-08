@@ -29,11 +29,9 @@
 
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "select nome, celular1, celular2, cnpj, produto_oferecido, id_fornecedor from fornecedores where nome like \"%$search%\";");
+        $query = mysqli_query($connection, "select nome, celular1, celular2, cnpj, id_fornecedor from fornecedores where nome like \"%$search%\";");
 
         while($output = mysqli_fetch_array($query)){
-
-            $produto = mysqli_fetch_array(mysqli_query($connection, "select nome_item from estoque where id_item=$output[4]"))[0];
 
             echo"<tr class='normal-row'>";
 
@@ -43,12 +41,14 @@
                 <div>$output[2]</div>
             </td>";
             echo"<td>$output[3]</td>";
-            echo"<td>$produto</td>";
+            echo"<td>";
+            getProductsLabel($output[4]);
+            echo"</td>";
             
             echo"<td><div style='display: flex; justify-content: center; gap: 1em;'>";
-            echo"<form action='tabelaFornecedores.php' method='post'><input type='hidden' name='id_info' value='$output[5]'><button name='get_info' type='submit'><img src='../images/icons/info.png'></button></form>";
-            echo"<form action='tabelaFornecedores.php' method='post'><input type='hidden' name='id_delete-confirmar' value='$output[5]'><button name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";
-            echo"<form action='tabelaFornecedores.php' method='post'><input type='hidden' name='id_edit' value='$output[5]'><button name='edit' type='submit'><img src='../images/icons/edit.png'></button></form>";
+            echo"<form action='tabelaFornecedores.php' method='post'><input type='hidden' name='id_info' value='$output[4]'><button name='get_info' type='submit'><img src='../images/icons/info.png'></button></form>";
+            echo"<form action='tabelaFornecedores.php' method='post'><input type='hidden' name='id_delete-confirmar' value='$output[4]'><button name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";
+            echo"<form action='tabelaFornecedores.php' method='post'><input type='hidden' name='id_edit' value='$output[4]'><button name='edit' type='submit'><img src='../images/icons/edit.png'></button></form>";
             echo"</div></td></tr>";
 
             echo"</tr>";
@@ -59,21 +59,30 @@
 
     }
 
-    function get_products(){
+    function getProductsLabel($id){
 
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query( $connection,"select id_item, nome_item from estoque;");
+        $query = mysqli_query($connection,"select nome_item from estoque where id_fornec = $id;");
+        $str_prods = "";
 
         while($output = mysqli_fetch_array($query)){
-            echo "<option value='$output[0]'>$output[1]</option>";
+            $str_prods = $str_prods . "$output[0], ";
         }
 
         mysqli_close($connection);
+
+        if($str_prods == ""){
+            echo "---";
+            return;
+        
+        }
+
+        echo substr($str_prods, 0, -2).".";
         
     }
 
-    function getProds($id){
+    function getProductList($id){
 
         include "utilities/mysql_connect.php";
 
@@ -189,7 +198,7 @@
                     <div>
                         <label for='produto'>Produtos:</label>
                         <ul id='prods'>";
-                            getProds($id);
+                            getProductList($id);
                     echo"</ul>
                     </div>
 
@@ -374,7 +383,7 @@
         
                 include "utilities/mysql_connect.php";
 
-                $values = mysqli_fetch_array(mysqli_query($connection, "select nome, celular1, celular2, email, endereco, cnpj, descricao, ramo_atividade, produto_oferecido, id_fornecedor from fornecedores where id_fornecedor=$id group by 1;"));
+                $values = mysqli_fetch_array(mysqli_query($connection, "select nome, celular1, celular2, email, endereco, cnpj, descricao, ramo_atividade, id_fornecedor from fornecedores where id_fornecedor=$id group by 1;"));
 
                 echo"<script>
 
@@ -388,8 +397,7 @@
                     document.getElementById('descricao').value = '$values[6]';
 
                     document.getElementById('ramo').value = '$values[7]';
-                    document.querySelector('#produto').value = '$values[8]';
-                    document.getElementById('id').value = '$values[9]';
+                    document.getElementById('id').value = '$values[8]';
 
                 </script>";
                 
@@ -417,7 +425,7 @@
         
                 include "utilities/mysql_connect.php";
 
-                $values = mysqli_fetch_array(mysqli_query($connection, "select nome, celular1, celular2, email, endereco, cnpj, descricao, ramo_atividade, produto_oferecido, id_fornecedor from fornecedores where id_fornecedor=$id group by 1;"));
+                $values = mysqli_fetch_array(mysqli_query($connection, "select nome, celular1, celular2, email, endereco, cnpj, descricao, ramo_atividade, id_fornecedor from fornecedores where id_fornecedor=$id group by 1;"));
 
                 echo"<script>
 
@@ -431,8 +439,7 @@
                     document.getElementById('descricao').value = '$values[6]';
 
                     document.getElementById('ramo').value = '$values[7]';
-                    document.querySelector('#produto').value = '$values[8]';
-                    document.getElementById('id').value = '$values[9]';
+                    document.getElementById('id').value = '$values[8]';
 
                     Array.from(document.getElementsByTagName('input')).forEach(e => {
                         e.disabled = true;
