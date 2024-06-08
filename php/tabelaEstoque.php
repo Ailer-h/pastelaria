@@ -19,12 +19,13 @@
         $unidade_medida = $_POST['unidade-medida'];
         $qtd = $_POST['qtd'];
         $qtd_padrao = $_POST['qtd-controle'];
+        $id_fornec = isset($_POST['fornecedor']) ? $_POST['fornecedor'] : "";
         
         $search_nome = mysqli_fetch_array(mysqli_query($connection, "select nome_item from estoque where nome_item like '$nome'"));
 
         if(empty($search_nome)){
 
-            $query = mysqli_query($connection, "insert into estoque(nome_item,data_vencimento,valor_custo,unidade_medida,qtd,qtd_padrao) values ('$nome','$data_vencimento','$valor_custo','$unidade_medida','$qtd','$qtd_padrao');");
+            $query = mysqli_query($connection, "insert into estoque(nome_item,data_vencimento,valor_custo,unidade_medida,qtd,qtd_padrao, id_fornec) values ('$nome','$data_vencimento','$valor_custo','$unidade_medida','$qtd','$qtd_padrao','$id_fornec');");
 
             mysqli_close($connection);
             header("Location: tabelaEstoque.php");
@@ -60,7 +61,7 @@
 
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "select nome_item, data_vencimento, valor_custo, unidade_medida, qtd, qtd_padrao, id_item from estoque where nome_item like \"%$search%\";");
+        $query = mysqli_query($connection, "select nome_item, data_vencimento, valor_custo, unidade_medida, qtd, qtd_padrao, id_item, id_fornec from estoque where nome_item like \"%$search%\";");
 
         while($output = mysqli_fetch_array($query)){
 
@@ -77,11 +78,13 @@
             }
 
             $data = tratarData($output[1]);
+            $fornec = $output[7] != 0 ? mysqli_fetch_array(mysqli_query($connection, "select nome from fornecedores where id_fornecedor = $output[7];"))[0] : "---";
             $percentageShow = getPercentageShow($output[4], $output[5]);
             $percentageReal = getPercentageReal($output[4], $output[5]);
             $preco = fixMoney($output[2]);
 
             echo"<td>$output[0]</td>";
+            echo"<td>$fornec</td>";
             echo"<td>$data</td>";
             echo"<td>$preco/$output[3]</td>";
             echo"<td>$output[4] $output[3]</td>";
@@ -114,6 +117,20 @@
 
         mysqli_close($connection);
         
+    }
+
+    function getSupliers(){
+
+        include "utilities/mysql_connect.php";
+
+        $query = mysqli_query($connection, "select id_fornecedor, nome from fornecedores;");
+
+        while($output = mysqli_fetch_array($query)){
+            echo "<option value='$output[0]'>$output[1]</option>";
+        }
+
+        mysqli_close($connection);
+
     }
 
     function show_delbox(){
@@ -155,6 +172,13 @@
                             <div>
                                 <label for='data-vencimento'>Data de Vencimento:</label>
                                 <input type='date' name='data-vencimento' id='data-vencimento' required>
+                            </div>
+                            <div>
+                                <label for='fornecedor'>Fornecedor:</label>
+                                <select name='fornecedor' id='fornecedor'>
+                                    <option value='' selected>---</option>";
+                                        getSupliers();
+                            echo"</select>
                             </div>
                         </div>
 
@@ -209,6 +233,13 @@
                             <label for='data-vencimento'>Data de Vencimento:</label>
                             <input type='date' name='data-vencimento' id='data-vencimento' required>
                         </div>
+                        <div>
+                            <label for='fornecedor'>Fornecedor:</label>
+                                <select name='fornecedor' id='fornecedor'>
+                                    <option value='' selected>---</option>";
+                                        getSupliers();
+                            echo"</select>
+                        </div>
                     </div>
                     
                     <div class='r-two'>
@@ -250,7 +281,7 @@
     //Funções das ações
     function delete_item($id){
         include "utilities/mysql_connect.php";
-        $query = mysqli_query($connection, "delete from estoque where id_item = $id;");
+        mysqli_query($connection, "delete from estoque where id_item = $id;");
         mysqli_close($connection);
 
         header("Location: tabelaEstoque.php");
@@ -266,10 +297,12 @@
         $info[3] = $_POST['unidade-medida'];
         $info[4] = $_POST['qtd'];
         $info[5] = $_POST['qtd-controle'];
+        $info[6] = isset($_POST['fornecedor']) ? $_POST['fornecedor'] : "";
+
 
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "update estoque set nome_item='$info[0]', data_vencimento='$info[1]', valor_custo='$info[2]', unidade_medida='$info[3]', qtd='$info[4]', qtd_padrao='$info[5]' where id_item=$id;");
+        mysqli_query($connection, "update estoque set nome_item='$info[0]', data_vencimento='$info[1]', valor_custo='$info[2]', unidade_medida='$info[3]', qtd='$info[4]', qtd_padrao='$info[5]', id_fornec='$info[6]' where id_item=$id;");
         mysqli_close($connection);
             
         header("Location: tabelaEstoque.php");
@@ -342,7 +375,15 @@
        
         <div class="table-holder">
             <table>
-                <tr style="position: sticky; top: 0; background-color: #dcdcdc;"><th style="border-left: none;">Nome</th><th>D. Vencimento</th><th>Custo (R$)</th><th>Qtd</th><th>Status</th><th style="border-right: none;">Ações</th></tr>
+                <tr style="position: sticky; top: 0; background-color: #dcdcdc;">
+                    <th style="border-left: none;">Nome</th>
+                    <th>D. Vencimento</th>
+                    <th>Fornecedor</th>
+                    <th>Custo (R$)</th>
+                    <th>Qtd</th>
+                    <th>Status</th>
+                    <th style="border-right: none;">Ações</th>
+                </tr>
                 <?php
 
                     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])){
@@ -376,14 +417,17 @@
         
                 include "utilities/mysql_connect.php";
 
-                $values = mysqli_fetch_array(mysqli_query($connection, "select nome_item, data_vencimento, valor_custo, unidade_medida, qtd, qtd_padrao, id_item from estoque where id_item=$id group by 1;"));
+                $values = mysqli_fetch_array(mysqli_query($connection, "select nome_item, data_vencimento, valor_custo, unidade_medida, qtd, qtd_padrao, id_item, id_fornec from estoque where id_item=$id group by 1;"));
         
+                $fornec = $values[7] != 0 ? $values[7] : "";
+
                 echo"<script>
 
                     document.getElementById('nome').value = '$values[0]';
                     document.getElementById('data-vencimento').value = '$values[1]';
                     document.getElementById('valor-custo').value = '$values[2]';
                     document.getElementById('unidade-medida').value = '$values[3]';
+                    document.getElementById('fornecedor').value = '$fornec';
                     document.getElementById('qtd').value = '$values[4]';
                     document.getElementById('qtd-controle').value = '$values[5]';
                     document.getElementById('id').value = '$values[6]';

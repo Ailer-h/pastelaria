@@ -13,14 +13,13 @@
         $cnpj = $_POST['cnpj'];
         $endereco = $_POST['endereco'];
         $ramo = $_POST['ramo'];
-        $produto = $_POST['produto'];
         $descricao = $_POST['descricao'];
         $tel1 = $_POST['tel1'];
         $tel2 = isset($_POST['tel2']) ? $_POST['tel2'] : null;
 
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "insert into fornecedores(nome,celular1,celular2,email,endereco,cnpj,descricao,ramo_atividade,produto_oferecido) values ('$nome','$tel1','$tel2','$email','$endereco','$cnpj','$descricao','$ramo','$produto');");
+        $query = mysqli_query($connection, "insert into fornecedores(nome,celular1,celular2,email,endereco,cnpj,descricao,ramo_atividade) values ('$nome','$tel1','$tel2','$email','$endereco','$cnpj','$descricao','$ramo');");
 
         mysqli_close($connection);
 
@@ -74,6 +73,20 @@
         
     }
 
+    function getProds($id){
+
+        include "utilities/mysql_connect.php";
+
+        $query = mysqli_query($connection,"select nome_item from estoque where id_fornec = $id;");
+
+        while($output = mysqli_fetch_array($query)){
+            echo "<li>$output[0]</li>";
+        }
+
+        mysqli_close($connection);
+
+    }
+
     function show_delbox(){
         echo"<div class='center-absolute'>
         <div class='delete-header'>
@@ -94,7 +107,7 @@
         ";
     }
 
-    function setForm($form_id){
+    function setForm($form_id, $id){
 
         if($form_id == 0){
             echo"<div class='center-absolute'>
@@ -114,15 +127,6 @@
                                 <label for='cnpj'>CNPJ:</label>
                                 <input type='text' name='cnpj' id='cnpj' maxlength='20' oninput='noBackslashes(this.value, this); nums_js(this.value, this)' onkeyup='mask_js(this.value, this, \"##.###.###/####-##\")' required>
                             </div>
-
-                            <div>
-                                <label for='produto'>Produto:</label>
-                                <select name='produto' id='produto' required>
-                                    <option value='' selected hidden></option>";
-                                    get_products();
-                            echo"</select>
-                            </div>
-
                         </div>
 
                         <div class='r-two'>
@@ -183,11 +187,10 @@
                     </div>
 
                     <div>
-                        <label for='produto'>Produto:</label>
-                        <select name='produto' id='produto' required>
-                            <option value='' selected hidden></option>";
-                            get_products();
-                    echo"</select>
+                        <label for='produto'>Produtos:</label>
+                        <ul id='prods'>";
+                            getProds($id);
+                    echo"</ul>
                     </div>
 
                 </div>
@@ -253,10 +256,9 @@
         $info[5] = $_POST['cnpj'];
         $info[6] = $_POST['descricao'];
         $info[7] = $_POST['ramo'];
-        $info[8] = $_POST['produto'];
 
         include "utilities/mysql_connect.php";
-        mysqli_query($connection, "update fornecedores set nome='$info[0]', celular1='$info[1]', celular2='$info[2]', email='$info[3]', endereco='$info[4]', cnpj='$info[5]', descricao='$info[6]', ramo_atividade='$info[7]', produto_oferecido='$info[8]' where id_fornecedor=$id");
+        mysqli_query($connection, "update fornecedores set nome='$info[0]', celular1='$info[1]', celular2='$info[2]', email='$info[3]', endereco='$info[4]', cnpj='$info[5]', descricao='$info[6]', ramo_atividade='$info[7]' where id_fornecedor=$id");
         mysqli_close($connection);
 
         header("Location: tabelaFornecedores.php");
@@ -363,12 +365,12 @@
         <?php
     
             if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new-item'])){
-                setForm(0);
+                setForm(0,"");
             
             }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_edit'])){
-                setForm(1);
-
                 $id = $_POST['id_edit'];
+                
+                setForm(1,$id);
         
                 include "utilities/mysql_connect.php";
 
@@ -409,9 +411,9 @@
             
             }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_info'])){
 
-                setForm(1);
-
                 $id = $_POST['id_info'];
+                
+                setForm(1,$id);
         
                 include "utilities/mysql_connect.php";
 
