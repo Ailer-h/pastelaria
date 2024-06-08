@@ -38,7 +38,11 @@
 
         foreach($pedidos as $id){
             $qtd = $_POST['qtd'.$id];
-            mysqli_query($connection, "insert into produtos_pedido(id_prod, qtd_prod, id_pedido) values ('$id', '$qtd', '$id_pedido');");
+
+            $preco_custo = getCost($id);
+            $preco_venda = mysqli_fetch_array(mysqli_query($connection, "select valor_venda from produtos where id_prod = $id"))[0];
+
+            mysqli_query($connection, "insert into produtos_pedido(id_prod, qtd_prod, id_pedido, preco_custo, preco_venda) values ('$id', '$qtd', '$id_pedido', '$preco_custo', '$preco_venda');");
         }
 
         //Dá baixa no estoque
@@ -48,6 +52,16 @@
 
         mysqli_close($connection);
 
+    }
+
+    function getCost($id){
+        include "utilities/mysql_connect.php";
+
+        $val = mysqli_fetch_array(mysqli_query($connection, "select sum(qtd_ingrediente*preco_ingrediente) from ingredientes_prod where id_produto = $id group by id_produto;"))[0];
+
+        mysqli_close($connection);
+
+        return $val;
     }
 
     function printNF(){
