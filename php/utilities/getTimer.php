@@ -12,7 +12,9 @@
         sprintf("%02d", $minutes) . ":" .
         sprintf("%02d", $seconds);
 
-        return $timer;
+        $color = $tempo_preparo >= 900 ? "red" : "";
+
+        return [$timer, $color];
 
     }
 

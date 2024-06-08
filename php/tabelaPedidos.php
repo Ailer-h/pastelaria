@@ -44,7 +44,7 @@
 
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "select id_pedido, estado, valor_total, pedido_iniciado, pedido_finalizado, dataHora_pedido from pedidos order by dataHora_pedido desc, estado;");
+        $query = mysqli_query($connection, "select id_pedido, estado, valor_total, pedido_iniciado, pedido_finalizado, dataHora_pedido, id_cliente from pedidos order by dataHora_pedido desc, estado;");
 
         while($output = mysqli_fetch_array($query)){
 
@@ -52,20 +52,12 @@
 
             $status_class = getStatusClass($output[1]);
             $price = fixMoney($output[2]);
+            $cliente = mysqli_fetch_array(mysqli_query($connection, "select cli_nome from clientes where cli_id = $output[6]"))[0];
 
             $date_time = explode(" ", $output[5]);
             $date = tratarData($date_time[0]);
             $time = $date_time[1];
 
-
-            if($output[3] == null || $output[1] == "Em Andamento"){
-                $timer = "<i>00:00:00</i>";
-            
-            }else{
-                
-                $timer = getTimer($output[4], $output[5]);
-
-            }
 
             if($output[1] == "Cancelado"){
                 echo"<tr class='normal-row' style='display: none;' id='$tags-cancelado'>";
@@ -78,10 +70,20 @@
             echo"<td style='max-width: 7em; padding-left: .5em; padding-right: .5em;'>";
             getProducts($output[0]);
             echo"</td>";
+            echo"<td>$cliente</td>";
             echo"<td>R$$price</td>";
             echo"<td><div style='display: flex; justify-content: center;'><div class='$status_class'>$output[1]</div></div></td>";
             echo"<td><div>$date</div><div>$time</div></td>";
-            echo"<td>$timer</td>";
+
+            if($output[1] == "Cancelado" || ($output[3] != null && $output[4] != null)){
+                $vals = getTimer($output[4], $output[5]);
+                echo"<td id='timer$output[0]' style='color: $vals[1];'>$vals[0]</td>";
+            
+            }else{
+                echo"<td id='timer$output[0]'>00:00:00:</td>";
+                echo"<script>timer('$output[5]',$output[0]);</script>";
+                
+            }
 
             echo"</tr>";
             
@@ -100,6 +102,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/tabelaPedidos.css">
     <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
+    <script src="../js/timer.js"></script>
     <title>Produtos</title>
 </head>
 <body>
@@ -180,6 +183,7 @@
             <table>
                 <tr style="position: sticky; top: 0; background-color: #dcdcdc;" id='header'>
                 <th style="border-left: none;">Produtos Pedidos</th>
+                <th>Cliente</th>
                 <th>Valor Total</th>
                 <th>Estado</th>
                 <th>Feito em</th>
