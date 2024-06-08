@@ -149,7 +149,7 @@
                     </div>
 
                     <div class='r-two'>
-                        <h3>Ingredientes:</h3>
+                        <h3 style='position: sticky; top:0; background-color: #dcdcdc; width: 100%;'>Ingredientes:</h3>
                             <div class='prod-grid'>";
 
                                     getProducts();
@@ -203,7 +203,7 @@
                     </div>
 
                     <div class='r-two'>
-                        <h3>Ingredientes:</h3>
+                        <h3 style='position: sticky; top:0; background-color: #dcdcdc; width: 100%;'>Ingredientes:</h3>
                             <div class='prod-grid'>";
 
                                 setProducts($id);
