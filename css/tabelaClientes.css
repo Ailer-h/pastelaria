@@ -496,6 +496,99 @@ body{
     transition: 200ms;
 
 }
+
+.center-absolute .orders-table{
+
+    width: 55em;
+    height: 23em;
+
+    border-radius: 0 0 1em 1em;
+    
+    background-color: #dcdcdc;
+
+}
+
+.center-absolute .orders-table table{
+
+    width: 100%;
+    border-spacing: 0;
+    text-align: center;
+
+}
+
+.center-absolute .orders-table table th{
+    
+    border: .1em solid grey;
+    
+}
+
+.center-absolute .orders-table table td{
+    border-bottom: .1em solid grey;
+}
+
+.center-absolute .orders-table table .normal-row:hover{
+    background-color: #9a9a9a;
+}
+
+/* Classes de estado do pedido */
+
+.center-absolute .orders-table table .n-iniciado{
+
+    text-transform: uppercase;
+    width: 8em;
+
+    padding: .5em;
+    border-radius: 1em;
+
+    font-weight: 600;
+    color: white;
+
+    background-color: #313131;
+}
+
+.center-absolute .orders-table table .em-andamento{
+    text-transform: uppercase;
+    width: 8em;
+
+    padding: .5em;
+    border-radius: 1em;
+
+    font-weight: 600;
+    color: white;
+
+    background-color: #FFC436;
+}
+
+.center-absolute .orders-table table .concluido{
+
+    text-transform: uppercase;
+    width: 8em;
+
+    padding: .5em;
+    border-radius: 1em;
+
+    font-weight: 600;
+    color: white;
+
+    background-color: #65B741;
+
+}
+
+.center-absolute .orders-table table .cancelado{
+    text-transform: uppercase;
+    width: 8em;
+
+    padding: .5em;
+    border-radius: 1em;
+
+    font-weight: 600;
+    color: white;
+
+    background-color: #EE4E4E;
+}
+
+/* Fim das classes de estado do pedido */
+
 /* Fim do cadastro de matéria prima */
 
 /* Confirmação de deleção */

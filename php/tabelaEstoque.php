@@ -84,8 +84,8 @@
             $preco = fixMoney($output[2]);
 
             echo"<td>$output[0]</td>";
-            echo"<td>$fornec</td>";
             echo"<td>$data</td>";
+            echo"<td>$fornec</td>";
             echo"<td>$preco/$output[3]</td>";
             echo"<td>$output[4] $output[3]</td>";
                 

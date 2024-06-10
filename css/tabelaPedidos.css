@@ -427,21 +427,6 @@ body{
 
 }
 
-.entregue{
-
-    text-transform: uppercase;
-    width: 8em;
-
-    padding: .5em;
-    border-radius: 1em;
-
-    font-weight: 600;
-    color: white;
-
-    background-color: #49862f;
-
-}
-
 .cancelado{
     text-transform: uppercase;
     width: 8em;

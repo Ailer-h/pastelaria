@@ -6,6 +6,15 @@
     //Checa se o usuário tem permissões para entrar na pagina
     include "utilities/checkPermissions.php";
 
+    //Função para substituir pontos por virgula em valores monetários
+    include "utilities/fixMoney.php";
+
+    //Função que recebe a classe referente a tag de status
+    include "utilities/getStatusClass.php";
+
+    //Função que cria um timer para display usando as timestamps de inicio e fim
+    include "utilities/getTimer.php";
+
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar'])){
 
         $cli_nome = $_POST['nome'];
@@ -30,7 +39,7 @@
 
         include "utilities/mysql_connect.php";
 
-        $query = mysqli_query($connection, "select cli_nome,cli_cel,cli_email,cli_endereco,cli_cpf,cli_rg, cli_id from clientes where cli_nome like \"%$search%\";");
+        $query = mysqli_query($connection, "select cli_nome,cli_cel,cli_cpf,cli_rg, cli_id from clientes where cli_nome like \"%$search%\";");
         
         while($output = mysqli_fetch_array($query)){
 
@@ -40,13 +49,12 @@
             echo"<td>$output[1]</td>";
             echo"<td>$output[2]</td>";
             echo"<td>$output[3]</td>";
-            echo"<td>$output[4]</td>";
-            echo"<td>$output[5]</td>";
             
             echo"<td><div style='display: flex; justify-content: center; gap: 1em;'>";
-            echo"<form action='tabelaClientes.php' method='post'><input type='hidden' name='id_info' value='$output[6]'><button name='get_info' type='submit'><img src='../images/icons/info.png'></button></form>";
-            echo"<form action='tabelaClientes.php' method='post'><input type='hidden' name='id_delete-confirmar' value='$output[6]'><button name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";
-            echo"<form action='tabelaClientes.php' method='post'><input type='hidden' name='id_edit' value='$output[6]'><button name='edit' type='submit'><img src='../images/icons/edit.png'></button></form>";
+            echo"<form action='tabelaClientes.php' method='post'><input type='hidden' name='id_info' value='$output[4]'><button name='get_info' type='submit'><img src='../images/icons/info.png'></button></form>";
+            echo"<form action='tabelaClientes.php' method='post'><input type='hidden' name='id_pedidos' value='$output[4]'><button name='pedidos' type='submit'><img src='../images/icons/menu.png'></button></form>";
+            echo"<form action='tabelaClientes.php' method='post'><input type='hidden' name='id_delete-confirmar' value='$output[4]'><button name='delete' type='submit'><img src='../images/icons/delete.png'></button></form>";
+            echo"<form action='tabelaClientes.php' method='post'><input type='hidden' name='id_edit' value='$output[4]'><button name='edit' type='submit'><img src='../images/icons/edit.png'></button></form>";
             echo"</div></td></tr>";
 
             echo"</tr>";
@@ -75,6 +83,106 @@
         </div>
         </div>
         ";
+    }
+
+    function tratarData($data){
+        $date_array = explode("-",$data);
+        return $date_array[2]."/".$date_array[1]."/".$date_array[0];
+    }
+
+    function getProducts($id){
+
+        include "utilities/mysql_connect.php";
+
+        $str_prods = "";
+
+        $prods = mysqli_query($connection, "select pr.nome_prod, pp.qtd_prod from produtos_pedido pp, produtos pr where pp.id_prod = pr.id_prod and pp.id_pedido = $id;");
+
+        while($output = mysqli_fetch_array($prods)){
+            $str_prods = $str_prods."$output[0] x$output[1], ";
+        }
+
+        mysqli_close($connection);
+
+        echo substr($str_prods, 0, -2).".";
+
+    }
+
+    function showOrders($cli_id,$cliente){
+
+        date_default_timezone_set("America/Sao_Paulo");
+
+        echo"<div class='center-absolute'>
+                <div class='header'>
+                    <h1 id='titulo-form'>Pedidos de $cliente</h1>
+                    <img src='../images/icons/close.png' id='close-register' onclick='location.href = location.href'>
+                </div>
+                <div class='orders-table' id='orders'>
+                <table>
+                    <tr style='position: sticky; top: 0; background-color: #dcdcdc;'>
+                    <th style='border-left: none;'>Produtos Pedidos</th>
+                    <th>Valor Total</th>
+                    <th>Estado</th>
+                    <th>Feito em</th>
+                    <th style='border-right: none;'>Tempo de Preparo</th></tr>";
+                
+                    include "utilities/mysql_connect.php";
+
+                    $query = mysqli_query($connection, "select id_pedido, estado, valor_total, pedido_iniciado, pedido_finalizado, dataHora_pedido, id_cliente from pedidos where id_cliente = $cli_id order by dataHora_pedido desc, estado;");
+                    $empty = true;
+                    
+                    while($output = mysqli_fetch_array($query)){
+                        $empty = false;
+
+                        $status_class = getStatusClass($output[1]);
+                        $price = fixMoney($output[2]);
+            
+                        $date_time = explode(" ", $output[5]);
+                        $date = tratarData($date_time[0]);
+                        $time = $date_time[1];
+            
+                        echo"<tr class='normal-row'>";
+                        
+                        echo"<td style='max-width: 7em; padding-left: .5em; padding-right: .5em;'>";
+                        getProducts($output[0]);
+                        echo"</td>";
+                        echo"<td>R$$price</td>";
+                        echo"<td><div style='display: flex; justify-content: center;'><div class='$status_class'>$output[1]</div></div></td>";
+                        echo"<td><div>$date</div><div>$time</div></td>";
+            
+                        if($output[1] == "Cancelado" || ($output[3] != null && $output[4] != null)){
+                            $vals = getTimer($output[4], $output[5]);
+                            echo"<td id='timer$output[0]' style='color: $vals[1];'>$vals[0]</td>";
+                        
+                        }else{
+                            echo"<td id='timer$output[0]'>00:00:00:</td>";
+                            echo"<script>timer('$output[5]',$output[0]);</script>";
+                            
+                        }
+            
+                        echo"</tr>";
+                        
+                    }
+                    mysqli_close($connection);
+                
+                echo"</table>
+                </div>";
+                
+                if($empty){
+                    echo"<script>
+                        document.getElementById('orders').style.display = 'flex';
+                        document.getElementById('orders').style.justifyContent = 'center';
+                        document.getElementById('orders').style.alignItems = 'center';
+                        document.getElementById('orders').innerHTML = '<h1>Não há pedidos desse cliente.</h1>';
+                    </script>";
+                }
+
+            echo"</div>";
+
+            echo"<script>
+                document.getElementById('titulo-form').textContent = 'Pedidos de $cliente';
+            </script>";
+
     }
 
     function setForm($form_id){
@@ -253,6 +361,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/tabelaClientes.css">
     <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
+    <script src="../js/timer.js"></script>
     <title>Clientes</title>
 </head>
 <body>
@@ -302,8 +411,6 @@
                 <tr style="position: sticky; top: 0; background-color: #dcdcdc;">
                     <th style="border-left: none;">Nome</th>
                     <th>Celular</th>
-                    <th>Email</th>
-                    <th>Endereço</th>
                     <th>CPF</th>
                     <th>RG</th>
                     <th style="border-right: none;">Ações</th>
@@ -410,6 +517,15 @@
 
                 </script>";
 
+            }else if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_pedidos'])){
+                $id = $_POST['id_pedidos'];
+
+                include "utilities/mysql_connect.php";
+                $cliente = mysqli_fetch_array(mysqli_query($connection, "select cli_nome from clientes where cli_id = $id"))[0];
+                mysqli_close($connection);
+                
+                showOrders($id,$cliente);
+                
             }
     
         ?>
