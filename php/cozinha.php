@@ -105,11 +105,11 @@
             
             if($output[1] == "Não Iniciado"){
                 echo"<button type='button' onclick='start($output[0])'><img src='../images/icons/play.png'></button>";
-                echo"<button type='button' onclick='cancel($output[0],false)'><img src='../images/icons/close.png'></button>";
+                echo"<button type='button' onclick='warning($output[0],\"cancel\",false)'><img src='../images/icons/close.png'></button>";
             
             }else{
-                echo"<button type='button' onclick='done($output[0])'><img src='../images/icons/done.png'></button>";
-                echo"<button type='button' onclick='cancel($output[0],true)'><img src='../images/icons/close.png'></button>";
+                echo"<button type='button' onclick='warning($output[0],\"finish\",true)'><img src='../images/icons/done.png'></button>";
+                echo"<button type='button' onclick='warning($output[0],\"cancel\",true)'><img src='../images/icons/close.png'></button>";
 
             }
             
@@ -244,6 +244,69 @@
 
         </table>
     </div>
+
+    <div id='form-box'>
+
+        <?php
+            if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id-warning'])){
+                $id = $_POST['id-warning'];
+                $type = $_POST['type-warning'];
+                $started = $_POST['started'];
+                
+                if($type == "cancel"){
+                    echo"
+                    <div class='center-absolute'>
+                        <div class='delete-header'>
+                            <img src='../images/icons/close.png' onclick='location.href = location.href'>
+                        </div>
+                        <div class='delete-form'>
+                            <div style='display: flex; align-items: center; flex-direction: column;'>
+                                <h1>Deseja cancelar este pedido?</h1>
+                                <h3 id='info'>";
+                                getProducts($id);
+                                echo"</h3>
+                            </div>
+
+                            <div class='btns'>
+                                <a href='cozinha.php'><button class='cancel'>Sim</button></a>
+                                <button class='del' onclick='cancel($id,$started)'>Não</button>
+                            </div>
+                        </div>
+                    </div>
+                ";
+                }else if($type == "finish"){
+                    echo"
+                    <div class='center-absolute'>
+                        <div class='delete-header'>
+                            <img src='../images/icons/close.png' onclick='location.href = location.href'>
+                        </div>
+                        <div class='delete-form'>
+                            <div style='display: flex; align-items: center; flex-direction: column;'>
+                                <h1>Deseja finalizar este pedido?</h1>
+                                <h3 id='info'>";
+                                getProducts($id);
+                                echo"</h3>
+                            </div>
+
+                            <div class='btns'>
+                                <button class='cancel' onclick='done($id)'>Sim</button>
+                                <a href='cozinha.php'><button class='del'>Não</button></a>
+                            </div>
+                        </div>
+                    </div>
+                ";
+                }
+
+            }
+        ?>
+    </div>
+
+    <!-- Metadata para a função de warning -->
+    <form action="cozinha.php" method="post" id='warning'>
+        <input type="hidden" name="id-warning" id="id-warning">
+        <input type="hidden" name="started" id="started">
+        <input type="hidden" name="type-warning" id="type-warning">
+    </form>
 
 </body>
 <script src="../js/orderHandler.js"></script>

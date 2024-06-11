@@ -84,3 +84,12 @@ function done(id){
     form.submit();
 
 }
+//Fim das funções de controle
+
+function warning(id,type,started){
+    document.getElementById('id-warning').value = id;
+    document.getElementById('type-warning').value = type;
+    document.getElementById('started').value = started;
+    
+    document.getElementById('warning').submit();
+}
