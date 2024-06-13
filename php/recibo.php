@@ -116,13 +116,13 @@
                 echo"<hr>";
 
                 echo"<div class='tableHolder'><table>";
-                echo"<tr style='position: sticky; top: 0;'><th style='border-left: none; width: 60%;'>Nome</th><th>Qtd</th><th>Preço</th><th style='border-right: none;></th></tr>";
+                echo"<tr style='position: sticky; top: 0;'><th style='border-left: none; width: 60%;'>Nome</th><th style='width: 2em;'>Qtd</th><th>Preço</th><th style='border-right: none;></th></tr>";
                 
                 $valor_total = printNF();
                 
-                echo"</table></div>";
+                echo"</table><p id='valor-total'>Valor Total - R$". fixMoney($valor_total) ."</p>";
 
-                echo"<p id='valor-total'>Valor Total - R$". fixMoney($valor_total) ."</p>";
+                echo"</div>";
 
             }
         ?>

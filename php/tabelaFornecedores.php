@@ -248,6 +248,7 @@
     function delete_item($id){
         include "utilities/mysql_connect.php";
         mysqli_query($connection, "delete from fornecedores where id_fornecedor = $id;");
+        mysqli_query($connection, "update estoque set id_fornec=0 where id_fornec=$id;");
         mysqli_close($connection);
 
         header("Location: tabelaFornecedores.php");
